@@ -1,15 +1,16 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 4
-last_updated: 2026-06-22T13:19:02+03:00
+status_version: 5
+last_updated: 2026-06-22T13:36:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
+llm_entrypoint: LLM_GUIDE.md
 ---
 
 # وضعیت پایگاه دانش Elementor V4
 
-این فایل منبع وضعیت اجرایی پژوهش است و باید پس از پایان هر مرحله به‌روزرسانی شود.
+این فایل منبع وضعیت اجرایی پژوهش است. برای استفاده مدل زبانی، ابتدا `LLM_GUIDE.md` خوانده شود.
 
 ## خلاصه وضعیت
 
@@ -21,7 +22,45 @@ source_policy: official_first
 | مراحل زمان‌بندی‌شده باقی‌مانده | 2 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
+| لایه مصرف توسط مدل زبانی | `initialized` |
+| مدیر خودکار صف | `enabled` |
 | وضعیت کلی | `in_progress` |
+
+## زیرساخت مصرف توسط مدل زبانی
+
+| فایل | نقش | Commit |
+|---|---|---|
+| `LLM_GUIDE.md` | نقطه شروع، سیاست حقیقت و ترتیب مطالعه | `7895c2ad385b44073a919ecc66524cb705db1141` |
+| `docs/_index.md` | فهرست انسانی و مسیرهای محتوایی | `234c0ab41179068b2fccc2bc6a388b2b01cd0ffe` |
+| `manifests/sources.yaml` | رجیستری ماشین‌خوان منابع و فایل‌ها | `b42913346faec8bac6656597830bc231da2e6a76` |
+| `manifests/coverage.yaml` | نقشه پوشش و شکاف‌ها | `2e8bf3d2877e4842bd04864efb79b134e3cf0ed3` |
+| `registries/evidence-states.yaml` | واژگان کنترل‌شده وضعیت شواهد | `2e0cf8107c7d0de4f2f238a943ad10c5b067d0ca` |
+| `schemas/knowledge-note.schema.json` | قرارداد Front Matter جزوه‌ها | `8cb5143da039d3c106a61707740e9fc3594898a4` |
+
+### ترتیب مطالعه مدل
+
+```text
+LLM_GUIDE.md
+→ STATUS.md
+→ manifests/coverage.yaml
+→ manifests/sources.yaml
+→ docs/_index.md
+→ سند موضوعی
+→ registries/evidence-states.yaml
+```
+
+## مدیر خودکار صف
+
+یک Automation ساعتی از `2026-06-22 14:30 Europe/Istanbul` فعال است.
+
+قواعد آن:
+
+1. خود مدیر صف را جزو تسک‌های پژوهشی حساب نمی‌کند.
+2. اگر سه یا بیشتر تسک پژوهشی فعال باشند، کاری انجام نمی‌دهد.
+3. اگر تعداد تسک‌های پژوهشی فعال کمتر از سه باشد، فقط یک مرحله `not_scheduled` را بر اساس اولویت صف انتخاب می‌کند.
+4. مرحله جدید را برای نزدیک‌ترین ساعت کامل آینده زمان‌بندی می‌کند.
+5. پس از ساخت واقعی تسک، `STATUS.md` را به `scheduled` به‌روزرسانی می‌کند.
+6. بدون نتیجه واقعی ابزار، ادعای ساخت تسک یا Commit نمی‌کند.
 
 ## مراحل تکمیل‌شده
 
@@ -69,7 +108,6 @@ source_policy: official_first
     - complete Query ID, URL, AJAX and accessibility behavior is not documented
     - four embedded screenshots could not be fetched visually by the research tool, though their official URLs were extracted
   notes:
-    - docs/_index.md did not exist, so no index update was performed
     - source documentation contains several apparent copy-editing inconsistencies, recorded in the note
 
 - stage_id: KB-007
@@ -91,7 +129,6 @@ source_policy: official_first
     - exact Elementor Core/Pro versions and Pro prerequisite are not stated
     - two official screenshots could not be fetched visually, though their URLs and captions were extracted
   notes:
-    - docs/_index.md did not exist, so no index update was performed
     - screenshot paths use 2022/01 while the article was updated in 2026; the page does not state the UI version represented
     - values All, Date, DESC and Yes are recorded as screenshot state, not official defaults
 
@@ -113,7 +150,6 @@ source_policy: official_first
     - the source does not identify the provider or version requirement for the Brand taxonomy
     - multiple copy-editing inconsistencies leave some Product and Taxonomy labels ambiguous
   notes:
-    - docs/_index.md did not exist, so no index update was performed
     - the article covers Posts, Products, Post Taxonomy and Product Taxonomy contexts
     - content from linked subpages was not attributed to the main article
 ```
@@ -137,50 +173,25 @@ source_policy: official_first
 
 پس از پایان هر مرحله، مجری باید:
 
-1. وضعیت مرحله را به یکی از مقادیر زیر تغییر دهد:
-   - `completed`
-   - `completed_with_gaps`
-   - `failed`
-   - `blocked`
-   - `insufficient_evidence`
+1. وضعیت مرحله را به `completed`، `completed_with_gaps`، `failed`، `blocked` یا `insufficient_evidence` تغییر دهد.
 2. مسیر فایل خروجی و شناسه Commit واقعی را ثبت کند.
 3. زمان پایان را با timezone صریح درج کند.
-4. تعداد منابع بررسی‌شده و مراحل زمان‌بندی‌شده را اصلاح کند.
-5. خلأهای شواهد را در بخش «موارد باز» اضافه کند.
-6. بدون Commit موفق، وضعیت ذخیره‌سازی را `committed` اعلام نکند.
-
-## الگوی ثبت نتیجه مرحله
-
-```yaml
-stage_id: KB-000
-status: completed_with_gaps
-source_url: https://example.com/
-output_path: docs/example.md
-completed_at: 2026-06-22T00:00:00+03:00
-commit_sha: null
-evidence_gaps: []
-notes: null
-```
+4. شمارنده‌های خلاصه و Manifestهای مرتبط را اصلاح کند.
+5. خلأهای شواهد را ثبت کند.
+6. `docs/_index.md`، `manifests/sources.yaml` و `manifests/coverage.yaml` را در صورت تغییر پوشش به‌روزرسانی کند.
+7. بدون Commit موفق، وضعیت ذخیره‌سازی را `committed` اعلام نکند.
 
 ## موارد باز
 
-- انتقال پنج جزوه تکمیل‌شده اولیه از گفتگو به فایل‌های مستقل Markdown.
-- ساخت `docs/_index.md` پس از ایجاد نخستین مجموعه Indexها.
-- ساخت `manifests/sources.yaml` و `manifests/coverage.yaml`.
-- تعیین نسخه دقیق Elementor برای مقالاتی که نسخه Plugin را اعلام نمی‌کنند.
-- حفظ تفکیک `documented`، `observed`، `derived` و `insufficient_evidence` در همه جزوه‌ها.
-- تکمیل شواهد KB-006 برای Pro prerequisite، Skin، Dynamic Tags، Responsive controls و Accessibility.
-- بررسی مستقل صفحات فرعی Loop Grid بدون نسبت‌دادن محتوای آن‌ها به صفحه اصلی Widget.
-- تکمیل KB-007 با منبع مستقل برای همه Source options، Exclude، Offset، Avoid Duplicates، Current Query، Related و منطق عمومی AND/OR.
-- بررسی Query ID API و Server-side filtering از مستندات توسعه‌دهندگان یا کد رسمی.
-- تعیین علت و تاریخ تغییر Slug مقاله Query از URL درخواست‌شده به URL فعلی.
-- تکمیل KB-008 با منابع رسمی مستقل برای Query ID API، منطق AND/OR، AJAX، URL، Pagination و Accessibility.
-- بررسی بصری تصاویر KB-008 در محیطی که فایل‌های رسمی تصویر بدون cache miss قابل دریافت باشند.
-- تعیین منبع و شرط نسخه‌ای Product Brand taxonomy در KB-008.
+- انتقال KB-001 تا KB-005 از گفتگو به فایل‌های مستقل Markdown.
+- اعتبارسنجی تمام Front Matterها با `schemas/knowledge-note.schema.json`.
+- افزودن GitHub Actions برای Schema، لینک‌ها، ID تکراری و هماهنگی Index/Manifest.
+- اصلاح timezone ثبت‌شده در KB-006 از `+03:30` به `Europe/Istanbul/+03:00`.
+- پیاده‌سازی Claim-level provenance ID.
+- تکمیل شواهد KB-006 تا KB-008 طبق Gapهای ثبت‌شده.
+- ساخت `manifests/evidence-gaps.yaml` و `manifests/redirects.yaml`.
 
 ## قانون منبع
-
-اولویت منابع:
 
 1. مستندات رسمی `elementor.com`
 2. مستندات توسعه‌دهندگان `developers.elementor.com`
@@ -188,4 +199,4 @@ notes: null
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح و بدون ارتقای آن‌ها به حقیقت رسمی
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T13:19:02+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T13:36:00+03:00`
