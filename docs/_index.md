@@ -10,6 +10,7 @@
 - [Build a query with the Loop Grid](widgets/loop/loop-grid-query.md) — `KB-007` — `completed_with_gaps`
 - [Elementor Query Configuration](concepts/queries/create-queries.md) — `KB-008` — `completed_with_gaps`
 - [Paginate your loop](widgets/loop/pagination.md) — `KB-009` — `completed_with_gaps`
+- [Taxonomy Filter widget](widgets/loop/taxonomy-filter.md) — `KB-010` — `completed_with_gaps`
 
 ## در انتظار انتقال از گفتگو
 
@@ -23,7 +24,7 @@
 
 ## زمان‌بندی‌شده
 
-- `KB-010` — Taxonomy Filter
+- `KB-011` — Loop Carousel
 
 ## مسیرهای موضوعی
 
@@ -31,7 +32,7 @@
 docs/
 ├── elements/               # Elementهای Editor V4
 ├── widgets/                # Widgetها و خانواده‌های Widget
-│   └── loop/               # Loop Grid، Query، Pagination و Filter
+│   └── loop/               # Loop Grid، Query، Pagination، Filter و Carousel
 ├── concepts/               # مفاهیم مشترک مانند Query، Classes و Variables
 │   └── queries/
 ├── indexes/                # Inventory صفحه‌های Index رسمی
