@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 16
-last_updated: 2026-06-22T23:28:28+03:00
+status_version: 18
+last_updated: 2026-06-23T00:08:29+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -16,10 +16,10 @@ llm_entrypoint: LLM_GUIDE.md
 
 | شاخص | مقدار |
 |---|---:|
-| منابع بررسی‌شده | 10 |
-| اسناد تکمیل‌شده و Commit‌شده | 5 |
+| منابع بررسی‌شده | 12 |
+| اسناد تکمیل‌شده و Commit‌شده | 7 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 9 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 7 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -45,8 +45,8 @@ llm_entrypoint: LLM_GUIDE.md
 | KB-015 | Search Widget and Search Results Archive | `scheduled` — 2026-06-22 20:00 |
 | KB-016 | Div Block element | `scheduled` — 2026-06-22 21:00 |
 | KB-017 | Flexbox element | `scheduled` — 2026-06-22 22:00 |
-| KB-018 | Image element | `scheduled` — 2026-06-22 23:00 |
-| KB-019 | Paragraph element | `scheduled` — 2026-06-23 00:00 |
+| KB-018 | Image element | `docs/elements/v4/image.md` — `completed_with_gaps` |
+| KB-019 | Paragraph element | `docs/elements/v4/paragraph.md` — `completed_with_gaps` |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
@@ -88,6 +88,24 @@ llm_entrypoint: LLM_GUIDE.md
   completed_at: 2026-06-22T15:08:11+03:00
   commit_sha: 95657df95445c453d310107715ddc3008baf68bb
   evidence_gaps: [version, Pro prerequisite, taxonomy scope, query interaction, URL, AJAX, accessibility, responsive, style defaults, screenshots]
+- stage_id: KB-018
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/image-element/
+  output_path: docs/elements/v4/image.md
+  completed_at: 2026-06-22T23:08:43+03:00
+  commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c
+  evidence_gaps: [exact_elementor_version, plan_or_pro_prerequisite, aspect_ratio, object_fit, lazy_loading, responsive_controls, dynamic_data, classes_and_variables, element_states, accessibility, seo, runtime_behavior]
+  notes: "وضعیت مرحله با فایل Commit‌شده و manifest منابع تطبیق داده شد."
+  counters: {official_pages_reviewed: 1, official_images_indexed: 11}
+- stage_id: KB-019
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/paragraph-element/
+  output_path: docs/elements/v4/paragraph.md
+  completed_at: 2026-06-23T00:06:13+03:00
+  commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73
+  evidence_gaps: [exact_elementor_version, plan_or_pro_prerequisite, inline_editing, html_tag_and_semantics, partial_text_links, custom_attributes, color_controls, detailed_style_controls, responsive_controls, dynamic_data, classes_and_variables, element_states, frontend_accessibility, keyboard_and_focus_runtime, seo_behavior, generated_markup, runtime_behavior]
+  notes: "صفحه رسمی خط‌به‌خط بررسی شد؛ 13 تصویر رسمی Index شد و فقط 2 تصویر مستقیماً قابل مشاهده بود. صفحات Style فرعی بدون بررسی مستقل به منبع مادر نسبت داده نشدند."
+  counters: {official_pages_reviewed: 1, official_images_indexed: 13, official_images_directly_viewed: 2, style_categories_named: 8}
 ```
 
 ## مراحل زمان‌بندی‌شده
@@ -100,8 +118,6 @@ llm_entrypoint: LLM_GUIDE.md
 - {stage_id: KB-015, title: Search Widget and Search Results Archive, source_urls: ["https://elementor.com/help/search-widget/", "https://elementor.com/help/customize-the-search-results-archive/"], output_path: "docs/widgets/search/search-widget-and-results-archive.md", scheduled_for: "2026-06-22T20:00:00+03:00"}
 - {stage_id: KB-016, title: Div Block element, source_url: "https://elementor.com/help/div-block-element/", output_path: "docs/elements/v4/div-block.md", scheduled_for: "2026-06-22T21:00:00+03:00"}
 - {stage_id: KB-017, title: Flexbox element, source_url: "https://elementor.com/help/flexbox-element/", output_path: "docs/elements/v4/flexbox.md", scheduled_for: "2026-06-22T22:00:00+03:00"}
-- {stage_id: KB-018, title: Image element, source_url: "https://elementor.com/help/image-element/", output_path: "docs/elements/v4/image.md", scheduled_for: "2026-06-22T23:00:00+03:00"}
-- {stage_id: KB-019, title: Paragraph element, source_url: "https://elementor.com/help/paragraph-element/", output_path: "docs/elements/v4/paragraph.md", scheduled_for: "2026-06-23T00:00:00+03:00"}
 ```
 
 ## صف بعدی پیشنهادی
@@ -115,8 +131,8 @@ llm_entrypoint: LLM_GUIDE.md
 | 5 | Search Widget and Search Results Archive | `scheduled` — 2026-06-22 20:00 |
 | 6 | Div Block element | `scheduled` — 2026-06-22 21:00 |
 | 7 | Flexbox element | `scheduled` — 2026-06-22 22:00 |
-| 8 | Image element | `scheduled` — 2026-06-22 23:00 |
-| 9 | Paragraph element | `scheduled` — 2026-06-23 00:00 |
+| 8 | Image element | `completed_with_gaps` |
+| 9 | Paragraph element | `completed_with_gaps` |
 | 10 | SVG element | `not_scheduled` |
 
 ## قرارداد به‌روزرسانی
@@ -132,6 +148,7 @@ llm_entrypoint: LLM_GUIDE.md
 - پیاده‌سازی Claim-level provenance ID.
 - تکمیل Gapهای KB-006 تا KB-010.
 - ساخت Manifestهای evidence gaps و redirects.
+- همگام‌سازی `docs/_index.md` برای KB-018 و KB-019؛ نوشتن این فایل در اجرای فعلی توسط بررسی ایمنی ابزار مسدود شد.
 
 ## قانون منبع
 
@@ -141,4 +158,4 @@ llm_entrypoint: LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T23:28:28+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-23T00:08:29+03:00`
