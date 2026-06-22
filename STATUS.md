@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 3
-last_updated: 2026-06-22T12:05:51+03:00
+status_version: 4
+last_updated: 2026-06-22T13:19:02+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -15,10 +15,10 @@ source_policy: official_first
 
 | شاخص | مقدار |
 |---|---:|
-| منابع بررسی‌شده | 7 |
-| مراحل تکمیل‌شده و Commit‌شده در ریپو | 2 |
+| منابع بررسی‌شده | 8 |
+| مراحل تکمیل‌شده و Commit‌شده در ریپو | 3 |
 | مراحل تکمیل‌شده در گفتگو و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 3 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 2 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -34,6 +34,7 @@ source_policy: official_first
 | KB-005 | Heading element | جزوه Element V4 | `pending_import` |
 | KB-006 | Loop Grid widget | جزوه جامع Widget | `committed` — `ddceabd45d3c8c6655cb44bca6016f98426034ae` |
 | KB-007 | Build a query with the Loop Grid | جزوه Workflow و کنترل‌های Query | `committed` — `ab98a1097ce26a2c2c665cab5d78ca504c1fd97e` |
+| KB-008 | Elementor query configuration | جزوه جامع Query و Taxonomy | `committed` — `5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9` |
 
 > پنج مرحله اول در گفتگو تکمیل شده‌اند، اما فایل Markdown نهایی آن‌ها هنوز به ریپو منتقل نشده است؛ بنابراین `pending_import` باقی می‌مانند.
 
@@ -43,7 +44,7 @@ source_policy: official_first
 |---|---|---|---|---|
 | KB-006 | 2026-06-22 11:00 | Loop Grid | `docs/widgets/loop/loop-grid.md` | `completed_with_gaps` |
 | KB-007 | 2026-06-22 12:00 | Query in Loop Grid | `docs/widgets/loop/loop-grid-query.md` | `completed_with_gaps` |
-| KB-008 | 2026-06-22 13:00 | Create Queries | `docs/concepts/queries/create-queries.md` | `scheduled` |
+| KB-008 | 2026-06-22 13:00 | Elementor query configuration | `docs/concepts/queries/create-queries.md` | `completed_with_gaps` |
 | KB-009 | 2026-06-22 14:00 | Pagination for Loop | `docs/widgets/loop/pagination.md` | `scheduled` |
 | KB-010 | 2026-06-22 15:00 | Taxonomy Filter | `docs/widgets/loop/taxonomy-filter.md` | `scheduled` |
 
@@ -93,6 +94,28 @@ source_policy: official_first
     - docs/_index.md did not exist, so no index update was performed
     - screenshot paths use 2022/01 while the article was updated in 2026; the page does not state the UI version represented
     - values All, Date, DESC and Yes are recorded as screenshot state, not official defaults
+
+- stage_id: KB-008
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/create-queries/
+  source_last_updated: 2025-06-30
+  output_path: docs/concepts/queries/create-queries.md
+  completed_at: 2026-06-22T13:19:02+03:00
+  commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9
+  evidence_gaps:
+    - exact Elementor Core and Pro versions are not stated
+    - Elementor Pro prerequisite is not explicitly stated
+    - the complete inventory of query-capable widgets and elements is not provided
+    - embedded image URLs were extracted but visual fetches failed with cache misses
+    - general AND/OR logic and precedence between Include and Exclude are not documented
+    - Query ID hooks, syntax and runtime lifecycle are delegated to a separate developer page
+    - AJAX, URL, pagination and accessibility behavior are not documented
+    - the source does not identify the provider or version requirement for the Brand taxonomy
+    - multiple copy-editing inconsistencies leave some Product and Taxonomy labels ambiguous
+  notes:
+    - docs/_index.md did not exist, so no index update was performed
+    - the article covers Posts, Products, Post Taxonomy and Product Taxonomy contexts
+    - content from linked subpages was not attributed to the main article
 ```
 
 ## صف بعدی پیشنهادی
@@ -151,6 +174,9 @@ notes: null
 - تکمیل KB-007 با منبع مستقل برای همه Source options، Exclude، Offset، Avoid Duplicates، Current Query، Related و منطق عمومی AND/OR.
 - بررسی Query ID API و Server-side filtering از مستندات توسعه‌دهندگان یا کد رسمی.
 - تعیین علت و تاریخ تغییر Slug مقاله Query از URL درخواست‌شده به URL فعلی.
+- تکمیل KB-008 با منابع رسمی مستقل برای Query ID API، منطق AND/OR، AJAX، URL، Pagination و Accessibility.
+- بررسی بصری تصاویر KB-008 در محیطی که فایل‌های رسمی تصویر بدون cache miss قابل دریافت باشند.
+- تعیین منبع و شرط نسخه‌ای Product Brand taxonomy در KB-008.
 
 ## قانون منبع
 
@@ -162,4 +188,4 @@ notes: null
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح و بدون ارتقای آن‌ها به حقیقت رسمی
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T12:05:51+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T13:19:02+03:00`
