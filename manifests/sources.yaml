@@ -1,5 +1,5 @@
 manifest_version: 1
-updated_at: 2026-06-22T23:11:50+03:00
+updated_at: 2026-06-23T00:03:10+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -170,3 +170,14 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c
+
+  - stage_id: KB-019
+    knowledge_id: elementor.help.paragraph-element
+    title: Paragraph element
+    source_url: https://elementor.com/help/paragraph-element/
+    source_type: official_help
+    source_last_updated: 2025-08-28
+    output_path: docs/elements/v4/paragraph.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73
