@@ -1,0 +1,95 @@
+manifest_version: 1
+updated_at: 2026-06-22T13:35:00+03:00
+timezone: Europe/Istanbul
+repository: rezahh107/elementor-v4-knowledge-base
+
+sources:
+  - stage_id: KB-001
+    knowledge_id: elementor.help.widgets-index
+    title: Widgets index
+    source_url: https://elementor.com/help/build-with-the-editor/widgets/
+    source_type: official_help
+    output_path: null
+    status: pending_import
+
+  - stage_id: KB-002
+    knowledge_id: elementor.help.editor-v4-index
+    title: Editor V4 index
+    source_url: https://elementor.com/help/build-with-the-editor/v4-editor/
+    source_type: official_help
+    output_path: null
+    status: pending_import
+
+  - stage_id: KB-003
+    knowledge_id: elementor.help.explore-v4-features
+    title: Explore the V4 features
+    source_url: https://elementor.com/help/explore-the-v4-features/
+    source_type: official_help
+    output_path: null
+    status: pending_import
+
+  - stage_id: KB-004
+    knowledge_id: elementor.help.button-element
+    title: Button element
+    source_url: https://elementor.com/help/button-element/
+    source_type: official_help
+    output_path: null
+    status: pending_import
+
+  - stage_id: KB-005
+    knowledge_id: elementor.help.heading-element
+    title: Heading element
+    source_url: https://elementor.com/help/heading-element/
+    source_type: official_help
+    output_path: null
+    status: pending_import
+
+  - stage_id: KB-006
+    knowledge_id: elementor.help.loop-grid
+    title: Loop Grid widget
+    source_url: https://elementor.com/help/loop-grid/
+    source_type: official_help
+    source_last_updated: 2026-06-19
+    output_path: docs/widgets/loop/loop-grid.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae
+
+  - stage_id: KB-007
+    knowledge_id: elementor.help.loop-grid-query
+    title: Build a query with the Loop Grid
+    source_url: https://elementor.com/help/create-a-query-in-a-loop-grid/
+    canonical_url: https://elementor.com/help/building-query-loop-grid/
+    source_type: official_help
+    source_last_updated: 2026-06-19
+    output_path: docs/widgets/loop/loop-grid-query.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e
+
+  - stage_id: KB-008
+    knowledge_id: elementor.help.query-configuration
+    title: Create queries
+    source_url: https://elementor.com/help/create-queries/
+    source_type: official_help
+    source_last_updated: 2025-06-30
+    output_path: docs/concepts/queries/create-queries.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9
+
+  - stage_id: KB-009
+    knowledge_id: elementor.help.loop-pagination
+    title: Pagination for Loop
+    source_url: https://elementor.com/help/pagination-for-loop/
+    source_type: official_help
+    output_path: docs/widgets/loop/pagination.md
+    status: scheduled
+
+  - stage_id: KB-010
+    knowledge_id: elementor.help.taxonomy-filter
+    title: Taxonomy Filter
+    source_url: https://elementor.com/help/taxonomy-filter/
+    source_type: official_help
+    output_path: docs/widgets/loop/taxonomy-filter.md
+    status: scheduled
