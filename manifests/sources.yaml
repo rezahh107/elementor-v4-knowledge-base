@@ -1,5 +1,5 @@
 manifest_version: 1
-updated_at: 2026-06-22T14:06:05+03:00
+updated_at: 2026-06-22T15:02:30+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -92,8 +92,20 @@ sources:
 
   - stage_id: KB-010
     knowledge_id: elementor.help.taxonomy-filter
-    title: Taxonomy Filter
+    title: Taxonomy Filter widget
     source_url: https://elementor.com/help/taxonomy-filter/
+    canonical_url: https://elementor.com/help/taxonomy-filter-widget/
     source_type: official_help
+    source_last_updated: 2026-06-04
     output_path: docs/widgets/loop/taxonomy-filter.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 95657df95445c453d310107715ddc3008baf68bb
+
+  - stage_id: KB-011
+    knowledge_id: elementor.help.loop-carousel
+    title: Loop Carousel
+    source_url: https://elementor.com/help/loop-carousel/
+    source_type: official_help
+    output_path: docs/widgets/loop/loop-carousel.md
     status: scheduled
