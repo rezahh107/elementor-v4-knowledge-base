@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 6
-last_updated: 2026-06-22T14:07:00+03:00
+status_version: 7
+last_updated: 2026-06-22T14:28:22+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -19,7 +19,7 @@ llm_entrypoint: LLM_GUIDE.md
 | منابع بررسی‌شده | 9 |
 | اسناد تکمیل‌شده و Commit‌شده | 4 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 1 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 2 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -50,6 +50,7 @@ LLM_GUIDE.md
 | KB-008 | Elementor query configuration | `docs/concepts/queries/create-queries.md` — `completed_with_gaps` |
 | KB-009 | Paginate your loop | `docs/widgets/loop/pagination.md` — `completed_with_gaps` |
 | KB-010 | Taxonomy Filter | `scheduled` — 2026-06-22 15:00 |
+| KB-011 | Loop Carousel | `scheduled` — 2026-06-22 15:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
@@ -122,11 +123,29 @@ LLM_GUIDE.md
     - docs/_index.md, manifests/sources.yaml and manifests/coverage.yaml were updated
 ```
 
+## مراحل زمان‌بندی‌شده
+
+```yaml
+- stage_id: KB-010
+  title: Taxonomy Filter
+  status: scheduled
+  source_url: https://elementor.com/help/taxonomy-filter/
+  output_path: docs/widgets/loop/taxonomy-filter.md
+  scheduled_for: 2026-06-22T15:00:00+03:00
+
+- stage_id: KB-011
+  title: Loop Carousel
+  status: scheduled
+  source_url: https://elementor.com/help/loop-carousel/
+  output_path: docs/widgets/loop/loop-carousel.md
+  scheduled_for: 2026-06-22T15:00:00+03:00
+```
+
 ## صف بعدی پیشنهادی
 
 | اولویت | موضوع | وضعیت |
 |---:|---|---|
-| 1 | Loop Carousel | `not_scheduled` |
+| 1 | Loop Carousel | `scheduled` — 2026-06-22 15:00 |
 | 2 | Alternate Template in Loop Grid | `not_scheduled` |
 | 3 | Customize Layout in Loop Grid | `not_scheduled` |
 | 4 | Off-Canvas in Loop Grid | `not_scheduled` |
@@ -165,4 +184,4 @@ LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T14:07:00+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T14:28:22+03:00`
