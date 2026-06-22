@@ -1,0 +1,59 @@
+registry_version: 1
+name: evidence_states
+
+states:
+  documented:
+    authority: source_text
+    definition: The claim is explicitly stated in the cited source text.
+    may_be_presented_as_fact: true
+
+  observed:
+    authority: source_visual
+    definition: The claim is directly visible in an official screenshot or interface capture from the source.
+    may_be_presented_as_fact: true
+    constraint: Do not infer hidden behavior from appearance alone.
+
+  validated:
+    authority: controlled_fixture_or_test
+    definition: The claim was confirmed by a controlled real fixture or deterministic test.
+    may_be_presented_as_fact: true
+
+  derived:
+    authority: traceable_analysis
+    definition: A limited conclusion derived from identified evidence.
+    may_be_presented_as_fact: false
+    constraint: The supporting evidence and reasoning boundary must remain explicit.
+
+  proposed:
+    authority: proposal
+    definition: A suggested interpretation, design, or future action.
+    may_be_presented_as_fact: false
+
+  unverified:
+    authority: unverified_claim
+    definition: A claim exists but has not been confirmed by an accepted source.
+    may_be_presented_as_fact: false
+
+  insufficient_evidence:
+    authority: evidence_gap
+    definition: Available evidence is not sufficient to establish the requested conclusion.
+    may_be_presented_as_fact: false
+    required_fields:
+      - missing_evidence
+      - affected_conclusion
+      - required_source
+
+allowed_document_statuses:
+  - draft
+  - completed
+  - completed_with_gaps
+  - stale
+  - superseded
+  - blocked
+  - failed
+
+allowed_storage_statuses:
+  - pending
+  - pending_import
+  - committed
+  - superseded
