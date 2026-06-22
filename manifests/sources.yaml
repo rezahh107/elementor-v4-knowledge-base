@@ -1,5 +1,5 @@
 manifest_version: 1
-updated_at: 2026-06-22T15:02:30+03:00
+updated_at: 2026-06-22T23:11:50+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -109,3 +109,64 @@ sources:
     source_type: official_help
     output_path: docs/widgets/loop/loop-carousel.md
     status: scheduled
+
+  - stage_id: KB-012
+    knowledge_id: elementor.help.loop-alternate-template
+    title: Add an alternate template in a loop grid
+    source_url: https://elementor.com/help/how-do-i-add-an-alternate-template-in-a-loop-grid/
+    source_type: official_help
+    output_path: docs/widgets/loop/alternate-template.md
+    status: scheduled
+
+  - stage_id: KB-013
+    knowledge_id: elementor.help.loop-customize-layout
+    title: Customize the layout of a Loop Grid
+    source_url: https://elementor.com/help/customize-layout-loop/
+    source_type: official_help
+    output_path: docs/widgets/loop/customize-layout.md
+    status: scheduled
+
+  - stage_id: KB-014
+    knowledge_id: elementor.help.loop-off-canvas
+    title: Add an Off Canvas widget to a Loop Grid
+    source_url: https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/
+    source_type: official_help
+    output_path: docs/widgets/loop/off-canvas.md
+    status: scheduled
+
+  - stage_id: KB-015
+    knowledge_id: elementor.help.search-widget-results-archive
+    title: Search Widget and Search Results Archive
+    source_urls:
+      - https://elementor.com/help/search-widget/
+      - https://elementor.com/help/customize-the-search-results-archive/
+    source_type: official_help
+    output_path: docs/widgets/search/search-widget-and-results-archive.md
+    status: scheduled
+
+  - stage_id: KB-016
+    knowledge_id: elementor.help.div-block-element
+    title: Div Block element
+    source_url: https://elementor.com/help/div-block-element/
+    source_type: official_help
+    output_path: docs/elements/v4/div-block.md
+    status: scheduled
+
+  - stage_id: KB-017
+    knowledge_id: elementor.help.flexbox-element
+    title: Flexbox element
+    source_url: https://elementor.com/help/flexbox-element/
+    source_type: official_help
+    output_path: docs/elements/v4/flexbox.md
+    status: scheduled
+
+  - stage_id: KB-018
+    knowledge_id: elementor.help.image-element
+    title: Image element
+    source_url: https://elementor.com/help/image-element/
+    source_type: official_help
+    source_last_updated: 2026-05-26
+    output_path: docs/elements/v4/image.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c
