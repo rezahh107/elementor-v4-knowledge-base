@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 8
-last_updated: 2026-06-22T15:08:11+03:00
+status_version: 9
+last_updated: 2026-06-22T15:35:07+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -19,7 +19,7 @@ llm_entrypoint: LLM_GUIDE.md
 | منابع بررسی‌شده | 10 |
 | اسناد تکمیل‌شده و Commit‌شده | 5 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 1 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 2 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -51,6 +51,7 @@ LLM_GUIDE.md
 | KB-009 | Paginate your loop | `docs/widgets/loop/pagination.md` — `completed_with_gaps` |
 | KB-010 | Taxonomy Filter widget | `docs/widgets/loop/taxonomy-filter.md` — `completed_with_gaps` |
 | KB-011 | Loop Carousel | `scheduled` — 2026-06-22 15:00 |
+| KB-012 | Add an alternate template in a loop grid | `scheduled` — 2026-06-22 16:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
@@ -163,6 +164,13 @@ LLM_GUIDE.md
   source_url: https://elementor.com/help/loop-carousel/
   output_path: docs/widgets/loop/loop-carousel.md
   scheduled_for: 2026-06-22T15:00:00+03:00
+
+- stage_id: KB-012
+  title: Add an alternate template in a loop grid
+  status: scheduled
+  source_url: https://elementor.com/help/how-do-i-add-an-alternate-template-in-a-loop-grid/
+  output_path: docs/widgets/loop/alternate-template.md
+  scheduled_for: 2026-06-22T16:00:00+03:00
 ```
 
 ## صف بعدی پیشنهادی
@@ -170,7 +178,7 @@ LLM_GUIDE.md
 | اولویت | موضوع | وضعیت |
 |---:|---|---|
 | 1 | Loop Carousel | `scheduled` — 2026-06-22 15:00 |
-| 2 | Alternate Template in Loop Grid | `not_scheduled` |
+| 2 | Alternate Template in Loop Grid | `scheduled` — 2026-06-22 16:00 |
 | 3 | Customize Layout in Loop Grid | `not_scheduled` |
 | 4 | Off-Canvas in Loop Grid | `not_scheduled` |
 | 5 | Search Widget and Search Results Archive | `not_scheduled` |
@@ -208,4 +216,4 @@ LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T15:08:11+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T15:35:07+03:00`
