@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 11
-last_updated: 2026-06-22T17:26:41+03:00
+status_version: 12
+last_updated: 2026-06-22T19:34:18+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -19,7 +19,7 @@ llm_entrypoint: LLM_GUIDE.md
 | منابع بررسی‌شده | 10 |
 | اسناد تکمیل‌شده و Commit‌شده | 5 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 4 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 5 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -54,6 +54,7 @@ LLM_GUIDE.md
 | KB-012 | Add an alternate template in a loop grid | `scheduled` — 2026-06-22 16:00 |
 | KB-013 | Customize the layout of a Loop Grid | `scheduled` — 2026-06-22 17:00 |
 | KB-014 | Add an Off Canvas widget to a Loop Grid | `scheduled` — 2026-06-22 18:00 |
+| KB-015 | Search Widget and Search Results Archive | `scheduled` — 2026-06-22 20:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
@@ -187,6 +188,15 @@ LLM_GUIDE.md
   source_url: https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/
   output_path: docs/widgets/loop/off-canvas.md
   scheduled_for: 2026-06-22T18:00:00+03:00
+
+- stage_id: KB-015
+  title: Search Widget and Search Results Archive
+  status: scheduled
+  source_urls:
+    - https://elementor.com/help/search-widget/
+    - https://elementor.com/help/customize-the-search-results-archive/
+  output_path: docs/widgets/search/search-widget-and-results-archive.md
+  scheduled_for: 2026-06-22T20:00:00+03:00
 ```
 
 ## صف بعدی پیشنهادی
@@ -197,7 +207,7 @@ LLM_GUIDE.md
 | 2 | Alternate Template in Loop Grid | `scheduled` — 2026-06-22 16:00 |
 | 3 | Customize Layout in Loop Grid | `scheduled` — 2026-06-22 17:00 |
 | 4 | Off-Canvas in Loop Grid | `scheduled` — 2026-06-22 18:00 |
-| 5 | Search Widget and Search Results Archive | `not_scheduled` |
+| 5 | Search Widget and Search Results Archive | `scheduled` — 2026-06-22 20:00 |
 | 6 | Div Block element | `not_scheduled` |
 | 7 | Flexbox element | `not_scheduled` |
 | 8 | Image element | `not_scheduled` |
@@ -232,4 +242,4 @@ LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T17:26:41+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T19:34:18+03:00`
