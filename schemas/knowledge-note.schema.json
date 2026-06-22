@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezahh107/elementor-v4-knowledge-base/schemas/knowledge-note.schema.json",
+  "title": "Elementor Knowledge Note Front Matter",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "source_url",
+    "source_type",
+    "version_scope",
+    "last_updated",
+    "researched_at",
+    "evidence_status",
+    "storage_status",
+    "language",
+    "stage_id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$"
+    },
+    "title": {"type": "string", "minLength": 1},
+    "source_url": {"type": "string", "format": "uri"},
+    "canonical_url": {"type": "string", "format": "uri"},
+    "source_title": {"type": "string"},
+    "source_type": {
+      "enum": [
+        "official_help",
+        "official_developer_docs",
+        "official_github",
+        "validated_fixture",
+        "third_party"
+      ]
+    },
+    "version_scope": {"type": "string", "minLength": 1},
+    "last_updated": {
+      "type": ["string", "null"],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "researched_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence_status": {
+      "enum": [
+        "draft",
+        "completed",
+        "completed_with_gaps",
+        "stale",
+        "superseded",
+        "blocked",
+        "failed"
+      ]
+    },
+    "storage_status": {
+      "enum": ["pending", "pending_import", "committed", "superseded"]
+    },
+    "language": {"enum": ["fa", "en"]},
+    "stage_id": {
+      "type": "string",
+      "pattern": "^KB-[0-9]{3,}$"
+    },
+    "product_scope": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "source_images": {
+      "type": "array",
+      "items": {"type": "string", "format": "uri"},
+      "uniqueItems": true
+    },
+    "supersedes": {"type": ["string", "null"]},
+    "superseded_by": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}
