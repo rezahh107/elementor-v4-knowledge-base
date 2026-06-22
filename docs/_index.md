@@ -9,6 +9,7 @@
 - [Loop Grid widget](widgets/loop/loop-grid.md) — `KB-006` — `completed_with_gaps`
 - [Build a query with the Loop Grid](widgets/loop/loop-grid-query.md) — `KB-007` — `completed_with_gaps`
 - [Elementor Query Configuration](concepts/queries/create-queries.md) — `KB-008` — `completed_with_gaps`
+- [Paginate your loop](widgets/loop/pagination.md) — `KB-009` — `completed_with_gaps`
 
 ## در انتظار انتقال از گفتگو
 
@@ -22,7 +23,6 @@
 
 ## زمان‌بندی‌شده
 
-- `KB-009` — Pagination for Loop
 - `KB-010` — Taxonomy Filter
 
 ## مسیرهای موضوعی
