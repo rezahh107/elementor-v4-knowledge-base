@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 2
-last_updated: 2026-06-22T11:07:20+03:00
+status_version: 3
+last_updated: 2026-06-22T12:05:51+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -15,10 +15,10 @@ source_policy: official_first
 
 | شاخص | مقدار |
 |---|---:|
-| منابع بررسی‌شده | 6 |
-| مراحل تکمیل‌شده و Commit‌شده در ریپو | 1 |
+| منابع بررسی‌شده | 7 |
+| مراحل تکمیل‌شده و Commit‌شده در ریپو | 2 |
 | مراحل تکمیل‌شده در گفتگو و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 4 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 3 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -33,6 +33,7 @@ source_policy: official_first
 | KB-004 | Button element | جزوه Element V4 | `pending_import` |
 | KB-005 | Heading element | جزوه Element V4 | `pending_import` |
 | KB-006 | Loop Grid widget | جزوه جامع Widget | `committed` — `ddceabd45d3c8c6655cb44bca6016f98426034ae` |
+| KB-007 | Build a query with the Loop Grid | جزوه Workflow و کنترل‌های Query | `committed` — `ab98a1097ce26a2c2c665cab5d78ca504c1fd97e` |
 
 > پنج مرحله اول در گفتگو تکمیل شده‌اند، اما فایل Markdown نهایی آن‌ها هنوز به ریپو منتقل نشده است؛ بنابراین `pending_import` باقی می‌مانند.
 
@@ -41,7 +42,7 @@ source_policy: official_first
 | ID | زمان اجرا | منبع | فایل هدف | وضعیت |
 |---|---|---|---|---|
 | KB-006 | 2026-06-22 11:00 | Loop Grid | `docs/widgets/loop/loop-grid.md` | `completed_with_gaps` |
-| KB-007 | 2026-06-22 12:00 | Query in Loop Grid | `docs/widgets/loop/loop-grid-query.md` | `scheduled` |
+| KB-007 | 2026-06-22 12:00 | Query in Loop Grid | `docs/widgets/loop/loop-grid-query.md` | `completed_with_gaps` |
 | KB-008 | 2026-06-22 13:00 | Create Queries | `docs/concepts/queries/create-queries.md` | `scheduled` |
 | KB-009 | 2026-06-22 14:00 | Pagination for Loop | `docs/widgets/loop/pagination.md` | `scheduled` |
 | KB-010 | 2026-06-22 15:00 | Taxonomy Filter | `docs/widgets/loop/taxonomy-filter.md` | `scheduled` |
@@ -69,6 +70,29 @@ source_policy: official_first
   notes:
     - docs/_index.md did not exist, so no index update was performed
     - source documentation contains several apparent copy-editing inconsistencies, recorded in the note
+
+- stage_id: KB-007
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/create-a-query-in-a-loop-grid/
+  canonical_url: https://elementor.com/help/building-query-loop-grid/
+  source_last_updated: 2026-06-19
+  output_path: docs/widgets/loop/loop-grid-query.md
+  completed_at: 2026-06-22T12:05:51+03:00
+  commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e
+  evidence_gaps:
+    - the requested URL differs from the current canonical article URL and redirect history is not documented
+    - the article is a simple walkthrough rather than a complete query-control reference
+    - Source options beyond Posts are not shown because the dropdown is never opened
+    - Exclude is visible but not explained
+    - Date, Order By, Order, Ignore Sticky Posts and Query ID are visible but only partially documented
+    - Offset, Avoid Duplicates, Current Query and Related are absent from the article text and inspected screenshots
+    - general AND/OR logic, Query ID API, AJAX, URL, accessibility and pagination interaction are not documented
+    - exact Elementor Core/Pro versions and Pro prerequisite are not stated
+    - two official screenshots could not be fetched visually, though their URLs and captions were extracted
+  notes:
+    - docs/_index.md did not exist, so no index update was performed
+    - screenshot paths use 2022/01 while the article was updated in 2026; the page does not state the UI version represented
+    - values All, Date, DESC and Yes are recorded as screenshot state, not official defaults
 ```
 
 ## صف بعدی پیشنهادی
@@ -124,6 +148,9 @@ notes: null
 - حفظ تفکیک `documented`، `observed`، `derived` و `insufficient_evidence` در همه جزوه‌ها.
 - تکمیل شواهد KB-006 برای Pro prerequisite، Skin، Dynamic Tags، Responsive controls و Accessibility.
 - بررسی مستقل صفحات فرعی Loop Grid بدون نسبت‌دادن محتوای آن‌ها به صفحه اصلی Widget.
+- تکمیل KB-007 با منبع مستقل برای همه Source options، Exclude، Offset، Avoid Duplicates، Current Query، Related و منطق عمومی AND/OR.
+- بررسی Query ID API و Server-side filtering از مستندات توسعه‌دهندگان یا کد رسمی.
+- تعیین علت و تاریخ تغییر Slug مقاله Query از URL درخواست‌شده به URL فعلی.
 
 ## قانون منبع
 
@@ -135,4 +162,4 @@ notes: null
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح و بدون ارتقای آن‌ها به حقیقت رسمی
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T11:07:20+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T12:05:51+03:00`
