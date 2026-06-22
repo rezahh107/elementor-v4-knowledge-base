@@ -1,5 +1,5 @@
 manifest_version: 1
-updated_at: 2026-06-22T13:35:00+03:00
+updated_at: 2026-06-22T14:06:05+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -80,11 +80,15 @@ sources:
 
   - stage_id: KB-009
     knowledge_id: elementor.help.loop-pagination
-    title: Pagination for Loop
+    title: Paginate your loop
     source_url: https://elementor.com/help/pagination-for-loop/
+    canonical_url: https://elementor.com/help/paginate-loop/
     source_type: official_help
+    source_last_updated: 2025-02-09
     output_path: docs/widgets/loop/pagination.md
-    status: scheduled
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c
 
   - stage_id: KB-010
     knowledge_id: elementor.help.taxonomy-filter
