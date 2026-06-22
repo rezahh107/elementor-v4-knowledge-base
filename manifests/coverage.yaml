@@ -1,13 +1,13 @@
 manifest_version: 1
-updated_at: 2026-06-22T15:03:10+03:00
+updated_at: 2026-06-23T00:03:10+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 
 summary:
-  reviewed_sources: 10
-  committed_documents: 5
+  reviewed_sources: 12
+  committed_documents: 7
   pending_import_documents: 5
-  scheduled_stages: 1
+  scheduled_stages: 7
   failed_stages: 0
 
 coverage:
@@ -22,19 +22,15 @@ coverage:
     status: in_progress
 
   editor_v4_elements:
-    committed: []
+    committed: [KB-018, KB-019]
     pending_import: [KB-004, KB-005]
-    queued_topics: [Div Block, Flexbox, Image, Paragraph, SVG, Tabs, YouTube]
+    scheduled: [KB-016, KB-017]
+    queued_topics: [SVG, Tabs, YouTube]
     status: in_progress
 
   loop_family:
     committed: [KB-006, KB-007, KB-008, KB-009, KB-010]
-    scheduled: [KB-011]
-    queued_topics:
-      - Alternate Template in Loop Grid
-      - Customize Layout in Loop Grid
-      - Off-Canvas in Loop Grid
-      - Search Widget and Search Results Archive
+    scheduled: [KB-011, KB-012, KB-013, KB-014, KB-015]
     status: in_progress
 
   design_system:
@@ -60,3 +56,6 @@ quality_gaps:
   - id: KBQ-004
     status: open
     description: Automated link validation is not configured yet.
+  - id: KBQ-005
+    status: open
+    description: Several scheduled stages remain unresolved in STATUS.md and should be reconciled against repository files and actual commits.
