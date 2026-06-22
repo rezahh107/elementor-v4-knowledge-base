@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 7
-last_updated: 2026-06-22T14:28:22+03:00
+status_version: 8
+last_updated: 2026-06-22T15:08:11+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -16,10 +16,10 @@ llm_entrypoint: LLM_GUIDE.md
 
 | شاخص | مقدار |
 |---|---:|
-| منابع بررسی‌شده | 9 |
-| اسناد تکمیل‌شده و Commit‌شده | 4 |
+| منابع بررسی‌شده | 10 |
+| اسناد تکمیل‌شده و Commit‌شده | 5 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 2 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 1 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -49,7 +49,7 @@ LLM_GUIDE.md
 | KB-007 | Build a query with the Loop Grid | `docs/widgets/loop/loop-grid-query.md` — `completed_with_gaps` |
 | KB-008 | Elementor query configuration | `docs/concepts/queries/create-queries.md` — `completed_with_gaps` |
 | KB-009 | Paginate your loop | `docs/widgets/loop/pagination.md` — `completed_with_gaps` |
-| KB-010 | Taxonomy Filter | `scheduled` — 2026-06-22 15:00 |
+| KB-010 | Taxonomy Filter widget | `docs/widgets/loop/taxonomy-filter.md` — `completed_with_gaps` |
 | KB-011 | Loop Carousel | `scheduled` — 2026-06-22 15:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
@@ -121,18 +121,42 @@ LLM_GUIDE.md
     - documented styles are None, Numbers, Previous/Next, Numbers + Previous/Next, Load on click and Infinite Scroll
     - three output-example images were visually inspected
     - docs/_index.md, manifests/sources.yaml and manifests/coverage.yaml were updated
+
+- stage_id: KB-010
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/taxonomy-filter/
+  canonical_url: https://elementor.com/help/taxonomy-filter-widget/
+  source_last_updated: 2026-06-04
+  output_path: docs/widgets/loop/taxonomy-filter.md
+  completed_at: 2026-06-22T15:08:11+03:00
+  commit_sha: 95657df95445c453d310107715ddc3008baf68bb
+  evidence_gaps:
+    - exact Elementor Core and Pro versions and the required plan are not stated
+    - the requested URL differs from the current official index URL and redirect history is not documented
+    - no separate control named Filter Type is documented; the page only documents choosing Categories or Tags through Taxonomy
+    - custom taxonomies and product taxonomies are not documented
+    - the Excluding categories and tags heading has no retrievable instructions beneath it
+    - boolean logic between multiple separate Taxonomy Filter widgets is not specified
+    - Current Query is explicitly unsupported and interaction with other query controls is incomplete
+    - hierarchy behavior is only documented as showing or hiding Taxonomy Children
+    - ordering and validation for Number of taxonomies are not documented
+    - AJAX, loading, error handling, hooks and interaction with pagination are not documented
+    - URL parameters, deep links, browser history and SEO behavior are not documented
+    - accessibility semantics, keyboard behavior, focus management and ARIA are not documented
+    - responsive behavior is only partially observable through device icons for Direction and Item Alignment
+    - style defaults, units and the complete conditional control matrix are not documented
+    - two official Settings and Style screenshots could not be fetched visually
+    - the exact Elementor version represented by the 2023 image assets is not stated
+  notes:
+    - documented controls include Selected Loop Grid, Taxonomy, Direction, Item Alignment, Multiple Selection with AND or OR, Empty Items, Taxonomy Children, First Item, First item title, Number of taxonomies and Horizontal Scroll
+    - documented style states are Normal, Hover and Active
+    - four official screenshots were visually inspected and two image URLs were extracted but not fetched
+    - docs/_index.md, manifests/sources.yaml and manifests/coverage.yaml were updated
 ```
 
 ## مراحل زمان‌بندی‌شده
 
 ```yaml
-- stage_id: KB-010
-  title: Taxonomy Filter
-  status: scheduled
-  source_url: https://elementor.com/help/taxonomy-filter/
-  output_path: docs/widgets/loop/taxonomy-filter.md
-  scheduled_for: 2026-06-22T15:00:00+03:00
-
 - stage_id: KB-011
   title: Loop Carousel
   status: scheduled
@@ -173,7 +197,7 @@ LLM_GUIDE.md
 - افزودن GitHub Actions برای Schema، لینک‌ها، IDهای تکراری و هماهنگی Index/Manifest.
 - اصلاح timezone ثبت‌شده در KB-006.
 - پیاده‌سازی Claim-level provenance ID.
-- تکمیل Gapهای KB-006 تا KB-009.
+- تکمیل Gapهای KB-006 تا KB-010.
 - ساخت Manifestهای evidence gaps و redirects.
 
 ## قانون منبع
@@ -184,4 +208,4 @@ LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T14:28:22+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T15:08:11+03:00`
