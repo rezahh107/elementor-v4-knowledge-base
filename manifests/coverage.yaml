@@ -1,0 +1,63 @@
+manifest_version: 1
+updated_at: 2026-06-22T13:35:00+03:00
+timezone: Europe/Istanbul
+pipeline_status: in_progress
+
+summary:
+  reviewed_sources: 8
+  committed_documents: 3
+  pending_import_documents: 5
+  scheduled_stages: 2
+  failed_stages: 0
+
+coverage:
+  indexes:
+    committed: []
+    pending_import: [KB-001, KB-002]
+    status: in_progress
+
+  editor_v4_overview:
+    committed: []
+    pending_import: [KB-003]
+    status: in_progress
+
+  editor_v4_elements:
+    committed: []
+    pending_import: [KB-004, KB-005]
+    queued_topics: [Div Block, Flexbox, Image, Paragraph, SVG, Tabs, YouTube]
+    status: in_progress
+
+  loop_family:
+    committed: [KB-006, KB-007, KB-008]
+    scheduled: [KB-009, KB-010]
+    queued_topics:
+      - Loop Carousel
+      - Alternate Template in Loop Grid
+      - Customize Layout in Loop Grid
+      - Off-Canvas in Loop Grid
+      - Search Widget and Search Results Archive
+    status: in_progress
+
+  design_system:
+    committed: []
+    queued_topics: [Classes, Class Manager, Variables, Variables Manager, Design System import and export]
+    status: not_started
+
+  shared_style_system:
+    committed: []
+    queued_topics: [Layout, Spacing, Size, Position, Typography, Background, Border, Effects, Responsive Editing, Dynamic Tags]
+    status: not_started
+
+quality_gaps:
+  - id: KBQ-001
+    status: open
+    description: Metadata schema validation is not automated yet.
+  - id: KBQ-002
+    status: open
+    description: KB-001 through KB-005 are not stored as repository documents yet.
+  - id: KBQ-003
+    status: open
+    description: Claim-level provenance IDs are not implemented yet.
+  - id: KBQ-004
+    status: open
+    description: Automated link validation is not configured yet.
