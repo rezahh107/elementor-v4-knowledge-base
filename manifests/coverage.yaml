@@ -1,13 +1,13 @@
 manifest_version: 1
-updated_at: 2026-06-22T13:35:00+03:00
+updated_at: 2026-06-22T14:06:05+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 
 summary:
-  reviewed_sources: 8
-  committed_documents: 3
+  reviewed_sources: 9
+  committed_documents: 4
   pending_import_documents: 5
-  scheduled_stages: 2
+  scheduled_stages: 1
   failed_stages: 0
 
 coverage:
@@ -28,8 +28,8 @@ coverage:
     status: in_progress
 
   loop_family:
-    committed: [KB-006, KB-007, KB-008]
-    scheduled: [KB-009, KB-010]
+    committed: [KB-006, KB-007, KB-008, KB-009]
+    scheduled: [KB-010]
     queued_topics:
       - Loop Carousel
       - Alternate Template in Loop Grid
