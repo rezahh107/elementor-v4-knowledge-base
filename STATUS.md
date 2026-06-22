@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 18
-last_updated: 2026-06-23T00:08:29+03:00
+status_version: 19
+last_updated: 2026-06-23T00:26:04+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -19,7 +19,7 @@ llm_entrypoint: LLM_GUIDE.md
 | منابع بررسی‌شده | 12 |
 | اسناد تکمیل‌شده و Commit‌شده | 7 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 7 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 8 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -47,6 +47,7 @@ llm_entrypoint: LLM_GUIDE.md
 | KB-017 | Flexbox element | `scheduled` — 2026-06-22 22:00 |
 | KB-018 | Image element | `docs/elements/v4/image.md` — `completed_with_gaps` |
 | KB-019 | Paragraph element | `docs/elements/v4/paragraph.md` — `completed_with_gaps` |
+| KB-020 | SVG element | `scheduled` — 2026-06-23 01:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
@@ -118,6 +119,7 @@ llm_entrypoint: LLM_GUIDE.md
 - {stage_id: KB-015, title: Search Widget and Search Results Archive, source_urls: ["https://elementor.com/help/search-widget/", "https://elementor.com/help/customize-the-search-results-archive/"], output_path: "docs/widgets/search/search-widget-and-results-archive.md", scheduled_for: "2026-06-22T20:00:00+03:00"}
 - {stage_id: KB-016, title: Div Block element, source_url: "https://elementor.com/help/div-block-element/", output_path: "docs/elements/v4/div-block.md", scheduled_for: "2026-06-22T21:00:00+03:00"}
 - {stage_id: KB-017, title: Flexbox element, source_url: "https://elementor.com/help/flexbox-element/", output_path: "docs/elements/v4/flexbox.md", scheduled_for: "2026-06-22T22:00:00+03:00"}
+- {stage_id: KB-020, title: SVG element, source_url: "https://elementor.com/help/svg-element/", output_path: "docs/elements/v4/svg.md", scheduled_for: "2026-06-23T01:00:00+03:00"}
 ```
 
 ## صف بعدی پیشنهادی
@@ -133,7 +135,7 @@ llm_entrypoint: LLM_GUIDE.md
 | 7 | Flexbox element | `scheduled` — 2026-06-22 22:00 |
 | 8 | Image element | `completed_with_gaps` |
 | 9 | Paragraph element | `completed_with_gaps` |
-| 10 | SVG element | `not_scheduled` |
+| 10 | SVG element | `scheduled` — 2026-06-23 01:00 |
 
 ## قرارداد به‌روزرسانی
 
@@ -158,4 +160,4 @@ llm_entrypoint: LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-23T00:08:29+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-23T00:26:04+03:00`
