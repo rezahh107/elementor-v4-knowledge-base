@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 1
-last_updated: 2026-06-22T10:13:54+03:00
+status_version: 2
+last_updated: 2026-06-22T11:07:20+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -15,8 +15,10 @@ source_policy: official_first
 
 | شاخص | مقدار |
 |---|---:|
-| منابع بررسی‌شده | 5 |
-| مراحل زمان‌بندی‌شده | 5 |
+| منابع بررسی‌شده | 6 |
+| مراحل تکمیل‌شده و Commit‌شده در ریپو | 1 |
+| مراحل تکمیل‌شده در گفتگو و در انتظار انتقال | 5 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 4 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -30,20 +32,44 @@ source_policy: official_first
 | KB-003 | Explore the V4 features | جزوه رسمی V4 | `pending_import` |
 | KB-004 | Button element | جزوه Element V4 | `pending_import` |
 | KB-005 | Heading element | جزوه Element V4 | `pending_import` |
+| KB-006 | Loop Grid widget | جزوه جامع Widget | `committed` — `ddceabd45d3c8c6655cb44bca6016f98426034ae` |
 
-> این پنج مرحله در گفتگو تکمیل شده‌اند، اما فایل Markdown نهایی آن‌ها هنوز به ریپو منتقل نشده است؛ بنابراین `pending_import` باقی می‌مانند.
+> پنج مرحله اول در گفتگو تکمیل شده‌اند، اما فایل Markdown نهایی آن‌ها هنوز به ریپو منتقل نشده است؛ بنابراین `pending_import` باقی می‌مانند.
 
 ## صف زمان‌بندی‌شده امروز
 
 | ID | زمان اجرا | منبع | فایل هدف | وضعیت |
 |---|---|---|---|---|
-| KB-006 | 2026-06-22 11:00 | Loop Grid | `docs/widgets/loop/loop-grid.md` | `scheduled` |
+| KB-006 | 2026-06-22 11:00 | Loop Grid | `docs/widgets/loop/loop-grid.md` | `completed_with_gaps` |
 | KB-007 | 2026-06-22 12:00 | Query in Loop Grid | `docs/widgets/loop/loop-grid-query.md` | `scheduled` |
 | KB-008 | 2026-06-22 13:00 | Create Queries | `docs/concepts/queries/create-queries.md` | `scheduled` |
 | KB-009 | 2026-06-22 14:00 | Pagination for Loop | `docs/widgets/loop/pagination.md` | `scheduled` |
 | KB-010 | 2026-06-22 15:00 | Taxonomy Filter | `docs/widgets/loop/taxonomy-filter.md` | `scheduled` |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
+
+## ثبت اجرای مراحل
+
+```yaml
+- stage_id: KB-006
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/loop-grid/
+  source_last_updated: 2026-06-19
+  output_path: docs/widgets/loop/loop-grid.md
+  completed_at: 2026-06-22T11:07:20+03:00
+  commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae
+  evidence_gaps:
+    - exact Elementor Core and Pro versions are not stated
+    - Elementor Pro prerequisite is not explicitly stated on the source page
+    - Skin options are absent from the source page
+    - responsive controls are only partially observable
+    - Dynamic Tags and dynamic field behavior are not documented
+    - complete Query ID, URL, AJAX and accessibility behavior is not documented
+    - four embedded screenshots could not be fetched visually by the research tool, though their official URLs were extracted
+  notes:
+    - docs/_index.md did not exist, so no index update was performed
+    - source documentation contains several apparent copy-editing inconsistencies, recorded in the note
+```
 
 ## صف بعدی پیشنهادی
 
@@ -92,10 +118,12 @@ notes: null
 ## موارد باز
 
 - انتقال پنج جزوه تکمیل‌شده اولیه از گفتگو به فایل‌های مستقل Markdown.
-- ساخت `docs/_index.md` پس از ایجاد نخستین مجموعه فایل‌ها.
+- ساخت `docs/_index.md` پس از ایجاد نخستین مجموعه Indexها.
 - ساخت `manifests/sources.yaml` و `manifests/coverage.yaml`.
-- تعیین نسخه دقیق Elementor برای مقالاتی که فقط برچسب V4 دارند.
+- تعیین نسخه دقیق Elementor برای مقالاتی که نسخه Plugin را اعلام نمی‌کنند.
 - حفظ تفکیک `documented`، `observed`، `derived` و `insufficient_evidence` در همه جزوه‌ها.
+- تکمیل شواهد KB-006 برای Pro prerequisite، Skin، Dynamic Tags، Responsive controls و Accessibility.
+- بررسی مستقل صفحات فرعی Loop Grid بدون نسبت‌دادن محتوای آن‌ها به صفحه اصلی Widget.
 
 ## قانون منبع
 
@@ -107,4 +135,4 @@ notes: null
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح و بدون ارتقای آن‌ها به حقیقت رسمی
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T10:13:54+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T11:07:20+03:00`
