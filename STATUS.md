@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 5
-last_updated: 2026-06-22T13:36:00+03:00
+status_version: 6
+last_updated: 2026-06-22T14:07:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -10,34 +10,21 @@ llm_entrypoint: LLM_GUIDE.md
 
 # وضعیت پایگاه دانش Elementor V4
 
-این فایل منبع وضعیت اجرایی پژوهش است. برای استفاده مدل زبانی، ابتدا `LLM_GUIDE.md` خوانده شود.
+این فایل منبع وضعیت اجرایی پژوهش است. مدل زبانی ابتدا `LLM_GUIDE.md` را بخواند.
 
 ## خلاصه وضعیت
 
 | شاخص | مقدار |
 |---|---:|
-| منابع بررسی‌شده | 8 |
-| مراحل تکمیل‌شده و Commit‌شده در ریپو | 3 |
-| مراحل تکمیل‌شده در گفتگو و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 2 |
+| منابع بررسی‌شده | 9 |
+| اسناد تکمیل‌شده و Commit‌شده | 4 |
+| اسناد تکمیل‌شده و در انتظار انتقال | 5 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 1 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
-| لایه مصرف توسط مدل زبانی | `initialized` |
-| مدیر خودکار صف | `enabled` |
 | وضعیت کلی | `in_progress` |
 
-## زیرساخت مصرف توسط مدل زبانی
-
-| فایل | نقش | Commit |
-|---|---|---|
-| `LLM_GUIDE.md` | نقطه شروع، سیاست حقیقت و ترتیب مطالعه | `7895c2ad385b44073a919ecc66524cb705db1141` |
-| `docs/_index.md` | فهرست انسانی و مسیرهای محتوایی | `234c0ab41179068b2fccc2bc6a388b2b01cd0ffe` |
-| `manifests/sources.yaml` | رجیستری ماشین‌خوان منابع و فایل‌ها | `b42913346faec8bac6656597830bc231da2e6a76` |
-| `manifests/coverage.yaml` | نقشه پوشش و شکاف‌ها | `2e8bf3d2877e4842bd04864efb79b134e3cf0ed3` |
-| `registries/evidence-states.yaml` | واژگان کنترل‌شده وضعیت شواهد | `2e0cf8107c7d0de4f2f238a943ad10c5b067d0ca` |
-| `schemas/knowledge-note.schema.json` | قرارداد Front Matter جزوه‌ها | `8cb5143da039d3c106a61707740e9fc3594898a4` |
-
-### ترتیب مطالعه مدل
+## ترتیب مطالعه مدل
 
 ```text
 LLM_GUIDE.md
@@ -49,47 +36,24 @@ LLM_GUIDE.md
 → registries/evidence-states.yaml
 ```
 
-## مدیر خودکار صف
+## وضعیت مراحل
 
-یک Automation ساعتی از `2026-06-22 14:30 Europe/Istanbul` فعال است.
-
-قواعد آن:
-
-1. خود مدیر صف را جزو تسک‌های پژوهشی حساب نمی‌کند.
-2. اگر سه یا بیشتر تسک پژوهشی فعال باشند، کاری انجام نمی‌دهد.
-3. اگر تعداد تسک‌های پژوهشی فعال کمتر از سه باشد، فقط یک مرحله `not_scheduled` را بر اساس اولویت صف انتخاب می‌کند.
-4. مرحله جدید را برای نزدیک‌ترین ساعت کامل آینده زمان‌بندی می‌کند.
-5. پس از ساخت واقعی تسک، `STATUS.md` را به `scheduled` به‌روزرسانی می‌کند.
-6. بدون نتیجه واقعی ابزار، ادعای ساخت تسک یا Commit نمی‌کند.
-
-## مراحل تکمیل‌شده
-
-| ID | منبع | نوع خروجی | وضعیت ذخیره در ریپو |
-|---|---|---|---|
-| KB-001 | Widgets index | جزوه Index و Inventory | `pending_import` |
-| KB-002 | Editor V4 index | جزوه Index و Inventory | `pending_import` |
-| KB-003 | Explore the V4 features | جزوه رسمی V4 | `pending_import` |
-| KB-004 | Button element | جزوه Element V4 | `pending_import` |
-| KB-005 | Heading element | جزوه Element V4 | `pending_import` |
-| KB-006 | Loop Grid widget | جزوه جامع Widget | `committed` — `ddceabd45d3c8c6655cb44bca6016f98426034ae` |
-| KB-007 | Build a query with the Loop Grid | جزوه Workflow و کنترل‌های Query | `committed` — `ab98a1097ce26a2c2c665cab5d78ca504c1fd97e` |
-| KB-008 | Elementor query configuration | جزوه جامع Query و Taxonomy | `committed` — `5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9` |
-
-> پنج مرحله اول در گفتگو تکمیل شده‌اند، اما فایل Markdown نهایی آن‌ها هنوز به ریپو منتقل نشده است؛ بنابراین `pending_import` باقی می‌مانند.
-
-## صف زمان‌بندی‌شده امروز
-
-| ID | زمان اجرا | منبع | فایل هدف | وضعیت |
-|---|---|---|---|---|
-| KB-006 | 2026-06-22 11:00 | Loop Grid | `docs/widgets/loop/loop-grid.md` | `completed_with_gaps` |
-| KB-007 | 2026-06-22 12:00 | Query in Loop Grid | `docs/widgets/loop/loop-grid-query.md` | `completed_with_gaps` |
-| KB-008 | 2026-06-22 13:00 | Elementor query configuration | `docs/concepts/queries/create-queries.md` | `completed_with_gaps` |
-| KB-009 | 2026-06-22 14:00 | Pagination for Loop | `docs/widgets/loop/pagination.md` | `scheduled` |
-| KB-010 | 2026-06-22 15:00 | Taxonomy Filter | `docs/widgets/loop/taxonomy-filter.md` | `scheduled` |
+| ID | عنوان | فایل/وضعیت |
+|---|---|---|
+| KB-001 | Widgets index | `pending_import` |
+| KB-002 | Editor V4 index | `pending_import` |
+| KB-003 | Explore the V4 features | `pending_import` |
+| KB-004 | Button element | `pending_import` |
+| KB-005 | Heading element | `pending_import` |
+| KB-006 | Loop Grid widget | `docs/widgets/loop/loop-grid.md` — `completed_with_gaps` |
+| KB-007 | Build a query with the Loop Grid | `docs/widgets/loop/loop-grid-query.md` — `completed_with_gaps` |
+| KB-008 | Elementor query configuration | `docs/concepts/queries/create-queries.md` — `completed_with_gaps` |
+| KB-009 | Paginate your loop | `docs/widgets/loop/pagination.md` — `completed_with_gaps` |
+| KB-010 | Taxonomy Filter | `scheduled` — 2026-06-22 15:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
-## ثبت اجرای مراحل
+## ثبت اجرای مراحل Commit‌شده
 
 ```yaml
 - stage_id: KB-006
@@ -100,15 +64,9 @@ LLM_GUIDE.md
   completed_at: 2026-06-22T11:07:20+03:00
   commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae
   evidence_gaps:
-    - exact Elementor Core and Pro versions are not stated
-    - Elementor Pro prerequisite is not explicitly stated on the source page
-    - Skin options are absent from the source page
-    - responsive controls are only partially observable
-    - Dynamic Tags and dynamic field behavior are not documented
-    - complete Query ID, URL, AJAX and accessibility behavior is not documented
-    - four embedded screenshots could not be fetched visually by the research tool, though their official URLs were extracted
-  notes:
-    - source documentation contains several apparent copy-editing inconsistencies, recorded in the note
+    - exact versions and Pro prerequisite are not stated
+    - responsive, Dynamic Tags, URL, AJAX and accessibility details are incomplete
+    - four embedded screenshots were not visually retrievable
 
 - stage_id: KB-007
   status: completed_with_gaps
@@ -119,18 +77,9 @@ LLM_GUIDE.md
   completed_at: 2026-06-22T12:05:51+03:00
   commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e
   evidence_gaps:
-    - the requested URL differs from the current canonical article URL and redirect history is not documented
-    - the article is a simple walkthrough rather than a complete query-control reference
-    - Source options beyond Posts are not shown because the dropdown is never opened
-    - Exclude is visible but not explained
-    - Date, Order By, Order, Ignore Sticky Posts and Query ID are visible but only partially documented
-    - Offset, Avoid Duplicates, Current Query and Related are absent from the article text and inspected screenshots
-    - general AND/OR logic, Query ID API, AJAX, URL, accessibility and pagination interaction are not documented
-    - exact Elementor Core/Pro versions and Pro prerequisite are not stated
-    - two official screenshots could not be fetched visually, though their URLs and captions were extracted
-  notes:
-    - screenshot paths use 2022/01 while the article was updated in 2026; the page does not state the UI version represented
-    - values All, Date, DESC and Yes are recorded as screenshot state, not official defaults
+    - exact versions, Pro prerequisite and redirect history are not stated
+    - several query controls and runtime behaviors are absent or partial
+    - two official screenshots were not visually retrievable
 
 - stage_id: KB-008
   status: completed_with_gaps
@@ -140,18 +89,37 @@ LLM_GUIDE.md
   completed_at: 2026-06-22T13:19:02+03:00
   commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9
   evidence_gaps:
+    - exact versions and Pro prerequisite are not stated
+    - query logic, Query ID lifecycle, AJAX, URL and accessibility are incomplete
+    - embedded screenshots were not visually retrievable
+
+- stage_id: KB-009
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/pagination-for-loop/
+  canonical_url: https://elementor.com/help/paginate-loop/
+  source_last_updated: 2025-02-09
+  output_path: docs/widgets/loop/pagination.md
+  completed_at: 2026-06-22T14:07:00+03:00
+  commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c
+  evidence_gaps:
     - exact Elementor Core and Pro versions are not stated
     - Elementor Pro prerequisite is not explicitly stated
-    - the complete inventory of query-capable widgets and elements is not provided
-    - embedded image URLs were extracted but visual fetches failed with cache misses
-    - general AND/OR logic and precedence between Include and Exclude are not documented
-    - Query ID hooks, syntax and runtime lifecycle are delegated to a separate developer page
-    - AJAX, URL, pagination and accessibility behavior are not documented
-    - the source does not identify the provider or version requirement for the Brand taxonomy
-    - multiple copy-editing inconsistencies leave some Product and Taxonomy labels ambiguous
+    - the requested URL differs from the current official index URL and redirect history is not documented
+    - the full conditional control matrix for every pagination style is not provided
+    - Page Limit applicability and validation rules are incomplete
+    - Shorten edge cases, ellipsis behavior and RTL behavior are not documented
+    - Previous and Next endpoint behavior and disabled states are not documented
+    - Button ID semantics and reuse mechanism are unclear
+    - AJAX hooks, loading states, error handling, focus management and history behavior are not documented
+    - URL parameters, deep linking, browser history and SEO behavior are not documented
+    - accessibility semantics and keyboard or screen-reader behavior are not documented
+    - responsive controls and breakpoint behavior are not documented
+    - the Style tab inventory and visual states are not documented
+    - most editor screenshots could not be fetched visually by the research tool
   notes:
-    - the article covers Posts, Products, Post Taxonomy and Product Taxonomy contexts
-    - content from linked subpages was not attributed to the main article
+    - documented styles are None, Numbers, Previous/Next, Numbers + Previous/Next, Load on click and Infinite Scroll
+    - three output-example images were visually inspected
+    - docs/_index.md, manifests/sources.yaml and manifests/coverage.yaml were updated
 ```
 
 ## صف بعدی پیشنهادی
@@ -169,34 +137,32 @@ LLM_GUIDE.md
 | 9 | Paragraph element | `not_scheduled` |
 | 10 | SVG element | `not_scheduled` |
 
-## قرارداد به‌روزرسانی وضعیت
+## قرارداد به‌روزرسانی
 
-پس از پایان هر مرحله، مجری باید:
+پس از هر مرحله:
 
-1. وضعیت مرحله را به `completed`، `completed_with_gaps`، `failed`، `blocked` یا `insufficient_evidence` تغییر دهد.
-2. مسیر فایل خروجی و شناسه Commit واقعی را ثبت کند.
-3. زمان پایان را با timezone صریح درج کند.
-4. شمارنده‌های خلاصه و Manifestهای مرتبط را اصلاح کند.
-5. خلأهای شواهد را ثبت کند.
-6. `docs/_index.md`، `manifests/sources.yaml` و `manifests/coverage.yaml` را در صورت تغییر پوشش به‌روزرسانی کند.
-7. بدون Commit موفق، وضعیت ذخیره‌سازی را `committed` اعلام نکند.
+1. وضعیت واقعی مرحله ثبت شود.
+2. `output_path`، زمان پایان و SHA واقعی Commit درج شود.
+3. شمارنده‌ها و Manifestها اصلاح شوند.
+4. خلأهای شواهد ثبت شوند.
+5. بدون Commit موفق، `storage_status: committed` اعلام نشود.
 
 ## موارد باز
 
-- انتقال KB-001 تا KB-005 از گفتگو به فایل‌های مستقل Markdown.
-- اعتبارسنجی تمام Front Matterها با `schemas/knowledge-note.schema.json`.
-- افزودن GitHub Actions برای Schema، لینک‌ها، ID تکراری و هماهنگی Index/Manifest.
-- اصلاح timezone ثبت‌شده در KB-006 از `+03:30` به `Europe/Istanbul/+03:00`.
+- انتقال KB-001 تا KB-005 به فایل‌های مستقل Markdown.
+- اعتبارسنجی Front Matter با Schema.
+- افزودن GitHub Actions برای Schema، لینک‌ها، IDهای تکراری و هماهنگی Index/Manifest.
+- اصلاح timezone ثبت‌شده در KB-006.
 - پیاده‌سازی Claim-level provenance ID.
-- تکمیل شواهد KB-006 تا KB-008 طبق Gapهای ثبت‌شده.
-- ساخت `manifests/evidence-gaps.yaml` و `manifests/redirects.yaml`.
+- تکمیل Gapهای KB-006 تا KB-009.
+- ساخت Manifestهای evidence gaps و redirects.
 
 ## قانون منبع
 
 1. مستندات رسمی `elementor.com`
-2. مستندات توسعه‌دهندگان `developers.elementor.com`
+2. مستندات رسمی توسعه‌دهندگان Elementor
 3. GitHub رسمی Elementor
 4. Fixture واقعی و کنترل‌شده
-5. منابع ثالث فقط با برچسب صریح و بدون ارتقای آن‌ها به حقیقت رسمی
+5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T13:36:00+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T14:07:00+03:00`
