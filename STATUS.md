@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 13
-last_updated: 2026-06-22T20:35:33+03:00
+status_version: 14
+last_updated: 2026-06-22T21:27:35+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -19,7 +19,7 @@ llm_entrypoint: LLM_GUIDE.md
 | منابع بررسی‌شده | 10 |
 | اسناد تکمیل‌شده و Commit‌شده | 5 |
 | اسناد تکمیل‌شده و در انتظار انتقال | 5 |
-| مراحل زمان‌بندی‌شده باقی‌مانده | 6 |
+| مراحل زمان‌بندی‌شده باقی‌مانده | 7 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | وضعیت کلی | `in_progress` |
@@ -56,6 +56,7 @@ LLM_GUIDE.md
 | KB-014 | Add an Off Canvas widget to a Loop Grid | `scheduled` — 2026-06-22 18:00 |
 | KB-015 | Search Widget and Search Results Archive | `scheduled` — 2026-06-22 20:00 |
 | KB-016 | Div Block element | `scheduled` — 2026-06-22 21:00 |
+| KB-017 | Flexbox element | `scheduled` — 2026-06-22 22:00 |
 
 همه زمان‌ها بر اساس `Europe/Istanbul` هستند.
 
@@ -205,6 +206,13 @@ LLM_GUIDE.md
   source_url: https://elementor.com/help/div-block-element/
   output_path: docs/elements/v4/div-block.md
   scheduled_for: 2026-06-22T21:00:00+03:00
+
+- stage_id: KB-017
+  title: Flexbox element
+  status: scheduled
+  source_url: https://elementor.com/help/flexbox-element/
+  output_path: docs/elements/v4/flexbox.md
+  scheduled_for: 2026-06-22T22:00:00+03:00
 ```
 
 ## صف بعدی پیشنهادی
@@ -217,7 +225,7 @@ LLM_GUIDE.md
 | 4 | Off-Canvas in Loop Grid | `scheduled` — 2026-06-22 18:00 |
 | 5 | Search Widget and Search Results Archive | `scheduled` — 2026-06-22 20:00 |
 | 6 | Div Block element | `scheduled` — 2026-06-22 21:00 |
-| 7 | Flexbox element | `not_scheduled` |
+| 7 | Flexbox element | `scheduled` — 2026-06-22 22:00 |
 | 8 | Image element | `not_scheduled` |
 | 9 | Paragraph element | `not_scheduled` |
 | 10 | SVG element | `not_scheduled` |
@@ -250,4 +258,4 @@ LLM_GUIDE.md
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-22T20:35:33+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-22T21:27:35+03:00`
