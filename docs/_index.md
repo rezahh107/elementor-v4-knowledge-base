@@ -29,6 +29,7 @@
 - [Alternate Template in Loop Grid](widgets/loop/alternate-template.md) — `KB-012` — `completed_with_gaps`
 - [Customize Layout in Loop Grid](widgets/loop/customize-layout.md) — `KB-013` — `completed_with_gaps`
 - [Off-Canvas in Loop Grid](widgets/loop/off-canvas.md) — `KB-014` — `completed_with_gaps`
+- [Search Widget and Results Archive](widgets/search/search-widget-and-results-archive.md) — `KB-015` — `completed_with_gaps`
 
 ## زمان‌بندی‌شده
 
@@ -36,7 +37,6 @@
 
 ## صف پژوهش منتظر ظرفیت
 
-- `KB-015` — Search Widget and Search Results Archive
 - `KB-016` — Div Block element
 - `KB-017` — Flexbox element
 - `KB-021` — Tabs Element
