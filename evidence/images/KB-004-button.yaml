@@ -1,0 +1,61 @@
+schema_version: 1
+stage_id: KB-004
+source_id: SRC-KB-004-01
+images:
+- image_id: IMG-KB-004-001
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Add-teh-element-to-the-canvas-scaled.webp
+  discovery_locator: source line 1189 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Edit Button panel with General and Style tabs, Button text field, Link row, and button visible on canvas.
+- image_id: IMG-KB-004-002
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Enter-get-started-scaled.webp
+  discovery_locator: source line 1191 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Button text field contains Get Started and canvas button text changes accordingly.
+- image_id: IMG-KB-004-003
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Click-the-plus-sign-2-241x300.png
+  discovery_locator: source line 1194 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: General tab shows Button text and Link, with plus sign next to Link.
+- image_id: IMG-KB-004-004
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Set-the-size-to-200-1-141x300.png
+  discovery_locator: source line 1202 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Style tab Size section shows Width 200 and Height 50.
+- image_id: IMG-KB-004-005
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Click-the-ellipses-1-151x300.png
+  discovery_locator: source line 1240 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Style tab shows CSS classes, local chip, and ellipsis menu trigger.
+- image_id: IMG-KB-004-006
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Select-hover-from-the-dropdown-1-137x300.png
+  discovery_locator: source line 1242 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Dropdown shows Normal, Hover, Focus, and Active; only Hover is supported by article text for product claim use.
+- image_id: IMG-KB-004-007
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Open-the-color-picker-2-174x300.png
+  discovery_locator: source line 1245 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Style panel shows local and hover chips and an open color picker.
+- image_id: IMG-KB-004-008
+  url: https://elementor.com/help/wp-content/uploads/2025/06/General-content-3.png
+  discovery_locator: source line 1258 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: General tab Content section shows Button text field.
+- image_id: IMG-KB-004-009
+  url: https://elementor.com/help/wp-content/uploads/2025/05/Style-tab-2-504x1024.png
+  discovery_locator: source line 1279 image link
+  retrieval_status: retrieved
+  inspection_status: inspected
+  observed_summary: Style tab lists Classes, Layout, Spacing, Size, Position, Typography, Background, Border, and Effects.
+policy_notes:
+  - URL discovery alone is not used as observation; only web-clicked images are marked inspected.
+  - Observations are limited to what is visible in the official image.
