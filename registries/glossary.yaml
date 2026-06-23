@@ -1,0 +1,20 @@
+registry_version: 1
+terms:
+- term: Apply Once
+  preferred_fa: فقط یک‌بار اعمال شود
+  status: approved
+- term: Column Span
+  preferred_fa: گسترهٔ ستون
+  status: approved
+- term: Loop Grid
+  preferred_fa: Loop Grid
+  status: preserve_english
+- term: Loop Carousel
+  preferred_fa: Loop Carousel
+  status: preserve_english
+- term: Dynamic Tags
+  preferred_fa: برچسب‌های پویا
+  status: approved
+- term: Class Manager
+  preferred_fa: مدیر کلاس‌ها
+  status: approved

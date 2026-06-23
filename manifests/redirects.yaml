@@ -1,0 +1,17 @@
+schema_version: 1
+redirects:
+- stage_id: KB-007
+  requested_url: https://elementor.com/help/create-a-query-in-a-loop-grid/
+  canonical_url: https://elementor.com/help/building-query-loop-grid/
+  status: legacy_record
+  observed_at: '2026-06-22T12:05:51+03:00'
+- stage_id: KB-009
+  requested_url: https://elementor.com/help/pagination-for-loop/
+  canonical_url: https://elementor.com/help/paginate-loop/
+  status: legacy_record
+  observed_at: '2026-06-22T14:07:00+03:00'
+- stage_id: KB-010
+  requested_url: https://elementor.com/help/taxonomy-filter/
+  canonical_url: https://elementor.com/help/taxonomy-filter-widget/
+  status: legacy_record
+  observed_at: '2026-06-22T15:08:11+03:00'

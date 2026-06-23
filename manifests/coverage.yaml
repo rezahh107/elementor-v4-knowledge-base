@@ -1,13 +1,66 @@
-manifest_version: 3
-updated_at: 2026-06-23T12:58:00+03:00
+# GENERATED FILE. Edit manifests/stages.yaml.
+manifest_version: 4
+generated_from_sha256: 8cf22477506faafae5d8422b47a5207ce029ccd2b6c9a18a27e48c23a158e903
 summary:
-  reviewed_sources: 17
-  committed_documents: 17
-  pending_import_documents: 0
+  total_stages: 37
+  committed_documents: 18
+  authoritative_documents: 0
+  not_scheduled_stages: 19
   scheduled_stages: 0
-  not_scheduled_stages: 20
+  failed_or_blocked_stages: 0
+  open_evidence_gaps: 54
 coverage:
-  loop_family:
-    committed: [KB-006, KB-007, KB-008, KB-009, KB-010, KB-011, KB-012, KB-013, KB-014]
-    scheduled: []
-    not_scheduled: [KB-015]
+  design_system:
+    not_scheduled:
+    - KB-023
+    - KB-024
+    - KB-025
+    - KB-026
+    - KB-027
+  element_v4:
+    completed_with_gaps:
+    - KB-004
+    - KB-005
+    - KB-018
+    - KB-019
+    - KB-020
+    not_scheduled:
+    - KB-016
+    - KB-017
+    - KB-021
+    - KB-022
+  index:
+    completed_with_gaps:
+    - KB-001
+    - KB-002
+  loop:
+    completed_with_gaps:
+    - KB-006
+    - KB-007
+    - KB-009
+    - KB-010
+    - KB-011
+    - KB-012
+    - KB-013
+    - KB-014
+  overview:
+    completed_with_gaps:
+    - KB-003
+  query:
+    completed_with_gaps:
+    - KB-008
+  search:
+    completed_with_gaps:
+    - KB-015
+  style_system:
+    not_scheduled:
+    - KB-028
+    - KB-029
+    - KB-030
+    - KB-031
+    - KB-032
+    - KB-033
+    - KB-034
+    - KB-035
+    - KB-036
+    - KB-037

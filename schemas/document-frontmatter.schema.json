@@ -1,0 +1,124 @@
+{
+  "$id": "https://example.invalid/schemas/document-frontmatter.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "oneOf": [
+    {
+      "required": [
+        "source_url"
+      ]
+    },
+    {
+      "required": [
+        "source_urls"
+      ]
+    }
+  ],
+  "properties": {
+    "evidence_status": {
+      "enum": [
+        "completed",
+        "completed_with_gaps",
+        "documented",
+        "observed",
+        "validated",
+        "derived",
+        "proposed",
+        "unverified",
+        "insufficient_evidence"
+      ]
+    },
+    "id": {
+      "minLength": 3,
+      "type": "string"
+    },
+    "language": {
+      "const": "fa"
+    },
+    "last_updated": {
+      "type": [
+        "string",
+        "object",
+        "null"
+      ]
+    },
+    "provenance_status": {
+      "enum": [
+        "not_started",
+        "document_level_legacy",
+        "claim_level"
+      ]
+    },
+    "researched_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "review_status": {
+      "enum": [
+        "not_started",
+        "unreviewed",
+        "machine_validated",
+        "peer_reviewed",
+        "verified_by_fixture",
+        "rejected"
+      ]
+    },
+    "source_type": {
+      "enum": [
+        "official_help",
+        "official_developer_docs",
+        "official_source_code",
+        "official_changelog",
+        "real_runtime_fixture",
+        "synthetic_fixture",
+        "third_party"
+      ]
+    },
+    "source_url": {
+      "pattern": "^https://",
+      "type": "string"
+    },
+    "source_urls": {
+      "items": {
+        "pattern": "^https://",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "stage_id": {
+      "pattern": "^KB-[0-9]{3}$",
+      "type": "string"
+    },
+    "storage_status": {
+      "enum": [
+        "pending",
+        "pending_import",
+        "committed",
+        "superseded"
+      ]
+    },
+    "title": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "version_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "source_type",
+    "researched_at",
+    "evidence_status",
+    "storage_status",
+    "language",
+    "stage_id"
+  ],
+  "title": "Knowledge document front matter",
+  "type": "object"
+}

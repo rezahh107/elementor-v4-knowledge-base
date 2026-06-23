@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "gaps": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "affected_conclusion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "blocks": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "gap_id": {
+            "pattern": "^GAP-KB-[0-9]{3}-[A-Z0-9_-]+$",
+            "type": "string"
+          },
+          "missing_evidence": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "required_source": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "stage_id": {
+            "pattern": "^KB-[0-9]{3}$",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "resolved",
+              "accepted_risk",
+              "superseded"
+            ]
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "gap_id",
+          "stage_id",
+          "title",
+          "status",
+          "severity",
+          "missing_evidence",
+          "affected_conclusion",
+          "required_source",
+          "blocks"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "gaps"
+  ],
+  "type": "object"
+}

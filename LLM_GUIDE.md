@@ -1,79 +1,80 @@
-# راهنمای استفاده مدل‌های زبانی از پایگاه دانش Elementor
-
-این فایل نقطه شروع اجباری برای هر مدل زبانی متصل به این مخزن است.
+# راهنمای اجباری مدل‌های زبانی
 
 ## ترتیب مطالعه
 
-1. `LLM_GUIDE.md`
-2. `STATUS.md`
-3. `manifests/coverage.yaml`
+1. `QUALITY_POLICY.md`
+2. `manifests/stages.yaml`
+3. `manifests/evidence-gaps.yaml`
 4. `manifests/sources.yaml`
-5. `docs/_index.md`
-6. سند یا اسناد موضوعی مرتبط
-7. `registries/evidence-states.yaml`
+5. `STATUS.md`
+6. سند موضوعی
+7. Claim Record و Source Record مربوط
+8. `registries/evidence-states.yaml`
 
-## سیاست حقیقت
+## منبع حقیقت
 
-هر ادعای factual باید به یکی از موارد زیر متصل باشد:
+`manifests/stages.yaml` تنها SSOT وضعیت مراحل است. `STATUS.md`، `docs/_index.md`، `manifests/coverage.yaml` و `manifests/sources.yaml` فایل‌های تولیدشده‌اند.
 
-1. صفحه رسمی Elementor ثبت‌شده در Front Matter سند؛
-2. مستندات رسمی توسعه‌دهندگان Elementor؛
-3. GitHub رسمی Elementor؛
-4. Fixture واقعی و کنترل‌شده؛
-5. نتیجه مشتق‌شده‌ای که صریحاً با `derived` برچسب خورده باشد.
+## قاعده استناد
 
-محتوای `documented` و `observed` را با `derived` یا `insufficient_evidence` ادغام نکن. هیچ مقدار، کنترل، نسخه، رفتار Runtime، Breakpoint، پیش‌نیاز Pro یا رابطه‌ای را که سند اثبات نکرده حدس نزن.
-
-## معنای وضعیت‌های شواهد
-
-- `documented`: صریحاً در متن منبع آمده است.
-- `observed`: مستقیماً در تصویر یا رابط رسمی منبع دیده شده است.
-- `validated`: با Fixture یا آزمون کنترل‌شده تأیید شده است.
-- `derived`: برداشت محدود و قابل ردیابی از شواهد موجود است.
-- `proposed`: پیشنهاد طراحی یا پژوهشی است، نه حقیقت محصول.
-- `unverified`: ادعا یا رفتار هنوز تأیید نشده است.
-- `insufficient_evidence`: شواهد برای نتیجه‌گیری کافی نیست.
-
-## قواعد پاسخ‌گویی
-
-- عنوان انگلیسی کنترل‌ها را حفظ کن و ترجمه فارسی را کنار آن بیاور.
-- در پاسخ‌های فنی، مسیر سند و `source_url` را ذکر کن.
-- وقتی چند سند تعارض دارند، منبع رسمی‌تر و جدیدتر را ترجیح بده و تعارض را گزارش کن.
-- `last_updated` تاریخ مقاله است، نه الزاماً تاریخ انتشار قابلیت یا نسخه افزونه.
-- `version_scope: rolling_documentation` یعنی صفحه ممکن است بدون نسخه‌بندی پایدار تغییر کند.
-- نبود یک گزینه در یک مقاله، اثبات نبود آن در محصول نیست.
-- صفحات فرعی فقط پس از بررسی مستقل می‌توانند منبع factual باشند.
-- سندی با `storage_status: committed` فقط ذخیره‌شدن در ریپو را نشان می‌دهد، نه کامل‌بودن شواهد.
-
-## قرارداد ارجاع
-
-در صورت امکان از این الگو استفاده کن:
+برای ادعای authoritative باید این زنجیره موجود باشد:
 
 ```text
-[claim]
-- knowledge_id: elementor.help.example
-- document: docs/path/example.md
-- evidence_state: documented
-- source_url: https://elementor.com/help/example/
+claim_id
+→ evidence_state
+→ source_id
+→ source_locator
+→ source_record/content_fingerprint
+→ review_status
 ```
 
-## اسناد وضعیت‌دار
+اگر این زنجیره کامل نیست، ادعا را با وضعیت واقعی آن بیان کنید:
 
-- `completed`: بررسی منبع طبق دامنه تعیین‌شده کامل شده است.
-- `completed_with_gaps`: بررسی انجام شده اما منبع یا ابزار شکاف شواهد داشته است.
-- `pending_import`: محتوا در گفتگو تولید شده ولی هنوز به فایل مستقل منتقل نشده است.
-- `scheduled`: پژوهش هنوز اجرا نشده است.
-- `blocked` یا `failed`: خروجی قابل اتکا تولید یا ذخیره نشده است.
+- `documented` یا `observed` فقط در محدوده Evidence موجود؛
+- `derived` همراه `derived_from`؛
+- `insufficient_evidence` همراه Missing Evidence؛
+- سند `document_level_legacy` را authoritative معرفی نکنید.
+
+## فرمت توصیه‌شده پاسخ
+
+```text
+[ادعا]
+- claim_id: KB-XXX-CNNN
+- document: docs/...
+- evidence_state: documented
+- source_id: SRC-KB-XXX-01
+- locator: ...
+- review_status: peer_reviewed
+```
+
+در اسناد Legacy که Claim ID ندارند:
+
+```text
+status: document_level_legacy
+citation_scope: document_only
+authoritative: false
+```
 
 ## ممنوعیت‌ها
 
-- پرکردن خلأها با دانش عمومی یا حافظه مدل؛
+- حدس‌زدن نسخه، Default، Pro prerequisite، Accessibility یا Runtime behavior؛
+- تبدیل خاموش V3 و V4؛
 - تبدیل `derived` به `documented`؛
-- ادعای Free/Pro، نسخه، سازگاری یا Accessibility بدون شاهد؛
-- ترکیب خاموش اطلاعات V3 و V4؛
-- نسبت‌دادن محتوای صفحات لینک‌شده به مقاله مادر بدون بررسی مستقل؛
-- استفاده از `STATUS.md` به‌عنوان منبع رفتار Elementor؛ این فایل فقط وضعیت اجرایی پژوهش است.
+- استفاده از تصویر `not_inspected` به‌عنوان Observation؛
+- استفاده از `STATUS.md` به‌عنوان منبع رفتار Elementor؛
+- اعلام Commit، CI یا Review بدون نتیجه واقعی ابزار؛
+- نادیده‌گرفتن Evidence Gap باز.
 
-## نقطه شروع محتوایی
+## تازه‌بودن
 
-فهرست ماشین‌خوان منابع در `manifests/sources.yaml` و نقشه پوشش در `manifests/coverage.yaml` قرار دارد. فهرست انسانی و مسیر اسناد در `docs/_index.md` نگهداری می‌شود.
+`last_updated` تاریخ گزارش‌شده مقاله است، نه تاریخ عرضه قابلیت. برای ادعای Current behavior باید Freshness و Source Snapshot بررسی شود.
+
+## اولویت تعارض
+
+1. Contract و Registry نسخه‌دار
+2. Source Record رسمی جدیدتر
+3. Fixture واقعی کنترل‌شده
+4. سند Synthesis
+5. یادداشت Legacy
+
+تعارض باید گزارش شود، نه اینکه خاموش Merge شود.

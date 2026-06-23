@@ -1,94 +1,71 @@
+<!-- GENERATED FILE. Edit manifests/stages.yaml and run tools/kb.py generate. -->
 ---
 project: elementor-v4-knowledge-base
-status_version: 28
-last_updated: 2026-06-23T14:00:00+03:00
+status_version: 1
+manifest_sha256: 8cf22477506faafae5d8422b47a5207ce029ccd2b6c9a18a27e48c23a158e903
 timezone: Europe/Istanbul
-pipeline_status: in_progress
+pipeline_status: hardening
 source_policy: official_first
-queue_manager_status: single_active
+queue_manager_status: paused_for_hardening
 ---
 
 # وضعیت پایگاه دانش Elementor V4
 
-## خلاصه وضعیت
+این فایل از `manifests/stages.yaml` تولید شده و منبع حقیقت مستقل نیست.
 
-committed_documents: 18
-pending_import_documents: 0
-scheduled_stages: 0
-not_scheduled_stages: 19
-failed_stages: 0
+## خلاصه
 
-## وضعیت مراحل تکمیل‌شده اخیر
+- مراحل تعریف‌شده: 37
+- اسناد Commit‌شده: 18
+- اسناد authoritative: 0
+- مراحل منتظر صف: 19
+- مراحل زمان‌بندی‌شده: 0
+- مراحل failed/blocked: 0
+- Evidence gapهای باز: 54
+- آخرین زمان تکمیل ثبت‌شده: `2026-06-23T14:00:00+03:00`
 
-- KB-013: `docs/widgets/loop/customize-layout.md` — `completed_with_gaps` — commit `82e837133913be600b89cef604d59f0919ea6093`
-- KB-014: `docs/widgets/loop/off-canvas.md` — `completed_with_gaps` — commit `3f00341d87342073e78e46d6fc42d7f6b705de32`
-- KB-015: `docs/widgets/search/search-widget-and-results-archive.md` — `completed_with_gaps` — commit `cb483c967eccfa12636f214f7582830b97ba9806`
+## وضعیت مراحل
 
-## ثبت اجرای KB-015
+| Stage | عنوان | وضعیت | Review | Provenance | خروجی |
+|---|---|---|---|---|---|
+| KB-001 | Widgets index | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/indexes/widgets-index.md` |
+| KB-002 | Editor V4 index | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/indexes/editor-v4-index.md` |
+| KB-003 | Explore the V4 features | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/overview/explore-v4-features.md` |
+| KB-004 | Button element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/button.md` |
+| KB-005 | Heading element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/heading.md` |
+| KB-006 | Loop Grid widget | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/loop-grid.md` |
+| KB-007 | Build a query with the Loop Grid | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/loop-grid-query.md` |
+| KB-008 | Create queries | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/concepts/queries/create-queries.md` |
+| KB-009 | Paginate your loop | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/pagination.md` |
+| KB-010 | Taxonomy Filter widget | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/taxonomy-filter.md` |
+| KB-011 | Loop Carousel | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/loop-carousel.md` |
+| KB-012 | Add an alternate template in a loop grid | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/alternate-template.md` |
+| KB-013 | Customize the layout of a Loop Grid | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/customize-layout.md` |
+| KB-014 | Add an Off Canvas widget to a Loop Grid | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/off-canvas.md` |
+| KB-015 | Search Widget and Search Results Archive | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/search/search-widget-and-results-archive.md` |
+| KB-016 | Div Block element | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-017 | Flexbox element | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-018 | Image element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/image.md` |
+| KB-019 | Paragraph element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/paragraph.md` |
+| KB-020 | SVG element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/svg.md` |
+| KB-021 | Tabs Element | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-022 | YouTube element | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-023 | Classes in Elementor | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-024 | The Elementor Editor Class Manager | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-025 | Variables | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-026 | Variables Manager | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-027 | Import and export design systems | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-028 | Style tab – Layout | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-029 | Style tab – Spacing | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-030 | Style tab – Size | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-031 | Style tab – Position | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-032 | Style tab – Typography | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-033 | Style tab – Background | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-034 | Style tab – Border | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-035 | Style tab – Effects | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-036 | Responsive editing | `not_scheduled` | `not_started` | `not_started` | — |
+| KB-037 | Dynamic tags in V4 | `not_scheduled` | `not_started` | `not_started` | — |
 
-```yaml
-stage_id: KB-015
-status: completed_with_gaps
-source_urls:
-  - https://elementor.com/help/search-widget/
-  - https://elementor.com/help/customize-the-search-results-archive/
-output_path: docs/widgets/search/search-widget-and-results-archive.md
-completed_at: 2026-06-23T14:00:00+03:00
-commit_sha: cb483c967eccfa12636f214f7582830b97ba9806
-evidence_gaps:
-  - exact_pro_prerequisite
-  - default_values
-  - complete_submit_button_style_controls
-  - complete_results_style_controls
-  - additional_settings_details
-  - url_query_parameter_behavior
-  - ajax_behavior
-  - empty_results_runtime_rendering
-  - accessibility
-  - keyboard_focus_behavior
-  - performance_and_caching
-  - multilingual_compatibility
-  - visual_confirmation_of_all_screenshots
-  - loop_carousel_usage_in_search_results_archive
-notes:
-  - دو منبع رسمی بررسی شد: Search Widget و Customize the Search Results Archive.
-  - تصاویر رسمی هنگام بازکردن مستقیم برای چند نمونه Cache miss دادند؛ URL و جایگاه تصویر ثبت شد اما تحلیل تصویری انجام نشد.
-  - docs/_index.md با commit جداگانه aab62d41c5a77fc16b203cde4c56b0d15e92fdd1 هماهنگ شد.
-  - تلاش برای به‌روزرسانی manifests/sources.yaml و manifests/coverage.yaml توسط فیلتر ابزار مسدود شد و باید در اجرای بعدی اصلاح شود.
-counters:
-  official_pages_reviewed: 2
-  official_images_indexed: 29
-  official_images_directly_viewed: 0
-  content_commit_sha: cb483c967eccfa12636f214f7582830b97ba9806
-  index_commit_sha: aab62d41c5a77fc16b203cde4c56b0d15e92fdd1
-```
+## Gate ازسرگیری صف
 
-## مراحل زمان‌بندی‌شده
-
-```yaml
-[]
-```
-
-## صف پژوهش مدیر صف
-
-1. KB-016 — not_scheduled
-2. KB-017 — not_scheduled
-3. KB-021 — not_scheduled
-4. KB-022 — not_scheduled
-5. KB-023 — not_scheduled
-6. KB-024 — not_scheduled
-7. KB-025 — not_scheduled
-8. KB-026 — not_scheduled
-9. KB-027 — not_scheduled
-10. KB-028 — not_scheduled
-11. KB-029 — not_scheduled
-12. KB-030 — not_scheduled
-13. KB-031 — not_scheduled
-14. KB-032 — not_scheduled
-15. KB-033 — not_scheduled
-16. KB-034 — not_scheduled
-17. KB-035 — not_scheduled
-18. KB-036 — not_scheduled
-19. KB-037 — not_scheduled
-
-آخرین وضعیت ثبت‌شده: `2026-06-23T14:00:00+03:00`
+صف فقط وقتی مجاز به ازسرگیری است که `python tools/kb.py validate --strict` و `python tools/kb.py generate --check` بدون خطا اجرا شوند و تغییر از طریق PR بررسی شود.

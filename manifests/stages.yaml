@@ -1,0 +1,813 @@
+schema_version: 1
+project: elementor-v4-knowledge-base
+timezone: Europe/Istanbul
+generated_artifacts:
+- STATUS.md
+- docs/_index.md
+- manifests/coverage.yaml
+- manifests/sources.yaml
+queue:
+  enabled: false
+  max_active_research_tasks: 1
+  resume_gate: repository_consistency_clean
+stages:
+- stage_id: KB-001
+  knowledge_id: elementor.help.widgets-index
+  title: Widgets index
+  category: index
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/indexes/widgets-index.md
+  sources:
+  - source_id: SRC-KB-001-01
+    url: https://elementor.com/help/build-with-the-editor/widgets/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: d59a28d614e93221f5737df277f78fea0b6b42a2
+  completed_at: '2026-06-23T10:51:16+03:00'
+  gap_ids:
+  - GAP-KB-001-PROVENANCE
+  - GAP-KB-001-SNAPSHOT
+  - GAP-KB-001-REVIEW
+- stage_id: KB-002
+  knowledge_id: elementor.help.editor-v4-index
+  title: Editor V4 index
+  category: index
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/indexes/editor-v4-index.md
+  sources:
+  - source_id: SRC-KB-002-01
+    url: https://elementor.com/help/build-with-the-editor/v4-editor/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: d028238125554e9fd35e4e31900f0fe97ddf96a4
+  completed_at: '2026-06-23T10:51:16+03:00'
+  gap_ids:
+  - GAP-KB-002-PROVENANCE
+  - GAP-KB-002-SNAPSHOT
+  - GAP-KB-002-REVIEW
+- stage_id: KB-003
+  knowledge_id: elementor.help.explore-v4-features
+  title: Explore the V4 features
+  category: overview
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/overview/explore-v4-features.md
+  sources:
+  - source_id: SRC-KB-003-01
+    url: https://elementor.com/help/explore-the-v4-features/
+    source_type: official_help
+    last_updated: '2025-06-11'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 4d2486d5997a642e994583cedf1a716aff2084b1
+  completed_at: '2026-06-23T10:51:16+03:00'
+  gap_ids:
+  - GAP-KB-003-PROVENANCE
+  - GAP-KB-003-SNAPSHOT
+  - GAP-KB-003-REVIEW
+- stage_id: KB-004
+  knowledge_id: elementor.help.button-element
+  title: Button element
+  category: element_v4
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/elements/v4/button.md
+  sources:
+  - source_id: SRC-KB-004-01
+    url: https://elementor.com/help/button-element/
+    source_type: official_help
+    last_updated: '2025-07-01'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 7108a82dde4e446ac5cc88cd5ffbfb13bd08575d
+  completed_at: '2026-06-23T10:51:16+03:00'
+  gap_ids:
+  - GAP-KB-004-PROVENANCE
+  - GAP-KB-004-SNAPSHOT
+  - GAP-KB-004-REVIEW
+- stage_id: KB-005
+  knowledge_id: elementor.help.heading-element
+  title: Heading element
+  category: element_v4
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/elements/v4/heading.md
+  sources:
+  - source_id: SRC-KB-005-01
+    url: https://elementor.com/help/heading-element/
+    source_type: official_help
+    last_updated: '2025-08-28'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac
+  completed_at: '2026-06-23T10:51:16+03:00'
+  gap_ids:
+  - GAP-KB-005-PROVENANCE
+  - GAP-KB-005-SNAPSHOT
+  - GAP-KB-005-REVIEW
+- stage_id: KB-006
+  knowledge_id: elementor.help.loop-grid
+  title: Loop Grid widget
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/loop-grid.md
+  sources:
+  - source_id: SRC-KB-006-01
+    url: https://elementor.com/help/loop-grid/
+    source_type: official_help
+    last_updated: '2026-06-19'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae
+  completed_at: '2026-06-22T11:07:20+03:00'
+  gap_ids:
+  - GAP-KB-006-PROVENANCE
+  - GAP-KB-006-SNAPSHOT
+  - GAP-KB-006-REVIEW
+- stage_id: KB-007
+  knowledge_id: elementor.help.loop-grid-query
+  title: Build a query with the Loop Grid
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/loop-grid-query.md
+  sources:
+  - source_id: SRC-KB-007-01
+    url: https://elementor.com/help/create-a-query-in-a-loop-grid/
+    source_type: official_help
+    last_updated: '2026-06-19'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e
+  completed_at: '2026-06-22T12:05:51+03:00'
+  gap_ids:
+  - GAP-KB-007-PROVENANCE
+  - GAP-KB-007-SNAPSHOT
+  - GAP-KB-007-REVIEW
+- stage_id: KB-008
+  knowledge_id: elementor.help.query-configuration
+  title: Create queries
+  category: query
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/concepts/queries/create-queries.md
+  sources:
+  - source_id: SRC-KB-008-01
+    url: https://elementor.com/help/create-queries/
+    source_type: official_help
+    last_updated: '2025-06-30'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9
+  completed_at: '2026-06-22T13:19:02+03:00'
+  gap_ids:
+  - GAP-KB-008-PROVENANCE
+  - GAP-KB-008-SNAPSHOT
+  - GAP-KB-008-REVIEW
+- stage_id: KB-009
+  knowledge_id: elementor.help.loop-pagination
+  title: Paginate your loop
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/pagination.md
+  sources:
+  - source_id: SRC-KB-009-01
+    url: https://elementor.com/help/pagination-for-loop/
+    source_type: official_help
+    last_updated: '2025-02-09'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c
+  completed_at: '2026-06-22T14:07:00+03:00'
+  gap_ids:
+  - GAP-KB-009-PROVENANCE
+  - GAP-KB-009-SNAPSHOT
+  - GAP-KB-009-REVIEW
+- stage_id: KB-010
+  knowledge_id: elementor.help.taxonomy-filter
+  title: Taxonomy Filter widget
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/taxonomy-filter.md
+  sources:
+  - source_id: SRC-KB-010-01
+    url: https://elementor.com/help/taxonomy-filter/
+    source_type: official_help
+    last_updated: '2026-06-04'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 95657df95445c453d310107715ddc3008baf68bb
+  completed_at: '2026-06-22T15:08:11+03:00'
+  gap_ids:
+  - GAP-KB-010-PROVENANCE
+  - GAP-KB-010-SNAPSHOT
+  - GAP-KB-010-REVIEW
+- stage_id: KB-011
+  knowledge_id: elementor.help.loop-carousel
+  title: Loop Carousel
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/loop-carousel.md
+  sources:
+  - source_id: SRC-KB-011-01
+    url: https://elementor.com/help/loop-carousel/
+    source_type: official_help
+    last_updated: '2024-01-14'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: c8c747d5199ee8b569e895422eacf7304957f43a
+  completed_at: '2026-06-23T11:28:43+03:00'
+  gap_ids:
+  - GAP-KB-011-PROVENANCE
+  - GAP-KB-011-SNAPSHOT
+  - GAP-KB-011-REVIEW
+- stage_id: KB-012
+  knowledge_id: elementor.help.loop-alternate-template
+  title: Add an alternate template in a loop grid
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/alternate-template.md
+  sources:
+  - source_id: SRC-KB-012-01
+    url: https://elementor.com/help/how-do-i-add-an-alternate-template-in-a-loop-grid/
+    source_type: official_help
+    last_updated: '2025-09-02'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: bb55ad8c288a1d6775818285ebb06731358cc88c
+  completed_at: '2026-06-23T12:00:00+03:00'
+  gap_ids:
+  - GAP-KB-012-PROVENANCE
+  - GAP-KB-012-SNAPSHOT
+  - GAP-KB-012-REVIEW
+- stage_id: KB-013
+  knowledge_id: elementor.help.loop-customize-layout
+  title: Customize the layout of a Loop Grid
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/customize-layout.md
+  sources:
+  - source_id: SRC-KB-013-01
+    url: https://elementor.com/help/customize-layout-loop/
+    source_type: official_help
+    last_updated: '2025-09-02'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 82e837133913be600b89cef604d59f0919ea6093
+  completed_at: '2026-06-23T13:28:00+03:00'
+  gap_ids:
+  - GAP-KB-013-PROVENANCE
+  - GAP-KB-013-SNAPSHOT
+  - GAP-KB-013-REVIEW
+- stage_id: KB-014
+  knowledge_id: elementor.help.loop-off-canvas
+  title: Add an Off Canvas widget to a Loop Grid
+  category: loop
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/loop/off-canvas.md
+  sources:
+  - source_id: SRC-KB-014-01
+    url: https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/
+    source_type: official_help
+    last_updated: '2026-06-08'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 3f00341d87342073e78e46d6fc42d7f6b705de32
+  completed_at: '2026-06-23T12:58:00+03:00'
+  gap_ids:
+  - GAP-KB-014-PROVENANCE
+  - GAP-KB-014-SNAPSHOT
+  - GAP-KB-014-REVIEW
+- stage_id: KB-015
+  knowledge_id: elementor.help.search-widget-results-archive
+  title: Search Widget and Search Results Archive
+  category: search
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/widgets/search/search-widget-and-results-archive.md
+  sources:
+  - source_id: SRC-KB-015-01
+    url: https://elementor.com/help/search-widget/
+    source_type: official_help
+    last_updated: '2026-06-19'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  - source_id: SRC-KB-015-02
+    url: https://elementor.com/help/customize-the-search-results-archive/
+    source_type: official_help
+    last_updated: '2024-11-11'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: cb483c967eccfa12636f214f7582830b97ba9806
+  completed_at: '2026-06-23T14:00:00+03:00'
+  gap_ids:
+  - GAP-KB-015-PROVENANCE
+  - GAP-KB-015-SNAPSHOT
+  - GAP-KB-015-REVIEW
+- stage_id: KB-016
+  knowledge_id: elementor.help.div-block-element
+  title: Div Block element
+  category: element_v4
+  status: not_scheduled
+  queue_priority: 1
+  output_path: docs/elements/v4/div-block.md
+  sources:
+  - source_id: SRC-KB-016-01
+    url: https://elementor.com/help/div-block-element/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-017
+  knowledge_id: elementor.help.flexbox-element
+  title: Flexbox element
+  category: element_v4
+  status: not_scheduled
+  queue_priority: 2
+  output_path: docs/elements/v4/flexbox.md
+  sources:
+  - source_id: SRC-KB-017-01
+    url: https://elementor.com/help/flexbox-element/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-018
+  knowledge_id: elementor.help.image-element
+  title: Image element
+  category: element_v4
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/elements/v4/image.md
+  sources:
+  - source_id: SRC-KB-018-01
+    url: https://elementor.com/help/image-element/
+    source_type: official_help
+    last_updated: '2026-05-26'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c
+  completed_at: '2026-06-22T23:08:43+03:00'
+  gap_ids:
+  - GAP-KB-018-PROVENANCE
+  - GAP-KB-018-SNAPSHOT
+  - GAP-KB-018-REVIEW
+- stage_id: KB-019
+  knowledge_id: elementor.help.paragraph-element
+  title: Paragraph element
+  category: element_v4
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/elements/v4/paragraph.md
+  sources:
+  - source_id: SRC-KB-019-01
+    url: https://elementor.com/help/paragraph-element/
+    source_type: official_help
+    last_updated: '2025-08-28'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73
+  completed_at: '2026-06-23T00:06:13+03:00'
+  gap_ids:
+  - GAP-KB-019-PROVENANCE
+  - GAP-KB-019-SNAPSHOT
+  - GAP-KB-019-REVIEW
+- stage_id: KB-020
+  knowledge_id: elementor.help.svg-element
+  title: SVG element
+  category: element_v4
+  status: completed_with_gaps
+  queue_priority: null
+  output_path: docs/elements/v4/svg.md
+  sources:
+  - source_id: SRC-KB-020-01
+    url: https://elementor.com/help/svg-element/
+    source_type: official_help
+    last_updated: '2025-07-01'
+    snapshot_status: missing_legacy_snapshot
+    content_fingerprint: null
+  evidence_status: completed_with_gaps
+  review_status: unreviewed
+  provenance_status: document_level_legacy
+  content_commit_sha: 05cc163db725b1f79f2664bd6eede28a736a23bf
+  completed_at: '2026-06-23T01:04:00+03:00'
+  gap_ids:
+  - GAP-KB-020-PROVENANCE
+  - GAP-KB-020-SNAPSHOT
+  - GAP-KB-020-REVIEW
+- stage_id: KB-021
+  knowledge_id: elementor.help.tabs-element
+  title: Tabs Element
+  category: element_v4
+  status: not_scheduled
+  queue_priority: 3
+  output_path: docs/elements/v4/tabs.md
+  sources:
+  - source_id: SRC-KB-021-01
+    url: https://elementor.com/help/tabs-element/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-022
+  knowledge_id: elementor.help.youtube-element
+  title: YouTube element
+  category: element_v4
+  status: not_scheduled
+  queue_priority: 4
+  output_path: docs/elements/v4/youtube.md
+  sources:
+  - source_id: SRC-KB-022-01
+    url: https://elementor.com/help/youtube-element/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-023
+  knowledge_id: elementor.help.classes-in-elementor
+  title: Classes in Elementor
+  category: design_system
+  status: not_scheduled
+  queue_priority: 5
+  output_path: docs/design-system/classes.md
+  sources:
+  - source_id: SRC-KB-023-01
+    url: https://elementor.com/help/classes-in-elementor-2/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-024
+  knowledge_id: elementor.help.class-manager
+  title: The Elementor Editor Class Manager
+  category: design_system
+  status: not_scheduled
+  queue_priority: 6
+  output_path: docs/design-system/class-manager.md
+  sources:
+  - source_id: SRC-KB-024-01
+    url: https://elementor.com/help/the-elementor-editor-class-manager/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-025
+  knowledge_id: elementor.help.variables
+  title: Variables
+  category: design_system
+  status: not_scheduled
+  queue_priority: 7
+  output_path: docs/design-system/variables.md
+  sources:
+  - source_id: SRC-KB-025-01
+    url: https://elementor.com/help/variables/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-026
+  knowledge_id: elementor.help.variables-manager
+  title: Variables Manager
+  category: design_system
+  status: not_scheduled
+  queue_priority: 8
+  output_path: docs/design-system/variables-manager.md
+  sources:
+  - source_id: SRC-KB-026-01
+    url: https://elementor.com/help/variables-manager/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-027
+  knowledge_id: elementor.help.design-system-import-export
+  title: Import and export design systems
+  category: design_system
+  status: not_scheduled
+  queue_priority: 9
+  output_path: docs/design-system/import-export.md
+  sources:
+  - source_id: SRC-KB-027-01
+    url: https://elementor.com/help/how-to-import-and-export-design-systems/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-028
+  knowledge_id: elementor.help.style-layout
+  title: Style tab – Layout
+  category: style_system
+  status: not_scheduled
+  queue_priority: 10
+  output_path: docs/style-system/layout.md
+  sources:
+  - source_id: SRC-KB-028-01
+    url: https://elementor.com/help/style-tab-layout/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-029
+  knowledge_id: elementor.help.style-spacing
+  title: Style tab – Spacing
+  category: style_system
+  status: not_scheduled
+  queue_priority: 11
+  output_path: docs/style-system/spacing.md
+  sources:
+  - source_id: SRC-KB-029-01
+    url: https://elementor.com/help/style-tab-spacing/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-030
+  knowledge_id: elementor.help.style-size
+  title: Style tab – Size
+  category: style_system
+  status: not_scheduled
+  queue_priority: 12
+  output_path: docs/style-system/size.md
+  sources:
+  - source_id: SRC-KB-030-01
+    url: https://elementor.com/help/style-tab-size/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-031
+  knowledge_id: elementor.help.style-position
+  title: Style tab – Position
+  category: style_system
+  status: not_scheduled
+  queue_priority: 13
+  output_path: docs/style-system/position.md
+  sources:
+  - source_id: SRC-KB-031-01
+    url: https://elementor.com/help/style-tab-position/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-032
+  knowledge_id: elementor.help.style-typography
+  title: Style tab – Typography
+  category: style_system
+  status: not_scheduled
+  queue_priority: 14
+  output_path: docs/style-system/typography.md
+  sources:
+  - source_id: SRC-KB-032-01
+    url: https://elementor.com/help/style-tab-typography/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-033
+  knowledge_id: elementor.help.style-background
+  title: Style tab – Background
+  category: style_system
+  status: not_scheduled
+  queue_priority: 15
+  output_path: docs/style-system/background.md
+  sources:
+  - source_id: SRC-KB-033-01
+    url: https://elementor.com/help/style-tab-background/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-034
+  knowledge_id: elementor.help.style-border
+  title: Style tab – Border
+  category: style_system
+  status: not_scheduled
+  queue_priority: 16
+  output_path: docs/style-system/border.md
+  sources:
+  - source_id: SRC-KB-034-01
+    url: https://elementor.com/help/style-tab-border/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-035
+  knowledge_id: elementor.help.style-effects
+  title: Style tab – Effects
+  category: style_system
+  status: not_scheduled
+  queue_priority: 17
+  output_path: docs/style-system/effects.md
+  sources:
+  - source_id: SRC-KB-035-01
+    url: https://elementor.com/help/style-tab-effects/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-036
+  knowledge_id: elementor.help.responsive-editing
+  title: Responsive editing
+  category: style_system
+  status: not_scheduled
+  queue_priority: 18
+  output_path: docs/style-system/responsive-editing.md
+  sources:
+  - source_id: SRC-KB-036-01
+    url: https://elementor.com/help/responsive-editing/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []
+- stage_id: KB-037
+  knowledge_id: elementor.help.dynamic-tags-v4
+  title: Dynamic tags in V4
+  category: style_system
+  status: not_scheduled
+  queue_priority: 19
+  output_path: docs/style-system/dynamic-tags-v4.md
+  sources:
+  - source_id: SRC-KB-037-01
+    url: https://elementor.com/help/dynamic-tags-in-v4/
+    source_type: official_help
+    last_updated: null
+    snapshot_status: not_retrieved
+    content_fingerprint: null
+  evidence_status: unverified
+  review_status: not_started
+  provenance_status: not_started
+  content_commit_sha: null
+  completed_at: null
+  gap_ids: []

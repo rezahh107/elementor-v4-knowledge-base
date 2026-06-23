@@ -1,0 +1,14 @@
+registry_version: 1
+review_states:
+  not_started:
+    authoritative: false
+  unreviewed:
+    authoritative: false
+  machine_validated:
+    authoritative: false
+  peer_reviewed:
+    authoritative: true
+  verified_by_fixture:
+    authoritative: true
+  rejected:
+    authoritative: false
