@@ -25,10 +25,10 @@
 - [Elementor Query Configuration](concepts/queries/create-queries.md) — `KB-008` — `completed_with_gaps`
 - [Paginate your loop](widgets/loop/pagination.md) — `KB-009` — `completed_with_gaps`
 - [Taxonomy Filter widget](widgets/loop/taxonomy-filter.md) — `KB-010` — `completed_with_gaps`
+- [Loop Carousel](widgets/loop/loop-carousel.md) — `KB-011` — `completed_with_gaps`
 
 ## زمان‌بندی‌شده
 
-- `KB-011` — Loop Carousel — 2026-06-23 11:00 Europe/Istanbul
 - `KB-012` — Alternate Template in Loop Grid — 2026-06-23 12:00 Europe/Istanbul
 - `KB-013` — Customize Layout in Loop Grid — 2026-06-23 13:00 Europe/Istanbul
 
