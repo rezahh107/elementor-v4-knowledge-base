@@ -26,7 +26,9 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.pull_request.head.repo.full_name == github.repository &&
-       github.actor != 'github-actions[bot]')
+       github.actor != 'github-actions[bot]' &&
+       (startsWith(github.event.pull_request.head.ref, 'migration/') ||
+        startsWith(github.event.pull_request.head.ref, 'migration-')))
     runs-on: ubuntu-latest
     steps:
       - name: Resolve branch
