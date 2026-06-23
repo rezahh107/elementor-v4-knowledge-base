@@ -330,7 +330,7 @@ sources:
   - stage_id: KB-037
     knowledge_id: elementor.help.dynamic-tags-v4
     title: Dynamic tags in V4
-    source_url: https://elementor.com/help/dynamic-tags-v4/
+    source_url: https://elementor.com/help/dynamic-tags-in-v4/
     source_type: official_help
     output_path: docs/style-system/dynamic-tags-v4.md
     status: not_scheduled
