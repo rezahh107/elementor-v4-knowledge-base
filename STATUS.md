@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 21
-last_updated: 2026-06-23T10:56:00+03:00
+status_version: 22
+last_updated: 2026-06-23T11:29:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -17,10 +17,10 @@ queue_manager_status: single_active
 
 | شاخص | مقدار |
 |---|---:|
-| منابع رسمی بررسی‌شده | 13 |
-| اسناد تکمیل‌شده و Commit‌شده | 13 |
+| منابع رسمی بررسی‌شده | 14 |
+| اسناد تکمیل‌شده و Commit‌شده | 14 |
 | اسناد در انتظار انتقال | 0 |
-| مراحل پژوهشی زمان‌بندی‌شده | 3 |
+| مراحل پژوهشی زمان‌بندی‌شده | 2 |
 | مراحل منتظر ظرفیت (`not_scheduled`) | 21 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
@@ -41,7 +41,7 @@ queue_manager_status: single_active
 | KB-008 | Elementor query configuration | `docs/concepts/queries/create-queries.md` — `completed_with_gaps` |
 | KB-009 | Paginate your loop | `docs/widgets/loop/pagination.md` — `completed_with_gaps` |
 | KB-010 | Taxonomy Filter widget | `docs/widgets/loop/taxonomy-filter.md` — `completed_with_gaps` |
-| KB-011 | Loop Carousel | `scheduled` — 2026-06-23 11:00 |
+| KB-011 | Loop Carousel | `docs/widgets/loop/loop-carousel.md` — `completed_with_gaps` |
 | KB-012 | Add an alternate template in a loop grid | `scheduled` — 2026-06-23 12:00 |
 | KB-013 | Customize the layout of a Loop Grid | `scheduled` — 2026-06-23 13:00 |
 | KB-014 | Add an Off Canvas widget to a Loop Grid | `not_scheduled` |
@@ -80,10 +80,19 @@ queue_manager_status: single_active
 - {stage_id: KB-004, status: completed_with_gaps, source_url: "https://elementor.com/help/button-element/", output_path: "docs/elements/v4/button.md", completed_at: "2026-06-23T10:51:16+03:00", commit_sha: 7108a82dde4e446ac5cc88cd5ffbfb13bd08575d, evidence_gaps: [defaults, complete_states, focus_behavior, aria_and_markup, responsive, dynamic_tags, variables, plan_requirements, runtime_behavior]}
 - {stage_id: KB-005, status: completed_with_gaps, source_url: "https://elementor.com/help/heading-element/", output_path: "docs/elements/v4/heading.md", completed_at: "2026-06-23T10:51:16+03:00", commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac, evidence_gaps: [complete_tag_list, default_tag, heading_hierarchy, accessibility, responsive, dynamic_tags, variables, runtime_markup]}
 - {stage_id: KB-006, status: completed_with_gaps, source_url: "https://elementor.com/help/loop-grid/", output_path: "docs/widgets/loop/loop-grid.md", completed_at: "2026-06-22T11:07:20+03:00", commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae, evidence_gaps: [version, Pro prerequisite, responsive, dynamic data, URL, AJAX, accessibility, screenshots]}
-- {stage_id: KB-007, status: completed_with_gaps, source_url: "https://elementor.com/help/create-a-query-in-a-loop-grid/", output_path: "docs/widgets/loop/loop-grid-query.md", completed_at: "2026-06-22T12:05:51+03:00", commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e, evidence_gaps: [version, Pro prerequisite, redirect history, query controls, runtime behavior, screenshots]}
-- {stage_id: KB-008, status: completed_with_gaps, source_url: "https://elementor.com/help/create-queries/", output_path: "docs/concepts/queries/create-queries.md", completed_at: "2026-06-22T13:19:02+03:00", commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9, evidence_gaps: [version, Pro prerequisite, query logic, Query ID lifecycle, AJAX, URL, accessibility, screenshots]}
-- {stage_id: KB-009, status: completed_with_gaps, source_url: "https://elementor.com/help/pagination-for-loop/", output_path: "docs/widgets/loop/pagination.md", completed_at: "2026-06-22T14:07:00+03:00", commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c, evidence_gaps: [version, Pro prerequisite, control matrix, URL, AJAX, accessibility, responsive, style states, screenshots]}
-- {stage_id: KB-010, status: completed_with_gaps, source_url: "https://elementor.com/help/taxonomy-filter/", output_path: "docs/widgets/loop/taxonomy-filter.md", completed_at: "2026-06-22T15:08:11+03:00", commit_sha: 95657df95445c453d310107715ddc3008baf68bb, evidence_gaps: [version, Pro prerequisite, taxonomy scope, query interaction, URL, AJAX, accessibility, responsive, style defaults, screenshots]}
+- {stage_id: KB-007, status: completed_with_gaps, source_url: "https://elementor.com/help/create-a-query-in-a-loop-grid/", output_path: "docs/widgets/loop/loop-grid-query.md", completed_at: "2026-06-22T12:05:51+03:00", commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e, evidence_gaps: [version, Pro prerequisite, redirect_history, query_controls, runtime_behavior, screenshots]}
+- {stage_id: KB-008, status: completed_with_gaps, source_url: "https://elementor.com/help/create-queries/", output_path: "docs/concepts/queries/create-queries.md", completed_at: "2026-06-22T13:19:02+03:00", commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9, evidence_gaps: [version, Pro prerequisite, query_logic, Query_ID_lifecycle, AJAX, URL, accessibility, screenshots]}
+- {stage_id: KB-009, status: completed_with_gaps, source_url: "https://elementor.com/help/pagination-for-loop/", output_path: "docs/widgets/loop/pagination.md", completed_at: "2026-06-22T14:07:00+03:00", commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c, evidence_gaps: [version, Pro_prerequisite, control_matrix, URL, AJAX, accessibility, responsive, style_states, screenshots]}
+- {stage_id: KB-010, status: completed_with_gaps, source_url: "https://elementor.com/help/taxonomy-filter/", output_path: "docs/widgets/loop/taxonomy-filter.md", completed_at: "2026-06-22T15:08:11+03:00", commit_sha: 95657df95445c453d310107715ddc3008baf68bb, evidence_gaps: [version, Pro_prerequisite, taxonomy_scope, query_interaction, URL, AJAX, accessibility, responsive, style_defaults, screenshots]}
+- stage_id: KB-011
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/loop-carousel/
+  output_path: docs/widgets/loop/loop-carousel.md
+  completed_at: 2026-06-23T11:29:00+03:00
+  commit_sha: c8c747d5199ee8b569e895422eacf7304957f43a
+  evidence_gaps: [version, Pro_prerequisite, defaults, responsive_controls, URL, AJAX, accessibility, runtime_behavior, dynamic_content, display_conditions, template_creation, SVG_sanitization, RTL_behavior]
+  notes: "Loop Carousel از منبع رسمی و تصاویر رسمی قابل دسترس بررسی شد؛ صفحات فرعی بدون بررسی مستقل به سند نسبت داده نشدند. مقادیر تصویری به‌عنوان observed_example ثبت شدند نه default."
+  counters: {official_pages_reviewed: 1, official_images_indexed: 16, official_images_directly_viewed: 4}
 - {stage_id: KB-018, status: completed_with_gaps, source_url: "https://elementor.com/help/image-element/", output_path: "docs/elements/v4/image.md", completed_at: "2026-06-22T23:08:43+03:00", commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c, evidence_gaps: [exact_elementor_version, plan_or_pro_prerequisite, aspect_ratio, object_fit, lazy_loading, responsive_controls, dynamic_data, classes_and_variables, element_states, accessibility, seo, runtime_behavior]}
 - {stage_id: KB-019, status: completed_with_gaps, source_url: "https://elementor.com/help/paragraph-element/", output_path: "docs/elements/v4/paragraph.md", completed_at: "2026-06-23T00:06:13+03:00", commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73, evidence_gaps: [exact_elementor_version, plan_or_pro_prerequisite, inline_editing, html_tag_and_semantics, partial_text_links, custom_attributes, color_controls, detailed_style_controls, responsive_controls, dynamic_data, classes_and_variables, element_states, frontend_accessibility, keyboard_and_focus_runtime, seo_behavior, generated_markup, runtime_behavior]}
 - {stage_id: KB-020, status: completed_with_gaps, source_url: "https://elementor.com/help/svg-element/", output_path: "docs/elements/v4/svg.md", completed_at: "2026-06-23T01:04:00+03:00", commit_sha: 05cc163db725b1f79f2664bd6eede28a736a23bf, evidence_gaps: [sanitization, viewbox, dimensions, aspect_ratio, stroke, responsive_controls, dynamic_data, accessibility, keyboard_and_focus_runtime, runtime_markup]}
@@ -92,7 +101,6 @@ queue_manager_status: single_active
 ## مراحل زمان‌بندی‌شده
 
 ```yaml
-- {stage_id: KB-011, title: Loop Carousel, source_url: "https://elementor.com/help/loop-carousel/", output_path: "docs/widgets/loop/loop-carousel.md", scheduled_for: "2026-06-23T11:00:00+03:00"}
 - {stage_id: KB-012, title: Add an alternate template in a loop grid, source_url: "https://elementor.com/help/how-do-i-add-an-alternate-template-in-a-loop-grid/", output_path: "docs/widgets/loop/alternate-template.md", scheduled_for: "2026-06-23T12:00:00+03:00"}
 - {stage_id: KB-013, title: Customize the layout of a Loop Grid, source_url: "https://elementor.com/help/customize-layout-loop/", output_path: "docs/widgets/loop/customize-layout.md", scheduled_for: "2026-06-23T13:00:00+03:00"}
 ```
@@ -130,7 +138,7 @@ queue_manager_status: single_active
 ```yaml
 active_queue_managers: 1
 duplicate_manager_disabled_at: 2026-06-23T10:46:54+03:00
-active_research_tasks: 3
+active_research_tasks: 2
 queue_policy: keep_at_most_3_active_research_tasks
 ```
 
@@ -155,4 +163,4 @@ queue_policy: keep_at_most_3_active_research_tasks
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-23T10:56:00+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-23T11:29:00+03:00`
