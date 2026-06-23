@@ -1,14 +1,14 @@
 manifest_version: 3
-updated_at: 2026-06-23T12:00:00+03:00
+updated_at: 2026-06-23T13:28:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 
 summary:
-  reviewed_sources: 15
-  committed_documents: 15
+  reviewed_sources: 16
+  committed_documents: 16
   pending_import_documents: 0
   scheduled_stages: 1
-  not_scheduled_stages: 21
+  not_scheduled_stages: 20
   running_stages: 0
   failed_stages: 0
 
@@ -17,58 +17,27 @@ coverage:
     committed: [KB-001, KB-002]
     pending_import: []
     status: completed_with_gaps
-
   editor_v4_overview:
     committed: [KB-003]
     pending_import: []
     status: completed_with_gaps
-
   editor_v4_elements:
     committed: [KB-004, KB-005, KB-018, KB-019, KB-020]
     scheduled: []
     not_scheduled: [KB-016, KB-017, KB-021, KB-022]
     status: in_progress
-
   loop_family:
-    committed: [KB-006, KB-007, KB-008, KB-009, KB-010, KB-011, KB-012]
-    scheduled: [KB-013]
-    not_scheduled: [KB-014, KB-015]
+    committed: [KB-006, KB-007, KB-008, KB-009, KB-010, KB-011, KB-012, KB-013]
+    scheduled: [KB-014]
+    not_scheduled: [KB-015]
     status: in_progress
-
   design_system:
     committed: []
     scheduled: []
     not_scheduled: [KB-023, KB-024, KB-025, KB-026, KB-027]
     status: not_started
-
   shared_style_system:
     committed: []
     scheduled: []
     not_scheduled: [KB-028, KB-029, KB-030, KB-031, KB-032, KB-033, KB-034, KB-035, KB-036, KB-037]
     status: not_started
-
-quality_gaps:
-  - id: KBQ-001
-    status: open
-    description: Metadata and front matter schema validation is not automated yet.
-  - id: KBQ-002
-    status: resolved
-    description: KB-001 through KB-005 were transferred to independent committed Markdown documents on 2026-06-23.
-  - id: KBQ-003
-    status: open
-    description: Claim-level provenance IDs are not implemented yet.
-  - id: KBQ-004
-    status: open
-    description: Automated link validation is not configured yet.
-  - id: KBQ-005
-    status: resolved
-    description: STATUS.md, docs/_index.md and manifests were reconciled against repository files through KB-020.
-  - id: KBQ-006
-    status: open
-    description: The historical timezone recorded for KB-006 still requires correction based on the original execution evidence.
-  - id: KBQ-007
-    status: open
-    description: Evidence gaps in completed_with_gaps documents require independent follow-up sources or controlled fixtures.
-  - id: KBQ-008
-    status: open
-    description: GitHub Actions gates for schema, duplicate IDs, links and Index/Manifest consistency are not implemented.
