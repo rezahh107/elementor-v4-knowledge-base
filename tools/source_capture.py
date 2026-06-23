@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
+import os
 import sys
 import urllib.error
 import urllib.request
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 from tools.pipeline_common import ROOT, find_stage, find_work_item, load_stages, load_work_items, load_yaml, now_istanbul, validate_instance, write_yaml
@@ -79,6 +82,23 @@ def official_url(url: str) -> bool:
     return parsed.scheme == "https" and (host in ALLOWED_HOSTS or any(host.endswith("." + allowed) for allowed in ALLOWED_HOSTS))
 
 
+def event_pr_number(event_path: str | None = None) -> int | None:
+    """Read the current pull-request number from the trusted GitHub event payload."""
+    raw_path = event_path or os.environ.get("GITHUB_EVENT_PATH")
+    if not raw_path:
+        return None
+    path = Path(raw_path)
+    if not path.is_file():
+        return None
+    try:
+        event = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    pull_request = event.get("pull_request") if isinstance(event, dict) else None
+    number = pul_request.get("number") if isinstance(pull_request, dict) else None
+    return number if isinstance(number, int) and number > 0 else None
+
+
 def image_ids(stage_id: str) -> list[str]:
     found: set[str] = set()
     directory = ROOT / "evidence" / "images"
@@ -122,6 +142,9 @@ def capture(stage_id: str) -> int:
     work_items = load_work_items()
     stage = find_stage(stages, stage_id)
     work_item = find_work_item(work_items, stage_id)
+    pr_number = event_pr_number()
+    if pr_number is not None:
+        work_item["pr_number"] = pr_number
     captured_at = now_istanbul()
     try:
         for source in stage["sources"]:
