@@ -1,0 +1,46 @@
+schema_version: 1
+items:
+  - work_id: migration-cycle-01:KB-004
+    cycle_id: migration-cycle-01
+    stage_id: KB-004
+    branch: migration-KB-004-button
+    pr_number: 8
+    state: evidence_draft
+    source_capture_status: pending
+    attempt: 1
+    idempotency_key: migration-cycle-01:KB-004
+    updated_at: '2026-06-23T19:55:00+03:00'
+    last_error: null
+  - work_id: migration-cycle-01:KB-005
+    cycle_id: migration-cycle-01
+    stage_id: KB-005
+    branch: migration/KB-005-heading
+    pr_number: 9
+    state: evidence_draft
+    source_capture_status: pending
+    attempt: 1
+    idempotency_key: migration-cycle-01:KB-005
+    updated_at: '2026-06-23T19:55:00+03:00'
+    last_error: null
+  - work_id: migration-cycle-01:KB-018
+    cycle_id: migration-cycle-01
+    stage_id: KB-018
+    branch: migration/KB-018-image
+    pr_number: null
+    state: blocked
+    source_capture_status: pending
+    attempt: 1
+    idempotency_key: migration-cycle-01:KB-018
+    updated_at: '2026-06-23T19:55:00+03:00'
+    last_error: null
+  - work_id: migration-cycle-01:KB-019
+    cycle_id: migration-cycle-01
+    stage_id: KB-019
+    branch: migration/KB-019-paragraph
+    pr_number: null
+    state: blocked
+    source_capture_status: pending
+    attempt: 1
+    idempotency_key: migration-cycle-01:KB-019
+    updated_at: '2026-06-23T19:55:00+03:00'
+    last_error: null
