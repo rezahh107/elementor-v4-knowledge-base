@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "canonical_url": {
+      "pattern": "^https://",
+      "type": "string"
+    },
+    "content_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "http_status": {
+      "maximum": 599,
+      "minimum": 100,
+      "type": "integer"
+    },
+    "image_evidence_ids": {
+      "items": {
+        "pattern": "^IMG-KB-[0-9]{3}-[0-9]{3}$",
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "page_title": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reported_last_updated": {
+      "format": "date",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_url": {
+      "pattern": "^https://",
+      "type": "string"
+    },
+    "retrieved_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "source_id": {
+      "pattern": "^SRC-KB-[0-9]{3}-[0-9]{2}$",
+      "type": "string"
+    },
+    "stage_id": {
+      "pattern": "^KB-[0-9]{3}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_id",
+    "stage_id",
+    "requested_url",
+    "canonical_url",
+    "retrieved_at",
+    "http_status",
+    "page_title",
+    "reported_last_updated",
+    "content_sha256",
+    "image_evidence_ids"
+  ],
+  "type": "object"
+}

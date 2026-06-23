@@ -1,0 +1,300 @@
+{
+  "$defs": {
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "content_fingerprint": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_updated": {
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "snapshot_status": {
+          "enum": [
+            "not_retrieved",
+            "captured",
+            "missing_legacy_snapshot",
+            "retrieval_failed"
+          ]
+        },
+        "source_id": {
+          "pattern": "^SRC-KB-[0-9]{3}-[0-9]{2}$",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "official_help",
+            "official_developer_docs",
+            "official_source_code",
+            "official_changelog",
+            "real_runtime_fixture",
+            "synthetic_fixture",
+            "third_party"
+          ]
+        },
+        "url": {
+          "pattern": "^https://",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "url",
+        "source_type",
+        "last_updated",
+        "snapshot_status",
+        "content_fingerprint"
+      ],
+      "type": "object"
+    },
+    "stage": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "completed",
+                  "completed_with_gaps"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "completed_at": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "content_commit_sha": {
+                "pattern": "^[a-f0-9]{40}$",
+                "type": "string"
+              },
+              "queue_priority": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "not_scheduled"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "completed_at": {
+                "type": "null"
+              },
+              "content_commit_sha": {
+                "type": "null"
+              },
+              "queue_priority": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "category": {
+          "enum": [
+            "index",
+            "overview",
+            "element_v4",
+            "loop",
+            "query",
+            "search",
+            "design_system",
+            "style_system"
+          ]
+        },
+        "completed_at": {
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "content_commit_sha": {
+          "pattern": "^[a-f0-9]{40}$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_status": {
+          "enum": [
+            "documented",
+            "observed",
+            "validated",
+            "derived",
+            "proposed",
+            "unverified",
+            "insufficient_evidence",
+            "completed",
+            "completed_with_gaps"
+          ]
+        },
+        "gap_ids": {
+          "items": {
+            "pattern": "^GAP-KB-[0-9]{3}-[A-Z0-9_-]+$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "knowledge_id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "output_path": {
+          "pattern": "^docs/.+\\.md$",
+          "type": "string"
+        },
+        "provenance_status": {
+          "enum": [
+            "not_started",
+            "document_level_legacy",
+            "claim_level"
+          ]
+        },
+        "queue_priority": {
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "review_status": {
+          "enum": [
+            "not_started",
+            "unreviewed",
+            "machine_validated",
+            "peer_reviewed",
+            "verified_by_fixture",
+            "rejected"
+          ]
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "stage_id": {
+          "pattern": "^KB-[0-9]{3}$",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "not_scheduled",
+            "scheduled",
+            "running",
+            "completed",
+            "completed_with_gaps",
+            "blocked",
+            "failed",
+            "stale",
+            "superseded"
+          ]
+        },
+        "title": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage_id",
+        "knowledge_id",
+        "title",
+        "category",
+        "status",
+        "queue_priority",
+        "output_path",
+        "sources",
+        "evidence_status",
+        "review_status",
+        "provenance_status",
+        "content_commit_sha",
+        "completed_at",
+        "gap_ids"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://example.invalid/schemas/stages.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "generated_artifacts": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "project": {
+      "const": "elementor-v4-knowledge-base"
+    },
+    "queue": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "max_active_research_tasks": {
+          "maximum": 3,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "resume_gate": {
+          "const": "repository_consistency_clean"
+        }
+      },
+      "required": [
+        "enabled",
+        "max_active_research_tasks",
+        "resume_gate"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "stages": {
+      "items": {
+        "$ref": "#/$defs/stage"
+      },
+      "type": "array"
+    },
+    "timezone": {
+      "const": "Europe/Istanbul"
+    }
+  },
+  "required": [
+    "schema_version",
+    "project",
+    "timezone",
+    "generated_artifacts",
+    "queue",
+    "stages"
+  ],
+  "title": "Elementor knowledge-base stages manifest",
+  "type": "object"
+}

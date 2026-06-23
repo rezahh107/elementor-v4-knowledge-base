@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "claim_id": {
+      "pattern": "^KB-[0-9]{3}-C[0-9]{3,}$",
+      "type": "string"
+    },
+    "claim_text": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "derived_from": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "evidence_state": {
+      "enum": [
+        "documented",
+        "observed",
+        "validated",
+        "derived",
+        "proposed",
+        "unverified",
+        "insufficient_evidence"
+      ]
+    },
+    "source_locators": {
+      "items": {
+        "properties": {
+          "locator": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "locator"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "stage_id": {
+      "pattern": "^KB-[0-9]{3}$",
+      "type": "string"
+    },
+    "verification_status": {
+      "enum": [
+        "unreviewed",
+        "machine_validated",
+        "peer_reviewed",
+        "verified_by_fixture",
+        "rejected"
+      ]
+    }
+  },
+  "required": [
+    "claim_id",
+    "stage_id",
+    "claim_text",
+    "evidence_state",
+    "source_locators",
+    "derived_from",
+    "verification_status"
+  ],
+  "type": "object"
+}

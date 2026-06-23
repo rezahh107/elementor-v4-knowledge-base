@@ -1,4 +1,4 @@
-registry_version: 1
+registry_version: 2
 name: evidence_states
 
 states:
@@ -6,44 +6,40 @@ states:
     authority: source_text
     definition: The claim is explicitly stated in the cited source text.
     may_be_presented_as_fact: true
-
+    required_fields: [claim_id, source_id, source_locator]
   observed:
-    authority: source_visual
-    definition: The claim is directly visible in an official screenshot or interface capture from the source.
+    authority: inspected_source_visual
+    definition: The claim is directly visible in an inspected official image or controlled interface capture.
     may_be_presented_as_fact: true
-    constraint: Do not infer hidden behavior from appearance alone.
-
+    required_fields: [claim_id, source_id, image_evidence_id]
+    constraints:
+      - image inspection_status must be inspected
+      - do not infer hidden behavior from appearance
   validated:
     authority: controlled_fixture_or_test
     definition: The claim was confirmed by a controlled real fixture or deterministic test.
     may_be_presented_as_fact: true
-
+    required_fields: [claim_id, fixture_id, verification_state]
   derived:
     authority: traceable_analysis
-    definition: A limited conclusion derived from identified evidence.
+    definition: A limited conclusion derived from identified claims.
     may_be_presented_as_fact: false
-    constraint: The supporting evidence and reasoning boundary must remain explicit.
-
+    required_fields: [claim_id, derived_from]
   proposed:
     authority: proposal
     definition: A suggested interpretation, design, or future action.
     may_be_presented_as_fact: false
-
   unverified:
     authority: unverified_claim
     definition: A claim exists but has not been confirmed by an accepted source.
     may_be_presented_as_fact: false
-
   insufficient_evidence:
     authority: evidence_gap
     definition: Available evidence is not sufficient to establish the requested conclusion.
     may_be_presented_as_fact: false
-    required_fields:
-      - missing_evidence
-      - affected_conclusion
-      - required_source
+    required_fields: [missing_evidence, affected_conclusion, required_source]
 
-allowed_document_statuses:
+document_statuses:
   - draft
   - completed
   - completed_with_gaps
@@ -52,8 +48,14 @@ allowed_document_statuses:
   - blocked
   - failed
 
-allowed_storage_statuses:
+storage_statuses:
   - pending
   - pending_import
   - committed
   - superseded
+
+authoritative_gate:
+  review_status: [peer_reviewed, verified_by_fixture]
+  provenance_status: claim_level
+  source_snapshot_status: captured
+  blocking_gaps: 0

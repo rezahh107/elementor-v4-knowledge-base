@@ -1,0 +1,32 @@
+registry_version: 1
+source_types:
+  official_help:
+    authority_rank: 1
+    may_support_documented: true
+    may_support_observed: true
+  official_developer_docs:
+    authority_rank: 1
+    may_support_documented: true
+    may_support_observed: true
+  official_source_code:
+    authority_rank: 1
+    may_support_documented: true
+    may_support_observed: false
+  official_changelog:
+    authority_rank: 1
+    may_support_documented: true
+    may_support_observed: false
+  real_runtime_fixture:
+    authority_rank: 2
+    may_support_documented: false
+    may_support_observed: true
+    may_support_validated: true
+  synthetic_fixture:
+    authority_rank: 3
+    may_support_documented: false
+    may_support_observed: false
+    may_support_validated: true
+  third_party:
+    authority_rank: 4
+    may_support_documented: false
+    may_support_observed: false

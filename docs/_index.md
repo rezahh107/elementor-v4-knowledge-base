@@ -1,58 +1,67 @@
+<!-- GENERATED FILE. Edit manifests/stages.yaml and run tools/kb.py generate. -->
 # فهرست پایگاه دانش Elementor
 
-این فایل فهرست انسانی اسناد است.
+`manifest_sha256: 8cf22477506faafae5d8422b47a5207ce029ccd2b6c9a18a27e48c23a158e903`
 
-## اسناد Commit‌شده
+اسناد `unreviewed` یا دارای `document_level_legacy` پژوهش‌نامه‌اند و نباید authoritative تلقی شوند.
 
-### Indexها و نمای کلی V4
+## Indexها
 
-- [Widgets index](indexes/widgets-index.md) — `KB-001` — `completed_with_gaps`
-- [Editor V4 index](indexes/editor-v4-index.md) — `KB-002` — `completed_with_gaps`
-- [Explore the V4 features](overview/explore-v4-features.md) — `KB-003` — `completed_with_gaps`
+- [Widgets index](indexes/widgets-index.md) — `KB-001` — `completed_with_gaps` — `unreviewed`
+- [Editor V4 index](indexes/editor-v4-index.md) — `KB-002` — `completed_with_gaps` — `unreviewed`
 
-### Elementهای Editor V4
+## نمای کلی
 
-- [Button element](elements/v4/button.md) — `KB-004` — `completed_with_gaps`
-- [Heading element](elements/v4/heading.md) — `KB-005` — `completed_with_gaps`
-- [Image element](elements/v4/image.md) — `KB-018` — `completed_with_gaps`
-- [Paragraph element](elements/v4/paragraph.md) — `KB-019` — `completed_with_gaps`
-- [SVG element](elements/v4/svg.md) — `KB-020` — `completed_with_gaps`
+- [Explore the V4 features](overview/explore-v4-features.md) — `KB-003` — `completed_with_gaps` — `unreviewed`
 
-### Loop و Query
+## Elementهای Editor V4
 
-- [Loop Grid widget](widgets/loop/loop-grid.md) — `KB-006` — `completed_with_gaps`
-- [Build a query with the Loop Grid](widgets/loop/loop-grid-query.md) — `KB-007` — `completed_with_gaps`
-- [Elementor Query Configuration](concepts/queries/create-queries.md) — `KB-008` — `completed_with_gaps`
-- [Paginate your loop](widgets/loop/pagination.md) — `KB-009` — `completed_with_gaps`
-- [Taxonomy Filter widget](widgets/loop/taxonomy-filter.md) — `KB-010` — `completed_with_gaps`
-- [Loop Carousel](widgets/loop/loop-carousel.md) — `KB-011` — `completed_with_gaps`
-- [Alternate Template in Loop Grid](widgets/loop/alternate-template.md) — `KB-012` — `completed_with_gaps`
-- [Customize Layout in Loop Grid](widgets/loop/customize-layout.md) — `KB-013` — `completed_with_gaps`
-- [Off-Canvas in Loop Grid](widgets/loop/off-canvas.md) — `KB-014` — `completed_with_gaps`
-- [Search Widget and Results Archive](widgets/search/search-widget-and-results-archive.md) — `KB-015` — `completed_with_gaps`
+- [Button element](elements/v4/button.md) — `KB-004` — `completed_with_gaps` — `unreviewed`
+- [Heading element](elements/v4/heading.md) — `KB-005` — `completed_with_gaps` — `unreviewed`
+- Div Block element — `KB-016` — `not_scheduled` — اولویت `1`
+- Flexbox element — `KB-017` — `not_scheduled` — اولویت `2`
+- [Image element](elements/v4/image.md) — `KB-018` — `completed_with_gaps` — `unreviewed`
+- [Paragraph element](elements/v4/paragraph.md) — `KB-019` — `completed_with_gaps` — `unreviewed`
+- [SVG element](elements/v4/svg.md) — `KB-020` — `completed_with_gaps` — `unreviewed`
+- Tabs Element — `KB-021` — `not_scheduled` — اولویت `3`
+- YouTube element — `KB-022` — `not_scheduled` — اولویت `4`
 
-## زمان‌بندی‌شده
+## Loop
 
-موردی ثبت نشده است.
+- [Loop Grid widget](widgets/loop/loop-grid.md) — `KB-006` — `completed_with_gaps` — `unreviewed`
+- [Build a query with the Loop Grid](widgets/loop/loop-grid-query.md) — `KB-007` — `completed_with_gaps` — `unreviewed`
+- [Paginate your loop](widgets/loop/pagination.md) — `KB-009` — `completed_with_gaps` — `unreviewed`
+- [Taxonomy Filter widget](widgets/loop/taxonomy-filter.md) — `KB-010` — `completed_with_gaps` — `unreviewed`
+- [Loop Carousel](widgets/loop/loop-carousel.md) — `KB-011` — `completed_with_gaps` — `unreviewed`
+- [Add an alternate template in a loop grid](widgets/loop/alternate-template.md) — `KB-012` — `completed_with_gaps` — `unreviewed`
+- [Customize the layout of a Loop Grid](widgets/loop/customize-layout.md) — `KB-013` — `completed_with_gaps` — `unreviewed`
+- [Add an Off Canvas widget to a Loop Grid](widgets/loop/off-canvas.md) — `KB-014` — `completed_with_gaps` — `unreviewed`
 
-## صف پژوهش منتظر ظرفیت
+## Query
 
-- `KB-016` — Div Block element
-- `KB-017` — Flexbox element
-- `KB-021` — Tabs Element
-- `KB-022` — YouTube element
-- `KB-023` — Classes in Elementor
-- `KB-024` — The Elementor Editor Class Manager
-- `KB-025` — Variables
-- `KB-026` — Variables Manager
-- `KB-027` — Import and export design systems
-- `KB-028` — Style tab – Layout
-- `KB-029` — Style tab – Spacing
-- `KB-030` — Style tab – Size
-- `KB-031` — Style tab – Position
-- `KB-032` — Style tab – Typography
-- `KB-033` — Style tab – Background
-- `KB-034` — Style tab – Border
-- `KB-035` — Style tab – Effects
-- `KB-036` — Responsive editing
-- `KB-037` — Dynamic tags in V4
+- [Create queries](concepts/queries/create-queries.md) — `KB-008` — `completed_with_gaps` — `unreviewed`
+
+## Search
+
+- [Search Widget and Search Results Archive](widgets/search/search-widget-and-results-archive.md) — `KB-015` — `completed_with_gaps` — `unreviewed`
+
+## Design System
+
+- Classes in Elementor — `KB-023` — `not_scheduled` — اولویت `5`
+- The Elementor Editor Class Manager — `KB-024` — `not_scheduled` — اولویت `6`
+- Variables — `KB-025` — `not_scheduled` — اولویت `7`
+- Variables Manager — `KB-026` — `not_scheduled` — اولویت `8`
+- Import and export design systems — `KB-027` — `not_scheduled` — اولویت `9`
+
+## Style System
+
+- Style tab – Layout — `KB-028` — `not_scheduled` — اولویت `10`
+- Style tab – Spacing — `KB-029` — `not_scheduled` — اولویت `11`
+- Style tab – Size — `KB-030` — `not_scheduled` — اولویت `12`
+- Style tab – Position — `KB-031` — `not_scheduled` — اولویت `13`
+- Style tab – Typography — `KB-032` — `not_scheduled` — اولویت `14`
+- Style tab – Background — `KB-033` — `not_scheduled` — اولویت `15`
+- Style tab – Border — `KB-034` — `not_scheduled` — اولویت `16`
+- Style tab – Effects — `KB-035` — `not_scheduled` — اولویت `17`
+- Responsive editing — `KB-036` — `not_scheduled` — اولویت `18`
+- Dynamic tags in V4 — `KB-037` — `not_scheduled` — اولویت `19`

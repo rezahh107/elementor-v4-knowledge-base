@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elementor-evidence-kb"
+version = "1.0.0"
+description = "Deterministic validation tooling for the Elementor evidence knowledge base"
+requires-python = ">=3.11"
+dependencies = [
+  "PyYAML==6.0.3",
+  "jsonschema==4.26.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.0.2",
+]
+
+[project.scripts]
+elementor-kb = "tools.kb:main"
+
+[tool.setuptools]
+packages = ["tools"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

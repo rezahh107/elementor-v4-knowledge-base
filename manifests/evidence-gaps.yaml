@@ -1,0 +1,560 @@
+schema_version: 1
+gaps:
+- gap_id: GAP-KB-001-PROVENANCE
+  stage_id: KB-001
+  title: Claim-level provenance migration for Widgets index
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-001-SNAPSHOT
+  stage_id: KB-001
+  title: Reproducible source snapshot for Widgets index
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-002-PROVENANCE
+  stage_id: KB-002
+  title: Claim-level provenance migration for Editor V4 index
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-002-SNAPSHOT
+  stage_id: KB-002
+  title: Reproducible source snapshot for Editor V4 index
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-003-PROVENANCE
+  stage_id: KB-003
+  title: Claim-level provenance migration for Explore the V4 features
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-003-SNAPSHOT
+  stage_id: KB-003
+  title: Reproducible source snapshot for Explore the V4 features
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-004-PROVENANCE
+  stage_id: KB-004
+  title: Claim-level provenance migration for Button element
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-004-SNAPSHOT
+  stage_id: KB-004
+  title: Reproducible source snapshot for Button element
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-005-PROVENANCE
+  stage_id: KB-005
+  title: Claim-level provenance migration for Heading element
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-005-SNAPSHOT
+  stage_id: KB-005
+  title: Reproducible source snapshot for Heading element
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-006-PROVENANCE
+  stage_id: KB-006
+  title: Claim-level provenance migration for Loop Grid widget
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-006-SNAPSHOT
+  stage_id: KB-006
+  title: Reproducible source snapshot for Loop Grid widget
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-007-PROVENANCE
+  stage_id: KB-007
+  title: Claim-level provenance migration for Build a query with the Loop Grid
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-007-SNAPSHOT
+  stage_id: KB-007
+  title: Reproducible source snapshot for Build a query with the Loop Grid
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-008-PROVENANCE
+  stage_id: KB-008
+  title: Claim-level provenance migration for Create queries
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-008-SNAPSHOT
+  stage_id: KB-008
+  title: Reproducible source snapshot for Create queries
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-009-PROVENANCE
+  stage_id: KB-009
+  title: Claim-level provenance migration for Paginate your loop
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-009-SNAPSHOT
+  stage_id: KB-009
+  title: Reproducible source snapshot for Paginate your loop
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-010-PROVENANCE
+  stage_id: KB-010
+  title: Claim-level provenance migration for Taxonomy Filter widget
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-010-SNAPSHOT
+  stage_id: KB-010
+  title: Reproducible source snapshot for Taxonomy Filter widget
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-011-PROVENANCE
+  stage_id: KB-011
+  title: Claim-level provenance migration for Loop Carousel
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-011-SNAPSHOT
+  stage_id: KB-011
+  title: Reproducible source snapshot for Loop Carousel
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-012-PROVENANCE
+  stage_id: KB-012
+  title: Claim-level provenance migration for Add an alternate template in a loop grid
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-012-SNAPSHOT
+  stage_id: KB-012
+  title: Reproducible source snapshot for Add an alternate template in a loop grid
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-013-PROVENANCE
+  stage_id: KB-013
+  title: Claim-level provenance migration for Customize the layout of a Loop Grid
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-013-SNAPSHOT
+  stage_id: KB-013
+  title: Reproducible source snapshot for Customize the layout of a Loop Grid
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-014-PROVENANCE
+  stage_id: KB-014
+  title: Claim-level provenance migration for Add an Off Canvas widget to a Loop Grid
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-014-SNAPSHOT
+  stage_id: KB-014
+  title: Reproducible source snapshot for Add an Off Canvas widget to a Loop Grid
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-015-PROVENANCE
+  stage_id: KB-015
+  title: Claim-level provenance migration for Search Widget and Search Results Archive
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-015-SNAPSHOT
+  stage_id: KB-015
+  title: Reproducible source snapshot for Search Widget and Search Results Archive
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-018-PROVENANCE
+  stage_id: KB-018
+  title: Claim-level provenance migration for Image element
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-018-SNAPSHOT
+  stage_id: KB-018
+  title: Reproducible source snapshot for Image element
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-019-PROVENANCE
+  stage_id: KB-019
+  title: Claim-level provenance migration for Paragraph element
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-019-SNAPSHOT
+  stage_id: KB-019
+  title: Reproducible source snapshot for Paragraph element
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-020-PROVENANCE
+  stage_id: KB-020
+  title: Claim-level provenance migration for SVG element
+  status: open
+  severity: high
+  missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
+  affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
+  required_source: peer_reviewed_claim_migration
+  blocks:
+  - authoritative_status
+  - claim_level_citation
+- gap_id: GAP-KB-020-SNAPSHOT
+  stage_id: KB-020
+  title: Reproducible source snapshot for SVG element
+  status: open
+  severity: medium
+  missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
+  affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
+  required_source: controlled_source_snapshot
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-001-REVIEW
+  stage_id: KB-001
+  title: Independent review for Widgets index
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-002-REVIEW
+  stage_id: KB-002
+  title: Independent review for Editor V4 index
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-003-REVIEW
+  stage_id: KB-003
+  title: Independent review for Explore the V4 features
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-004-REVIEW
+  stage_id: KB-004
+  title: Independent review for Button element
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-005-REVIEW
+  stage_id: KB-005
+  title: Independent review for Heading element
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-006-REVIEW
+  stage_id: KB-006
+  title: Independent review for Loop Grid widget
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-007-REVIEW
+  stage_id: KB-007
+  title: Independent review for Build a query with the Loop Grid
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-008-REVIEW
+  stage_id: KB-008
+  title: Independent review for Create queries
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-009-REVIEW
+  stage_id: KB-009
+  title: Independent review for Paginate your loop
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-010-REVIEW
+  stage_id: KB-010
+  title: Independent review for Taxonomy Filter widget
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-011-REVIEW
+  stage_id: KB-011
+  title: Independent review for Loop Carousel
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-012-REVIEW
+  stage_id: KB-012
+  title: Independent review for Add an alternate template in a loop grid
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-013-REVIEW
+  stage_id: KB-013
+  title: Independent review for Customize the layout of a Loop Grid
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-014-REVIEW
+  stage_id: KB-014
+  title: Independent review for Add an Off Canvas widget to a Loop Grid
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-015-REVIEW
+  stage_id: KB-015
+  title: Independent review for Search Widget and Search Results Archive
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-018-REVIEW
+  stage_id: KB-018
+  title: Independent review for Image element
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-019-REVIEW
+  stage_id: KB-019
+  title: Independent review for Paragraph element
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
+- gap_id: GAP-KB-020-REVIEW
+  stage_id: KB-020
+  title: Independent review for SVG element
+  status: open
+  severity: high
+  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
+  affected_conclusion: The document cannot be classified as authoritative.
+  required_source: independent_peer_review_or_real_fixture
+  blocks:
+  - authoritative_status
