@@ -1,0 +1,143 @@
+schema_version: 1
+stage_id: KB-004
+source_id: SRC-KB-004-01
+claims:
+- claim_id: KB-004-C001
+  state: documented
+  locator: lines 1145-1147
+  claim: The official article title is Button element and reports Last Update July 1, 2025.
+- claim_id: KB-004-C002
+  state: documented
+  locator: lines 1149-1151
+  claim: The article is for Editor v4 users.
+- claim_id: KB-004-C003
+  state: documented
+  locator: line 1151
+  claim: Editor v3 users are directed to a separate Button Widget article.
+- claim_id: KB-004-C004
+  state: documented
+  locator: lines 1171-1173
+  claim: Buttons guide user actions, provide calls to action, enhance engagement, and add interactive visual buttons.
+- claim_id: KB-004-C005
+  state: documented
+  locator: lines 1174-1176
+  claim: The main use case links a hero-section button to a registration page.
+- claim_id: KB-004-C006
+  state: documented
+  locator: lines 1181-1185
+  claim: Additional use cases include portfolio links, event/webinar banners or posters, and before/after transformations.
+- claim_id: KB-004-C007
+  state: documented
+  locator: lines 1183-1185
+  claim: Each Button in a portfolio gallery can link to a project page or detailed view.
+- claim_id: KB-004-C008
+  state: documented_source_anomaly
+  locator: lines 1176-1178
+  claim: The article includes a rating-related sentence that is inconsistent with the Button element context; it is not treated as a Button feature.
+- claim_id: KB-004-C009
+  state: documented
+  locator: lines 1156-1163
+  claim: To add the element, click plus in Elementor Editor, then click or drag the element to the canvas.
+- claim_id: KB-004-C010
+  state: documented
+  locator: lines 1165-1170
+  claim: To delete the element, select it on the canvas and press the delete key.
+- claim_id: KB-004-C011
+  state: documented_source_anomaly
+  locator: lines 1158-1167
+  claim: The article uses widget wording inside an Editor V4 element article.
+- claim_id: KB-004-C012
+  state: documented_example
+  locator: lines 1190-1192
+  image_evidence_id: IMG-KB-004-002
+  claim: The step-by-step example enters Get Started in Button text; this is an example value, not a documented default.
+- claim_id: KB-004-C013
+  state: documented
+  locator: lines 1193-1197
+  image_evidence_id: IMG-KB-004-003
+  claim: The example clicks the plus sign next to Link and adds the destination URL in the Link text box.
+- claim_id: KB-004-C014
+  state: documented_example
+  locator: lines 1201-1203
+  image_evidence_id: IMG-KB-004-004
+  claim: The example sets Width to 200 and Height to 50; these are example values, not documented defaults.
+- claim_id: KB-004-C015
+  state: documented_example
+  locator: lines 1209-1213
+  claim: The example selects Font Family Sora, Font Weight 600, and Font Size 16; these are example values, not documented defaults.
+- claim_id: KB-004-C016
+  state: documented_example
+  locator: lines 1214-1221
+  claim: The example opens Background, opens the color picker, and sets opacity to 0%; this is an example value.
+- claim_id: KB-004-C017
+  state: documented_example
+  locator: lines 1222-1230
+  claim: The example opens Border, clicks Adjust Borders, and enters 50 for all corners; this is an example value.
+- claim_id: KB-004-C018
+  state: documented_example
+  locator: lines 1231-1235
+  claim: The example clicks the plus sign by Border and increases Border width to 2; this is an example value.
+- claim_id: KB-004-C019
+  state: documented_example
+  locator: lines 1235-1238
+  claim: The example sets Border color to #FFFFFF; this is an example value.
+- claim_id: KB-004-C020
+  state: documented
+  locator: lines 1254-1262
+  image_evidence_id: IMG-KB-004-008
+  claim: General tab includes Button text, the text appearing in the button.
+- claim_id: KB-004-C021
+  state: documented
+  locator: lines 1264-1268
+  claim: General tab includes Link; clicking plus allows entering a link, and visitors clicking the button open the link.
+- claim_id: KB-004-C022
+  state: documented
+  locator: lines 1268-1270
+  claim: If the Button contains a link, Open in a new tab toggles whether the link opens in a new tab.
+- claim_id: KB-004-C023
+  state: documented
+  locator: lines 1272-1274
+  claim: ID lets users tag individual elements on a page so they can link to that specific element.
+- claim_id: KB-004-C024
+  state: documented
+  locator: lines 1275-1292
+  image_evidence_id: IMG-KB-004-009
+  claim: Style tab links to individual articles for Layout, Spacing, Size, Position, Typography, Background, Border, and Effects.
+- claim_id: KB-004-C025
+  state: documented
+  locator: lines 1238-1239
+  claim: Hover is called a state, and elements can be edited to change appearance depending on state.
+- claim_id: KB-004-C026
+  state: documented
+  locator: lines 1240-1244
+  image_evidence_id: IMG-KB-004-005
+  claim: In Classes text field, clicking ellipses next to local and selecting Hover changes the editing context.
+- claim_id: KB-004-C027
+  state: documented
+  locator: lines 1243-1244
+  image_evidence_id: IMG-KB-004-007
+  claim: The word hover appears in the Classes text box and is colored pink, indicating hover editing.
+- claim_id: KB-004-C028
+  state: documented_example
+  locator: lines 1245-1248
+  claim: The example changes Hover color to #FFFFFF and opacity to 100%, and the button turns white on mouse hover.
+- claim_id: KB-004-C029
+  state: insufficient_evidence
+  locator: article_scope
+  claim: The article does not document actual default values for all Button element controls.
+- claim_id: KB-004-C030
+  state: insufficient_evidence
+  locator: article_scope
+  claim: The article does not document runtime HTML, ARIA, keyboard focus, responsive overrides, link protocol handling, Ajax behavior, or exact product version requirements.
+derived_claims:
+- claim_id: KB-004-D001
+  state: derived
+  derived_from:
+  - KB-004-C002
+  - KB-004-C003
+  claim: This KB document should use Button element terminology for Editor V4 and not silently convert it to Button Widget terminology.
+- claim_id: KB-004-D002
+  state: derived
+  derived_from:
+  - KB-004-C024
+  claim: Details of the Style option families must be sourced from their own articles before being promoted beyond cross-reference status.
