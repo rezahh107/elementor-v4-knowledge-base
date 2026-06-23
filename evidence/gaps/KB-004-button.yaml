@@ -1,0 +1,44 @@
+schema_version: 1
+stage_id: KB-004
+gaps:
+- gap_id: GAP-KB-004-RAW-CONTENT-SHA256
+  status: open
+  severity: medium
+  missing_evidence: Raw canonical page bytes were not exposed to this automation runtime, so a true content_sha256 could not be calculated.
+  affected_conclusion: Source snapshot is inspectable by locators and rendered text, but not byte-reproducible.
+  required_source: raw_html_fetch_or_archived_snapshot
+  blocks:
+  - authoritative_status
+  - exact_source_reproduction
+- gap_id: GAP-KB-004-RUNTIME
+  status: open
+  severity: high
+  missing_evidence: No controlled runtime fixture was executed for DOM, browser, submit, disabled, analytics, protocol, sanitization, URL, or AJAX behavior.
+  affected_conclusion: Runtime behavior is not claimed.
+  required_source: controlled_real_runtime_fixture
+  blocks:
+  - runtime_claims
+- gap_id: GAP-KB-004-ACCESSIBILITY
+  status: open
+  severity: high
+  missing_evidence: The article does not document ARIA output, accessible name behavior, keyboard focus, focus-visible, or screen-reader behavior.
+  affected_conclusion: Accessibility behavior is not claimed.
+  required_source: official_accessibility_doc_or_controlled_fixture
+  blocks:
+  - accessibility_claims
+- gap_id: GAP-KB-004-RESPONSIVE
+  status: open
+  severity: medium
+  missing_evidence: The article does not document responsive overrides or breakpoint behavior for the Button element.
+  affected_conclusion: Responsive behavior is not claimed.
+  required_source: official_responsive_doc_or_controlled_fixture
+  blocks:
+  - responsive_claims
+- gap_id: GAP-KB-004-PEER-REVIEW
+  status: open
+  severity: medium
+  missing_evidence: Independent human review has not been performed.
+  affected_conclusion: review_status must not exceed machine_validated.
+  required_source: independent_peer_review
+  blocks:
+  - peer_reviewed_status
