@@ -1,0 +1,37 @@
+schema_version: 1
+source_id: SRC-KB-004-01
+stage_id: KB-004
+source_type: official_help
+requested_url: https://elementor.com/help/button-element/
+canonical_url: https://elementor.com/help/button-element/
+retrieved_at: '2026-06-23T16:53:00+03:00'
+http_status: 200
+page_title: Button element | Elementor
+reported_last_updated: '2025-07-01'
+content_sha256: null
+content_sha256_status: raw_page_bytes_not_available
+canonical_locators:
+  article_header: lines 1142-1151
+  add_delete: lines 1152-1170
+  definition_and_use_cases: lines 1171-1185
+  step_by_step: lines 1186-1250
+  settings_general: lines 1251-1274
+  settings_style: lines 1275-1292
+image_evidence_ids:
+  inspected:
+  - IMG-KB-004-001
+  - IMG-KB-004-002
+  - IMG-KB-004-003
+  - IMG-KB-004-004
+  - IMG-KB-004-005
+  - IMG-KB-004-006
+  - IMG-KB-004-007
+  - IMG-KB-004-008
+  - IMG-KB-004-009
+open_evidence_gaps:
+  - GAP-KB-004-RAW-CONTENT-SHA256
+  - GAP-KB-004-RUNTIME
+  - GAP-KB-004-ACCESSIBILITY
+  - GAP-KB-004-RESPONSIVE
+notes:
+  - The source page text and official images were inspected, but raw page bytes were not exposed; content_sha256 was not guessed.
