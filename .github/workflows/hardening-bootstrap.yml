@@ -37,11 +37,11 @@ jobs:
           python tools/kb.py generate --check
           python tools/kb.py validate --strict
           python -m pytest
-      - name: Commit hardening platform
+      - name: Commit validated non-workflow platform files
         run: |
-          rm -rf bootstrap .github/workflows/hardening-bootstrap.yml
+          rm -f .github/workflows/kb-quality.yml .github/workflows/source-health.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git add -A -- ':!.github/workflows'
           git commit -m "feat(kb): harden evidence platform and validation gates"
           git push origin HEAD:hardening/evidence-platform-v1
