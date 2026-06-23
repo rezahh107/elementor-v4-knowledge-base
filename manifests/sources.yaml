@@ -1,5 +1,5 @@
-manifest_version: 2
-updated_at: 2026-06-23T10:51:16+03:00
+manifest_version: 3
+updated_at: 2026-06-23T10:56:00+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -14,7 +14,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: d59a28d614e93221f5737df277f78fea0b6b42a2
-
   - stage_id: KB-002
     knowledge_id: elementor.help.editor-v4-index
     title: Editor V4 index
@@ -25,7 +24,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: d028238125554e9fd35e4e31900f0fe97ddf96a4
-
   - stage_id: KB-003
     knowledge_id: elementor.help.explore-v4-features
     title: Explore the V4 features
@@ -36,7 +34,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 4d2486d5997a642e994583cedf1a716aff2084b1
-
   - stage_id: KB-004
     knowledge_id: elementor.help.button-element
     title: Button element
@@ -47,7 +44,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 7108a82dde4e446ac5cc88cd5ffbfb13bd08575d
-
   - stage_id: KB-005
     knowledge_id: elementor.help.heading-element
     title: Heading element
@@ -58,7 +54,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac
-
   - stage_id: KB-006
     knowledge_id: elementor.help.loop-grid
     title: Loop Grid widget
@@ -69,7 +64,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae
-
   - stage_id: KB-007
     knowledge_id: elementor.help.loop-grid-query
     title: Build a query with the Loop Grid
@@ -81,7 +75,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e
-
   - stage_id: KB-008
     knowledge_id: elementor.help.query-configuration
     title: Create queries
@@ -92,7 +85,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9
-
   - stage_id: KB-009
     knowledge_id: elementor.help.loop-pagination
     title: Paginate your loop
@@ -104,7 +96,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c
-
   - stage_id: KB-010
     knowledge_id: elementor.help.taxonomy-filter
     title: Taxonomy Filter widget
@@ -116,7 +107,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 95657df95445c453d310107715ddc3008baf68bb
-
   - stage_id: KB-011
     knowledge_id: elementor.help.loop-carousel
     title: Loop Carousel
@@ -125,7 +115,6 @@ sources:
     output_path: docs/widgets/loop/loop-carousel.md
     status: scheduled
     scheduled_for: 2026-06-23T11:00:00+03:00
-
   - stage_id: KB-012
     knowledge_id: elementor.help.loop-alternate-template
     title: Add an alternate template in a loop grid
@@ -134,7 +123,6 @@ sources:
     output_path: docs/widgets/loop/alternate-template.md
     status: scheduled
     scheduled_for: 2026-06-23T12:00:00+03:00
-
   - stage_id: KB-013
     knowledge_id: elementor.help.loop-customize-layout
     title: Customize the layout of a Loop Grid
@@ -143,7 +131,6 @@ sources:
     output_path: docs/widgets/loop/customize-layout.md
     status: scheduled
     scheduled_for: 2026-06-23T13:00:00+03:00
-
   - stage_id: KB-014
     knowledge_id: elementor.help.loop-off-canvas
     title: Add an Off Canvas widget to a Loop Grid
@@ -151,8 +138,7 @@ sources:
     source_type: official_help
     output_path: docs/widgets/loop/off-canvas.md
     status: not_scheduled
-    queue_priority: 4
-
+    queue_priority: 1
   - stage_id: KB-015
     knowledge_id: elementor.help.search-widget-results-archive
     title: Search Widget and Search Results Archive
@@ -162,8 +148,7 @@ sources:
     source_type: official_help
     output_path: docs/widgets/search/search-widget-and-results-archive.md
     status: not_scheduled
-    queue_priority: 5
-
+    queue_priority: 2
   - stage_id: KB-016
     knowledge_id: elementor.help.div-block-element
     title: Div Block element
@@ -171,8 +156,7 @@ sources:
     source_type: official_help
     output_path: docs/elements/v4/div-block.md
     status: not_scheduled
-    queue_priority: 6
-
+    queue_priority: 3
   - stage_id: KB-017
     knowledge_id: elementor.help.flexbox-element
     title: Flexbox element
@@ -180,8 +164,7 @@ sources:
     source_type: official_help
     output_path: docs/elements/v4/flexbox.md
     status: not_scheduled
-    queue_priority: 7
-
+    queue_priority: 4
   - stage_id: KB-018
     knowledge_id: elementor.help.image-element
     title: Image element
@@ -192,7 +175,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c
-
   - stage_id: KB-019
     knowledge_id: elementor.help.paragraph-element
     title: Paragraph element
@@ -203,7 +185,6 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73
-
   - stage_id: KB-020
     knowledge_id: elementor.help.svg-element
     title: SVG element
@@ -214,3 +195,139 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 05cc163db725b1f79f2664bd6eede28a736a23bf
+  - stage_id: KB-021
+    knowledge_id: elementor.help.tabs-element
+    title: Tabs Element
+    source_url: https://elementor.com/help/tabs-element/
+    source_type: official_help
+    output_path: docs/elements/v4/tabs.md
+    status: not_scheduled
+    queue_priority: 5
+  - stage_id: KB-022
+    knowledge_id: elementor.help.youtube-element
+    title: YouTube element
+    source_url: https://elementor.com/help/youtube-element/
+    source_type: official_help
+    output_path: docs/elements/v4/youtube.md
+    status: not_scheduled
+    queue_priority: 6
+  - stage_id: KB-023
+    knowledge_id: elementor.help.classes-in-elementor
+    title: Classes in Elementor
+    source_url: https://elementor.com/help/classes-in-elementor-2/
+    source_type: official_help
+    output_path: docs/design-system/classes.md
+    status: not_scheduled
+    queue_priority: 7
+  - stage_id: KB-024
+    knowledge_id: elementor.help.class-manager
+    title: The Elementor Editor Class Manager
+    source_url: https://elementor.com/help/the-elementor-editor-class-manager/
+    source_type: official_help
+    output_path: docs/design-system/class-manager.md
+    status: not_scheduled
+    queue_priority: 8
+  - stage_id: KB-025
+    knowledge_id: elementor.help.variables
+    title: Variables
+    source_url: https://elementor.com/help/variables/
+    source_type: official_help
+    output_path: docs/design-system/variables.md
+    status: not_scheduled
+    queue_priority: 9
+  - stage_id: KB-026
+    knowledge_id: elementor.help.variables-manager
+    title: Variables Manager
+    source_url: https://elementor.com/help/variables-manager/
+    source_type: official_help
+    output_path: docs/design-system/variables-manager.md
+    status: not_scheduled
+    queue_priority: 10
+  - stage_id: KB-027
+    knowledge_id: elementor.help.design-system-import-export
+    title: Import and export design systems
+    source_url: https://elementor.com/help/how-to-import-and-export-design-systems/
+    source_type: official_help
+    output_path: docs/design-system/import-export.md
+    status: not_scheduled
+    queue_priority: 11
+  - stage_id: KB-028
+    knowledge_id: elementor.help.style-layout
+    title: Style tab – Layout
+    source_url: https://elementor.com/help/style-tab-layout/
+    source_type: official_help
+    output_path: docs/style-system/layout.md
+    status: not_scheduled
+    queue_priority: 12
+  - stage_id: KB-029
+    knowledge_id: elementor.help.style-spacing
+    title: Style tab – Spacing
+    source_url: https://elementor.com/help/style-tab-spacing/
+    source_type: official_help
+    output_path: docs/style-system/spacing.md
+    status: not_scheduled
+    queue_priority: 13
+  - stage_id: KB-030
+    knowledge_id: elementor.help.style-size
+    title: Style tab – Size
+    source_url: https://elementor.com/help/style-tab-size/
+    source_type: official_help
+    output_path: docs/style-system/size.md
+    status: not_scheduled
+    queue_priority: 14
+  - stage_id: KB-031
+    knowledge_id: elementor.help.style-position
+    title: Style tab – Position
+    source_url: https://elementor.com/help/style-tab-position/
+    source_type: official_help
+    output_path: docs/style-system/position.md
+    status: not_scheduled
+    queue_priority: 15
+  - stage_id: KB-032
+    knowledge_id: elementor.help.style-typography
+    title: Style tab – Typography
+    source_url: https://elementor.com/help/style-tab-typography/
+    source_type: official_help
+    output_path: docs/style-system/typography.md
+    status: not_scheduled
+    queue_priority: 16
+  - stage_id: KB-033
+    knowledge_id: elementor.help.style-background
+    title: Style tab – Background
+    source_url: https://elementor.com/help/style-tab-background/
+    source_type: official_help
+    output_path: docs/style-system/background.md
+    status: not_scheduled
+    queue_priority: 17
+  - stage_id: KB-034
+    knowledge_id: elementor.help.style-border
+    title: Style tab – Border
+    source_url: https://elementor.com/help/style-tab-border/
+    source_type: official_help
+    output_path: docs/style-system/border.md
+    status: not_scheduled
+    queue_priority: 18
+  - stage_id: KB-035
+    knowledge_id: elementor.help.style-effects
+    title: Style tab – Effects
+    source_url: https://elementor.com/help/style-tab-effects/
+    source_type: official_help
+    output_path: docs/style-system/effects.md
+    status: not_scheduled
+    queue_priority: 19
+  - stage_id: KB-036
+    knowledge_id: elementor.help.responsive-editing
+    title: Responsive editing
+    source_url: https://elementor.com/help/responsive-editing/
+    source_type: official_help
+    output_path: docs/style-system/responsive-editing.md
+    status: not_scheduled
+    queue_priority: 20
+  - stage_id: KB-037
+    knowledge_id: elementor.help.dynamic-tags-v4
+    title: Dynamic tags in V4
+    source_url: https://elementor.com/help/dynamic-tags-in-v4/
+    source_type: official_help
+    output_path: docs/style-system/dynamic-tags-v4.md
+    status: not_scheduled
+    queue_priority: 21
