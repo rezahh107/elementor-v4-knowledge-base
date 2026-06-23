@@ -27,42 +27,42 @@
 - [Taxonomy Filter widget](widgets/loop/taxonomy-filter.md) — `KB-010` — `completed_with_gaps`
 - [Loop Carousel](widgets/loop/loop-carousel.md) — `KB-011` — `completed_with_gaps`
 - [Alternate Template in Loop Grid](widgets/loop/alternate-template.md) — `KB-012` — `completed_with_gaps`
+- [Customize Layout in Loop Grid](widgets/loop/customize-layout.md) — `KB-013` — `completed_with_gaps`
 
 ## زمان‌بندی‌شده
 
-- `KB-013` — Customize Layout in Loop Grid — 2026-06-23 13:00 Europe/Istanbul
+- `KB-014` — Off-Canvas in Loop Grid — 2026-06-23 13:00 Europe/Istanbul
 
 ## صف پژوهش منتظر ظرفیت
 
 ### تکمیل خانواده Loop و Elementهای پایه
 
-1. `KB-014` — Off-Canvas in Loop Grid
-2. `KB-015` — Search Widget and Search Results Archive
-3. `KB-016` — Div Block element
-4. `KB-017` — Flexbox element
-5. `KB-021` — Tabs Element
-6. `KB-022` — YouTube element
+1. `KB-015` — Search Widget and Search Results Archive
+2. `KB-016` — Div Block element
+3. `KB-017` — Flexbox element
+4. `KB-021` — Tabs Element
+5. `KB-022` — YouTube element
 
 ### Design System
 
-7. `KB-023` — Classes in Elementor
-8. `KB-024` — The Elementor Editor Class Manager
-9. `KB-025` — Variables
-10. `KB-026` — Variables Manager
-11. `KB-027` — Import and export design systems
+6. `KB-023` — Classes in Elementor
+7. `KB-024` — The Elementor Editor Class Manager
+8. `KB-025` — Variables
+9. `KB-026` — Variables Manager
+10. `KB-027` — Import and export design systems
 
 ### Style System مشترک
 
-12. `KB-028` — Style tab – Layout
-13. `KB-029` — Style tab – Spacing
-14. `KB-030` — Style tab – Size
-15. `KB-031` — Style tab – Position
-16. `KB-032` — Style tab – Typography
-17. `KB-033` — Style tab – Background
-18. `KB-034` — Style tab – Border
-19. `KB-035` — Style tab – Effects
-20. `KB-036` — Responsive editing
-21. `KB-037` — Dynamic tags in V4
+11. `KB-028` — Style tab – Layout
+12. `KB-029` — Style tab – Spacing
+13. `KB-030` — Style tab – Size
+14. `KB-031` — Style tab – Position
+15. `KB-032` — Style tab – Typography
+16. `KB-033` — Style tab – Background
+17. `KB-034` — Style tab – Border
+18. `KB-035` — Style tab – Effects
+19. `KB-036` — Responsive editing
+20. `KB-037` — Dynamic tags in V4
 
 همه این مراحل `not_scheduled` هستند. مدیر صف یکتا پس از آزادشدن ظرفیت، فقط مرحله بعدی را بر اساس همین اولویت برای نزدیک‌ترین ساعت کامل آینده برنامه‌ریزی می‌کند.
 
