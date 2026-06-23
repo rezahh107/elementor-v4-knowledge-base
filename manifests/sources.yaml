@@ -1,5 +1,5 @@
-manifest_version: 1
-updated_at: 2026-06-23T00:03:10+03:00
+manifest_version: 2
+updated_at: 2026-06-23T10:51:16+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -9,40 +9,55 @@ sources:
     title: Widgets index
     source_url: https://elementor.com/help/build-with-the-editor/widgets/
     source_type: official_help
-    output_path: null
-    status: pending_import
+    source_last_updated: null
+    output_path: docs/indexes/widgets-index.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: d59a28d614e93221f5737df277f78fea0b6b42a2
 
   - stage_id: KB-002
     knowledge_id: elementor.help.editor-v4-index
     title: Editor V4 index
     source_url: https://elementor.com/help/build-with-the-editor/v4-editor/
     source_type: official_help
-    output_path: null
-    status: pending_import
+    source_last_updated: null
+    output_path: docs/indexes/editor-v4-index.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: d028238125554e9fd35e4e31900f0fe97ddf96a4
 
   - stage_id: KB-003
     knowledge_id: elementor.help.explore-v4-features
     title: Explore the V4 features
     source_url: https://elementor.com/help/explore-the-v4-features/
     source_type: official_help
-    output_path: null
-    status: pending_import
+    source_last_updated: 2025-06-11
+    output_path: docs/overview/explore-v4-features.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 4d2486d5997a642e994583cedf1a716aff2084b1
 
   - stage_id: KB-004
     knowledge_id: elementor.help.button-element
     title: Button element
     source_url: https://elementor.com/help/button-element/
     source_type: official_help
-    output_path: null
-    status: pending_import
+    source_last_updated: 2025-07-01
+    output_path: docs/elements/v4/button.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 7108a82dde4e446ac5cc88cd5ffbfb13bd08575d
 
   - stage_id: KB-005
     knowledge_id: elementor.help.heading-element
     title: Heading element
     source_url: https://elementor.com/help/heading-element/
     source_type: official_help
-    output_path: null
-    status: pending_import
+    source_last_updated: 2025-08-28
+    output_path: docs/elements/v4/heading.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac
 
   - stage_id: KB-006
     knowledge_id: elementor.help.loop-grid
@@ -109,6 +124,7 @@ sources:
     source_type: official_help
     output_path: docs/widgets/loop/loop-carousel.md
     status: scheduled
+    scheduled_for: 2026-06-23T11:00:00+03:00
 
   - stage_id: KB-012
     knowledge_id: elementor.help.loop-alternate-template
@@ -117,6 +133,7 @@ sources:
     source_type: official_help
     output_path: docs/widgets/loop/alternate-template.md
     status: scheduled
+    scheduled_for: 2026-06-23T12:00:00+03:00
 
   - stage_id: KB-013
     knowledge_id: elementor.help.loop-customize-layout
@@ -125,6 +142,7 @@ sources:
     source_type: official_help
     output_path: docs/widgets/loop/customize-layout.md
     status: scheduled
+    scheduled_for: 2026-06-23T13:00:00+03:00
 
   - stage_id: KB-014
     knowledge_id: elementor.help.loop-off-canvas
@@ -132,7 +150,8 @@ sources:
     source_url: https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/
     source_type: official_help
     output_path: docs/widgets/loop/off-canvas.md
-    status: scheduled
+    status: not_scheduled
+    queue_priority: 4
 
   - stage_id: KB-015
     knowledge_id: elementor.help.search-widget-results-archive
@@ -142,7 +161,8 @@ sources:
       - https://elementor.com/help/customize-the-search-results-archive/
     source_type: official_help
     output_path: docs/widgets/search/search-widget-and-results-archive.md
-    status: scheduled
+    status: not_scheduled
+    queue_priority: 5
 
   - stage_id: KB-016
     knowledge_id: elementor.help.div-block-element
@@ -150,7 +170,8 @@ sources:
     source_url: https://elementor.com/help/div-block-element/
     source_type: official_help
     output_path: docs/elements/v4/div-block.md
-    status: scheduled
+    status: not_scheduled
+    queue_priority: 6
 
   - stage_id: KB-017
     knowledge_id: elementor.help.flexbox-element
@@ -158,7 +179,8 @@ sources:
     source_url: https://elementor.com/help/flexbox-element/
     source_type: official_help
     output_path: docs/elements/v4/flexbox.md
-    status: scheduled
+    status: not_scheduled
+    queue_priority: 7
 
   - stage_id: KB-018
     knowledge_id: elementor.help.image-element
@@ -181,3 +203,14 @@ sources:
     evidence_status: completed_with_gaps
     storage_status: committed
     content_commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73
+
+  - stage_id: KB-020
+    knowledge_id: elementor.help.svg-element
+    title: SVG element
+    source_url: https://elementor.com/help/svg-element/
+    source_type: official_help
+    source_last_updated: 2025-07-01
+    output_path: docs/elements/v4/svg.md
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: 05cc163db725b1f79f2664bd6eede28a736a23bf
