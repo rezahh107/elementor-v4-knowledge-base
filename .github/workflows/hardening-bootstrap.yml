@@ -1,12 +1,13 @@
 name: Hardening Bootstrap
 
 on:
-  push:
+  pull_request:
     branches:
-      - hardening/evidence-platform-v1
+      - main
     paths:
       - bootstrap/**
       - .github/workflows/hardening-bootstrap.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,15 +18,16 @@ concurrency:
 
 jobs:
   bootstrap:
+    if: github.head_ref == 'hardening/evidence-platform-v1' || github.ref_name == 'hardening/evidence-platform-v1'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
+          ref: hardening/evidence-platform-v1
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-          cache: pip
       - name: Extract verified hardening payload
         run: python bootstrap/bootstrap_hardening.py
       - name: Install validation dependencies
