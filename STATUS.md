@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 24
-last_updated: 2026-06-23T12:34:06+03:00
+status_version: 25
+last_updated: 2026-06-23T13:28:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -17,10 +17,10 @@ queue_manager_status: single_active
 
 | شاخص | مقدار |
 |---|---:|
-| منابع رسمی بررسی‌شده | 15 |
-| اسناد تکمیل‌شده و Commit‌شده | 15 |
+| منابع رسمی بررسی‌شده | 16 |
+| اسناد تکمیل‌شده و Commit‌شده | 16 |
 | اسناد در انتظار انتقال | 0 |
-| مراحل پژوهشی زمان‌بندی‌شده | 2 |
+| مراحل پژوهشی زمان‌بندی‌شده | 1 |
 | مراحل منتظر ظرفیت (`not_scheduled`) | 20 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
@@ -43,7 +43,7 @@ queue_manager_status: single_active
 | KB-010 | Taxonomy Filter widget | `docs/widgets/loop/taxonomy-filter.md` — `completed_with_gaps` |
 | KB-011 | Loop Carousel | `docs/widgets/loop/loop-carousel.md` — `completed_with_gaps` |
 | KB-012 | Add an alternate template in a loop grid | `docs/widgets/loop/alternate-template.md` — `completed_with_gaps` |
-| KB-013 | Customize the layout of a Loop Grid | `scheduled` — 2026-06-23 13:00 |
+| KB-013 | Customize the layout of a Loop Grid | `docs/widgets/loop/customize-layout.md` — `completed_with_gaps` |
 | KB-014 | Add an Off Canvas widget to a Loop Grid | `scheduled` — 2026-06-23 13:00 |
 | KB-015 | Search Widget and Search Results Archive | `not_scheduled` |
 | KB-016 | Div Block element | `not_scheduled` |
@@ -102,6 +102,15 @@ queue_manager_status: single_active
   evidence_gaps: [exact_elementor_version, pro_or_plan_prerequisite, complete_default_values, complete_control_matrix, query_interaction, pagination_behavior, ajax_behavior, url_behavior, responsive_controls, breakpoint_behavior, display_conditions, dynamic_content, accessibility, keyboard_and_focus_behavior, frontend_runtime_markup, dom_order, template_creation_details, theme_builder_details, static_item_query_count_effect, column_span_allowed_values, max_alternative_templates, interaction_with_masonry_or_custom_layouts]
   notes: "Alternate Template در Loop Grid از منبع رسمی و لینک‌های تصویر رسمی بررسی شد؛ تصاویر مستقیم به دلیل Cache miss ابزار قابل مشاهده کامل نبودند، بنابراین جزئیات تصویری فقط در حد جایگاه و ارتباط با متن رسمی ثبت شدند. صفحات فرعی Theme Builder، Loop Grid و ساخت Loop Item بدون بررسی مستقل به سند نسبت داده نشدند."
   counters: {official_pages_reviewed: 1, official_images_indexed: 14, official_images_directly_viewed: 0}
+- stage_id: KB-013
+  status: completed_with_gaps
+  source_url: https://elementor.com/help/customize-layout-loop/
+  output_path: docs/widgets/loop/customize-layout.md
+  completed_at: 2026-06-23T13:28:00+03:00
+  commit_sha: 82e837133913be600b89cef604d59f0919ea6093
+  evidence_gaps: [exact_elementor_version, pro_or_plan_prerequisite, defaults, control_ranges, template_creation, query_controls, pagination_behavior, ajax_behavior, url_behavior, responsive_controls, breakpoint_behavior, equal_height, row_gap, column_gap, style_controls, display_conditions, accessibility, keyboard_and_focus_behavior, frontend_runtime_markup, dom_order, masonry_algorithm, dynamic_content, rtl_behavior]
+  notes: "Customize Layout in Loop Grid از متن رسمی و تصاویر رسمی بررسی شد؛ تصاویر پنل تنظیمات با Cache miss مستقیم باز نشدند، اما URL و Caption آن‌ها ثبت شد. تصاویر Masonry مستقیم دیده شدند. صفحات Build a loop grid و Paginate your loop بدون بررسی مستقل به این سند نسبت داده نشدند."
+  counters: {official_pages_reviewed: 1, official_images_indexed: 6, official_images_directly_viewed: 2}
 - {stage_id: KB-018, status: completed_with_gaps, source_url: "https://elementor.com/help/image-element/", output_path: "docs/elements/v4/image.md", completed_at: "2026-06-22T23:08:43+03:00", commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c, evidence_gaps: [exact_elementor_version, plan_or_pro_prerequisite, aspect_ratio, object_fit, lazy_loading, responsive_controls, dynamic_data, classes_and_variables, element_states, accessibility, seo, runtime_behavior]}
 - {stage_id: KB-019, status: completed_with_gaps, source_url: "https://elementor.com/help/paragraph-element/", output_path: "docs/elements/v4/paragraph.md", completed_at: "2026-06-23T00:06:13+03:00", commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73, evidence_gaps: [exact_elementor_version, plan_or_pro_prerequisite, inline_editing, html_tag_and_semantics, partial_text_links, custom_attributes, color_controls, detailed_style_controls, responsive_controls, dynamic_data, classes_and_variables, element_states, frontend_accessibility, keyboard_and_focus_runtime, seo_behavior, generated_markup, runtime_behavior]}
 - {stage_id: KB-020, status: completed_with_gaps, source_url: "https://elementor.com/help/svg-element/", output_path: "docs/elements/v4/svg.md", completed_at: "2026-06-23T01:04:00+03:00", commit_sha: 05cc163db725b1f79f2664bd6eede28a736a23bf, evidence_gaps: [sanitization, viewbox, dimensions, aspect_ratio, stroke, responsive_controls, dynamic_data, accessibility, keyboard_and_focus_runtime, runtime_markup]}
@@ -110,7 +119,6 @@ queue_manager_status: single_active
 ## مراحل زمان‌بندی‌شده
 
 ```yaml
-- {stage_id: KB-013, title: Customize the layout of a Loop Grid, source_url: "https://elementor.com/help/customize-layout-loop/", output_path: "docs/widgets/loop/customize-layout.md", scheduled_for: "2026-06-23T13:00:00+03:00"}
 - {stage_id: KB-014, title: Add an Off Canvas widget to a Loop Grid, source_url: "https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/", output_path: "docs/widgets/loop/off-canvas.md", scheduled_for: "2026-06-23T13:00:00+03:00"}
 ```
 
@@ -147,7 +155,7 @@ queue_manager_status: single_active
 ```yaml
 active_queue_managers: 1
 duplicate_manager_disabled_at: 2026-06-23T10:46:54+03:00
-active_research_tasks: 2
+active_research_tasks: 1
 queue_policy: keep_at_most_3_active_research_tasks
 ```
 
@@ -172,4 +180,4 @@ queue_policy: keep_at_most_3_active_research_tasks
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-23T12:34:06+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-23T13:28:00+03:00`
