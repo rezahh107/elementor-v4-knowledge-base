@@ -1,13 +1,13 @@
 manifest_version: 3
-updated_at: 2026-06-23T11:29:00+03:00
+updated_at: 2026-06-23T12:00:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 
 summary:
-  reviewed_sources: 14
-  committed_documents: 14
+  reviewed_sources: 15
+  committed_documents: 15
   pending_import_documents: 0
-  scheduled_stages: 2
+  scheduled_stages: 1
   not_scheduled_stages: 21
   running_stages: 0
   failed_stages: 0
@@ -30,8 +30,8 @@ coverage:
     status: in_progress
 
   loop_family:
-    committed: [KB-006, KB-007, KB-008, KB-009, KB-010, KB-011]
-    scheduled: [KB-012, KB-013]
+    committed: [KB-006, KB-007, KB-008, KB-009, KB-010, KB-011, KB-012]
+    scheduled: [KB-013]
     not_scheduled: [KB-014, KB-015]
     status: in_progress
 
