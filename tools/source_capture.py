@@ -11,9 +11,20 @@ import urllib.error
 import urllib.request
 from html.parser import HTMLParser
 from pathlib import Path
+from typing import Any
 from urllib.parse import urljoin, urlparse
 
-from tools.pipeline_common import ROOT, find_stage, find_work_item, load_stages, load_work_items, load_yaml, now_istanbul, validate_instance, write_yaml
+from tools.pipeline_common import (
+    ROOT,
+    find_stage,
+    find_work_item,
+    load_stages,
+    load_work_items,
+    load_yaml,
+    now_istanbul,
+    validate_instance,
+    write_yaml,
+)
 
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 PARSER_VERSION = "html-text-v1"
@@ -42,7 +53,7 @@ class TextParser(HTMLParser):
             return
         if tag == "title":
             self.in_title = True
-        if tag == "img":
+        elif tag == "img":
             values = dict(attrs)
             source = values.get("src") or values.get("data-src")
             if source:
@@ -54,18 +65,18 @@ class TextParser(HTMLParser):
         tag = tag.lower()
         if tag in self.SKIP and self.skip_depth:
             self.skip_depth -= 1
-            return
-        if tag == "title":
+        elif tag == "title":
             self.in_title = False
 
     def handle_data(self, data: str) -> None:
         if self.skip_depth:
             return
         value = " ".join(data.split())
-        if value:
-            if self.in_title:
-                self.title_parts.append(value)
-            self.text_parts.append(value)
+        if not value:
+            return
+        if self.in_title:
+            self.title_parts.append(value)
+        self.text_parts.append(value)
 
     @property
     def title(self) -> str:
@@ -79,11 +90,14 @@ class TextParser(HTMLParser):
 def official_url(url: str) -> bool:
     parsed = urlparse(url)
     host = (parsed.hostname or "").lower()
-    return parsed.scheme == "https" and (host in ALLOWED_HOSTS or any(host.endswith("." + allowed) for allowed in ALLOWED_HOSTS))
+    return parsed.scheme == "https" and (
+        host in ALLOWED_HOSTS
+        or any(host.endswith("." + allowed) for allowed in ALLOWED_HOSTS)
+    )
 
 
 def event_pr_number(event_path: str | None = None) -> int | None:
-    """Read the current pull-request number from the trusted GitHub event payload."""
+    """Return a positive PR number from the trusted GitHub event payload."""
     raw_path = event_path or os.environ.get("GITHUB_EVENT_PATH")
     if not raw_path:
         return None
@@ -95,28 +109,39 @@ def event_pr_number(event_path: str | None = None) -> int | None:
     except (OSError, json.JSONDecodeError):
         return None
     pull_request = event.get("pull_request") if isinstance(event, dict) else None
-    number = pul_request.get("number") if isinstance(pull_request, dict) else None
-    return number if isinstance(number, int) and number > 0 else None
+    number = pull_request.get("number") if isinstance(pull_request, dict) else None
+    return number if isinstance(number, int) and not isinstance(number, bool) and number > 0 else None
 
 
 def image_ids(stage_id: str) -> list[str]:
     found: set[str] = set()
     directory = ROOT / "evidence" / "images"
-    if directory.exists():
-        for path in sorted(directory.glob(f"{stage_id}*.yaml")):
-            value = load_yaml(path)
-            records = value.get("images", []) if isinstance(value, dict) else value
-            if isinstance(records, list):
-                for record in records:
-                    if isinstance(record, dict) and isinstance(record.get("image_id"), str):
-                        found.add(record["image_id"])
+    if not directory.exists():
+        return []
+    for path in sorted(directory.glob(f"{stage_id}*.yaml")):
+        value = load_yaml(path)
+        records = value.get("images", []) if isinstance(value, dict) else value
+        if isinstance(records, list):
+            found.update(
+                record["image_id"]
+                for record in records
+                if isinstance(record, dict) and isinstance(record.get("image_id"), str)
+            )
     return sorted(found)
 
 
-def fetch(url: str):
+def fetch(url: str) -> tuple[bytes, Any, str, int]:
     if not official_url(url):
         raise ValueError(f"URL is outside the official allowlist: {url}")
-    request = urllib.request.Request(url, method="GET", headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml", "Accept-Encoding": "identity"})
+    request = urllib.request.Request(
+        url,
+        method="GET",
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "text/html,application/xhtml+xml",
+            "Accept-Encoding": "identity",
+        },
+    )
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             final_url = response.geturl()
@@ -152,7 +177,12 @@ def capture(stage_id: str) -> int:
             charset = headers.get_content_charset() or "utf-8"
             text = raw.decode(charset, errors="replace")
             first_chunk = text[:20000].lower()
-            if len(text) < 1000 or "just a moment" in first_chunk or "cf-chl-" in first_chunk or "captcha" in first_chunk:
+            if (
+                len(text) < 1000
+                or "just a moment" in first_chunk
+                or "cf-chl-" in first_chunk
+                or "captcha" in first_chunk
+            ):
                 raise ValueError("response appears to be empty or a challenge page")
             parser = TextParser(final_url)
             parser.feed(text)
@@ -168,7 +198,9 @@ def capture(stage_id: str) -> int:
                 "source_type": source["source_type"],
                 "requested_url": source["url"],
                 "canonical_url": final_url,
-                "redirect_chain": [source["url"]] if source["url"] == final_url else [source["url"], final_url],
+                "redirect_chain": [source["url"]]
+                if source["url"] == final_url
+                else [source["url"], final_url],
                 "retrieved_at": captured_at,
                 "http_status": status,
                 "content_type": headers.get_content_type(),
@@ -184,12 +216,20 @@ def capture(stage_id: str) -> int:
                 "parser_version": PARSER_VERSION,
                 "image_evidence_ids": image_ids(stage_id),
                 "discovered_image_urls": sorted(parser.image_urls),
-                "notes": ["response_bytes_sha256 hashes exact HTTP response bytes", "normalized_document_sha256 hashes deterministic visible-ish HTML text"],
+                "notes": [
+                    "response_bytes_sha256 hashes exact HTTP response bytes",
+                    "normalized_document_sha256 hashes deterministic visible-ish HTML text",
+                ],
             }
-            errors = validate_instance(record, "source-record.schema.json", source["source_id"])
+            errors = validate_instance(
+                record, "source-record.schema.json", source["source_id"]
+            )
             if errors:
                 raise ValueError("; ".join(errors))
-            write_yaml(ROOT / "evidence" / "sources" / f"{source['source_id']}.yaml", record)
+            write_yaml(
+                ROOT / "evidence" / "sources" / f"{source['source_id']}.yaml",
+                record,
+            )
         work_item["source_capture_status"] = "captured"
         work_item["updated_at"] = captured_at
         work_item["last_error"] = None
