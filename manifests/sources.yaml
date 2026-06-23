@@ -1,5 +1,5 @@
 manifest_version: 3
-updated_at: 2026-06-23T11:29:00+03:00
+updated_at: 2026-06-23T12:00:00+03:00
 timezone: Europe/Istanbul
 repository: rezahh107/elementor-v4-knowledge-base
 
@@ -122,9 +122,11 @@ sources:
     title: Add an alternate template in a loop grid
     source_url: https://elementor.com/help/how-do-i-add-an-alternate-template-in-a-loop-grid/
     source_type: official_help
+    source_last_updated: 2025-09-02
     output_path: docs/widgets/loop/alternate-template.md
-    status: scheduled
-    scheduled_for: 2026-06-23T12:00:00+03:00
+    evidence_status: completed_with_gaps
+    storage_status: committed
+    content_commit_sha: bb55ad8c288a1d6775818285ebb06731358cc88c
   - stage_id: KB-013
     knowledge_id: elementor.help.loop-customize-layout
     title: Customize the layout of a Loop Grid
@@ -328,7 +330,7 @@ sources:
   - stage_id: KB-037
     knowledge_id: elementor.help.dynamic-tags-v4
     title: Dynamic tags in V4
-    source_url: https://elementor.com/help/dynamic-tags-in-v4/
+    source_url: https://elementor.com/help/dynamic-tags-v4/
     source_type: official_help
     output_path: docs/style-system/dynamic-tags-v4.md
     status: not_scheduled
