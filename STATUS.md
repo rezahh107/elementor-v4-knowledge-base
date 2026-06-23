@@ -1,7 +1,7 @@
 ---
 project: elementor-v4-knowledge-base
-status_version: 23
-last_updated: 2026-06-23T12:00:00+03:00
+status_version: 24
+last_updated: 2026-06-23T12:34:06+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 source_policy: official_first
@@ -20,8 +20,8 @@ queue_manager_status: single_active
 | منابع رسمی بررسی‌شده | 15 |
 | اسناد تکمیل‌شده و Commit‌شده | 15 |
 | اسناد در انتظار انتقال | 0 |
-| مراحل پژوهشی زمان‌بندی‌شده | 1 |
-| مراحل منتظر ظرفیت (`not_scheduled`) | 21 |
+| مراحل پژوهشی زمان‌بندی‌شده | 2 |
+| مراحل منتظر ظرفیت (`not_scheduled`) | 20 |
 | مراحل در حال اجرا | 0 |
 | مراحل ناموفق | 0 |
 | مدیر صف فعال | 1 |
@@ -44,7 +44,7 @@ queue_manager_status: single_active
 | KB-011 | Loop Carousel | `docs/widgets/loop/loop-carousel.md` — `completed_with_gaps` |
 | KB-012 | Add an alternate template in a loop grid | `docs/widgets/loop/alternate-template.md` — `completed_with_gaps` |
 | KB-013 | Customize the layout of a Loop Grid | `scheduled` — 2026-06-23 13:00 |
-| KB-014 | Add an Off Canvas widget to a Loop Grid | `not_scheduled` |
+| KB-014 | Add an Off Canvas widget to a Loop Grid | `scheduled` — 2026-06-23 13:00 |
 | KB-015 | Search Widget and Search Results Archive | `not_scheduled` |
 | KB-016 | Div Block element | `not_scheduled` |
 | KB-017 | Flexbox element | `not_scheduled` |
@@ -111,13 +111,14 @@ queue_manager_status: single_active
 
 ```yaml
 - {stage_id: KB-013, title: Customize the layout of a Loop Grid, source_url: "https://elementor.com/help/customize-layout-loop/", output_path: "docs/widgets/loop/customize-layout.md", scheduled_for: "2026-06-23T13:00:00+03:00"}
+- {stage_id: KB-014, title: Add an Off Canvas widget to a Loop Grid, source_url: "https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/", output_path: "docs/widgets/loop/off-canvas.md", scheduled_for: "2026-06-23T13:00:00+03:00"}
 ```
 
 ## صف پژوهش مدیر صف
 
 | اولویت | ID | موضوع | URL رسمی | وضعیت |
 |---:|---|---|---|---|
-| 1 | KB-014 | Off-Canvas in Loop Grid | `https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/` | `not_scheduled` |
+| 1 | KB-014 | Off-Canvas in Loop Grid | `https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/` | `scheduled` — 2026-06-23 13:00 |
 | 2 | KB-015 | Search Widget and Search Results Archive | دو URL ثبت‌شده در Manifest | `not_scheduled` |
 | 3 | KB-016 | Div Block element | `https://elementor.com/help/div-block-element/` | `not_scheduled` |
 | 4 | KB-017 | Flexbox element | `https://elementor.com/help/flexbox-element/` | `not_scheduled` |
@@ -146,7 +147,7 @@ queue_manager_status: single_active
 ```yaml
 active_queue_managers: 1
 duplicate_manager_disabled_at: 2026-06-23T10:46:54+03:00
-active_research_tasks: 1
+active_research_tasks: 2
 queue_policy: keep_at_most_3_active_research_tasks
 ```
 
@@ -171,4 +172,4 @@ queue_policy: keep_at_most_3_active_research_tasks
 4. Fixture واقعی و کنترل‌شده
 5. منابع ثالث فقط با برچسب صریح
 
-آخرین وضعیت ثبت‌شده: `2026-06-23T12:00:00+03:00`
+آخرین وضعیت ثبت‌شده: `2026-06-23T12:34:06+03:00`
