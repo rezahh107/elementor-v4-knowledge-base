@@ -1,5 +1,5 @@
-manifest_version: 2
-updated_at: 2026-06-23T10:51:16+03:00
+manifest_version: 3
+updated_at: 2026-06-23T10:56:00+03:00
 timezone: Europe/Istanbul
 pipeline_status: in_progress
 
@@ -8,7 +8,7 @@ summary:
   committed_documents: 13
   pending_import_documents: 0
   scheduled_stages: 3
-  not_scheduled_stages: 4
+  not_scheduled_stages: 21
   running_stages: 0
   failed_stages: 0
 
@@ -26,8 +26,7 @@ coverage:
   editor_v4_elements:
     committed: [KB-004, KB-005, KB-018, KB-019, KB-020]
     scheduled: []
-    not_scheduled: [KB-016, KB-017]
-    queued_topics: [Tabs, YouTube]
+    not_scheduled: [KB-016, KB-017, KB-021, KB-022]
     status: in_progress
 
   loop_family:
@@ -38,12 +37,14 @@ coverage:
 
   design_system:
     committed: []
-    queued_topics: [Classes, Class Manager, Variables, Variables Manager, Design System import and export]
+    scheduled: []
+    not_scheduled: [KB-023, KB-024, KB-025, KB-026, KB-027]
     status: not_started
 
   shared_style_system:
     committed: []
-    queued_topics: [Layout, Spacing, Size, Position, Typography, Background, Border, Effects, Responsive Editing, Dynamic Tags]
+    scheduled: []
+    not_scheduled: [KB-028, KB-029, KB-030, KB-031, KB-032, KB-033, KB-034, KB-035, KB-036, KB-037]
     status: not_started
 
 quality_gaps:
