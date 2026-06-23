@@ -1,0 +1,45 @@
+name: Hardening Bootstrap
+
+on:
+  push:
+    branches:
+      - hardening/evidence-platform-v1
+    paths:
+      - bootstrap/**
+      - .github/workflows/hardening-bootstrap.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hardening-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Extract verified hardening payload
+        run: python bootstrap/bootstrap_hardening.py
+      - name: Install validation dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Validate repository
+        run: |
+          python tools/kb.py generate --check
+          python tools/kb.py validate --strict
+          python -m pytest
+      - name: Commit hardening platform
+        run: |
+          rm -rf bootstrap .github/workflows/hardening-bootstrap.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat(kb): harden evidence platform and validation gates"
+          git push origin HEAD:hardening/evidence-platform-v1
