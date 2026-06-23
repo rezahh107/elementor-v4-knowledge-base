@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from tools.pipeline_common import infer_stage, transition
-from tools.source_capture import TextParser, official_url
+from tools.source_capture import TextParser, event_pr_number, official_url
 from tools.work_item_validate import validate
 
 
@@ -42,3 +44,11 @@ def test_html_normalization_ignores_script_and_collects_https_images() -> None:
     assert "Hello world" in parser.normalized_text
     assert "ignored" not in parser.normalized_text
     assert parser.image_urls == {"https://elementor.com/a.png"}
+
+
+def test_pr_number_is_read_only_from_event_payload(tmp_path) -> None:
+    event = tmp_path / "event.json"
+    event.write_text(json.dumps({"pull_request": {"number": 42}}), encoding="utf-8")
+    assert event_pr_number(str(event)) == 42
+    event.write_text(json.dumps({"pull_request": {"number": "42"}}), encoding="utf-8")
+    assert event_pr_number(str(event)) is None
