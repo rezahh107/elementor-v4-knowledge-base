@@ -1,0 +1,92 @@
+name: Capture Source Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage_id:
+        description: Stage ID such as KB-004
+        required: true
+        type: string
+      branch:
+        description: Existing migration branch
+        required: true
+        type: string
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: source-capture-${{ github.event.pull_request.number || inputs.stage_id }}
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.label.name == 'capture-source' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve branch
+        id: target
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_BRANCH: ${{ inputs.branch }}
+          INPUT_STAGE: ${{ inputs.stage_id }}
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            branch="$INPUT_BRANCH"
+            stage="$INPUT_STAGE"
+          else
+            branch="$PR_BRANCH"
+            stage=""
+          fi
+          [[ "$branch" == migration/* || "$branch" == migration-* ]]
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "stage=$stage" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.target.outputs.branch }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+      - run: python -m pip install -e .
+      - name: Resolve stage ID
+        id: stage
+        shell: bash
+        env:
+          EXPLICIT_STAGE: ${{ steps.target.outputs.stage }}
+          TARGET_BRANCH: ${{ steps.target.outputs.branch }}
+        run: |
+          set -euo pipefail
+          if [[ -n "$EXPLICIT_STAGE" ]]; then
+            value="$EXPLICIT_STAGE"
+          else
+            value="$(python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["TARGET_BRANCH"]))')"
+          fi
+          [[ "$value" =~ ^KB-[0-9]{3}$ ]]
+          echo "value=$value" >> "$GITHUB_OUTPUT"
+      - name: Capture exact source bytes
+        run: python tools/source_capture.py --stage '${{ steps.stage.outputs.value }}'
+      - name: Validate orchestration state
+        run: python tools/work_item_validate.py
+      - name: Commit source evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add evidence/sources manifests/work-items.yaml
+          if git diff --cached --quiet; then
+            echo 'No source-capture changes to commit.'
+            exit 0
+          fi
+          git commit -m 'evidence: capture official source for ${{ steps.stage.outputs.value }}'
+          git push origin HEAD:${{ steps.target.outputs.branch }}
