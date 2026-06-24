@@ -2,12 +2,18 @@
 """Reconcile queue intent with a supplied GitHub/EDIS repository-state snapshot."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import argparse
 import json
 import re
-import sys
-from pathlib import Path
 from typing import Any
+
+import yaml
 
 from tools.queue_common import ROOT, load_queue, validate_queue
 
@@ -19,16 +25,22 @@ STATUS_STAGE_RE = re.compile(
 
 
 def local_state() -> dict[str, Any]:
-    status_text = (ROOT / "STATUS.md").read_text(encoding="utf-8")
-    work_items_path = ROOT / "manifests" / "work-items.yaml"
-    import yaml
+    try:
+        status_text = (ROOT / "STATUS.md").read_text(encoding="utf-8")
+    except OSError:
+        status_text = ""
 
-    value = yaml.safe_load(work_items_path.read_text(encoding="utf-8"))
+    work_items_path = ROOT / "manifests" / "work-items.yaml"
+    try:
+        value = yaml.safe_load(work_items_path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        value = {}
     if not isinstance(value, dict):
         value = {}
     items = value.get("items", [])
     if not isinstance(items, list):
         items = []
+
     return {
         "status_stages": {
             match.group("stage"): {
@@ -62,10 +74,11 @@ def reconcile(queue: dict[str, Any], external: dict[str, Any]) -> list[dict[str,
     prs_by_number = {
         pr["number"]: pr for pr in prs if isinstance(pr.get("number"), int)
     }
+
     active_by_stage: dict[str, list[dict[str, Any]]] = {}
     for pr in prs:
         stage_id = pr.get("stage_id")
-        if stage_id and pr.get("state") == "open":
+        if isinstance(stage_id, str) and pr.get("state") == "open":
             active_by_stage.setdefault(stage_id, []).append(pr)
 
     for stage_id, stage_prs in sorted(active_by_stage.items()):
@@ -75,7 +88,11 @@ def reconcile(queue: dict[str, Any], external: dict[str, Any]) -> list[dict[str,
                 "severity": "P0",
                 "stage_id": stage_id,
                 "message": f"{len(stage_prs)} open PRs reference {stage_id}",
-                "evidence_refs": [f"pr:{pr['number']}" for pr in stage_prs],
+                "evidence_refs": [
+                    f"pr:{pr['number']}"
+                    for pr in stage_prs
+                    if isinstance(pr.get("number"), int)
+                ],
             })
 
     reported_work_item_drift: set[tuple[str, int]] = set()
@@ -85,20 +102,22 @@ def reconcile(queue: dict[str, Any], external: dict[str, Any]) -> list[dict[str,
         if stage_id and stage_id in local["work_items"]:
             work_item = local["work_items"][stage_id]
             expected_attempt = task["spec"].get("expected_work_item_attempt")
-            if expected_attempt is not None and work_item.get("attempt") != expected_attempt:
-                key = (stage_id, expected_attempt)
-                if key not in reported_work_item_drift:
-                    reported_work_item_drift.add(key)
-                    diagnostics.append({
-                        "code": "RQ_WORK_ITEM_DRIFT",
-                        "severity": "P0",
-                        "stage_id": stage_id,
-                        "message": (
-                            f"queue expects attempt {expected_attempt}; "
-                            f"main records {work_item.get('attempt')}"
-                        ),
-                        "evidence_refs": ["manifests/work-items.yaml", task["id"]],
-                    })
+            if (
+                expected_attempt is not None
+                and work_item.get("attempt") != expected_attempt
+                and (stage_id, expected_attempt) not in reported_work_item_drift
+            ):
+                reported_work_item_drift.add((stage_id, expected_attempt))
+                diagnostics.append({
+                    "code": "RQ_WORK_ITEM_DRIFT",
+                    "severity": "P0",
+                    "stage_id": stage_id,
+                    "message": (
+                        f"queue expects attempt {expected_attempt}; "
+                        f"main records {work_item.get('attempt')}"
+                    ),
+                    "evidence_refs": ["manifests/work-items.yaml", task["id"]],
+                })
         if runtime["active_pr"] is not None:
             pr = prs_by_number.get(runtime["active_pr"])
             if pr is None:
@@ -126,7 +145,9 @@ def reconcile(queue: dict[str, Any], external: dict[str, Any]) -> list[dict[str,
             diagnostics.append({
                 "code": "RQ_CI_MISSING_JOBS",
                 "severity": "P0",
-                "stage_id": run.get("stage_id"),
+                "stage_id": run.get("stage_id")
+                if isinstance(run.get("stage_id"), str)
+                else None,
                 "message": (
                     f"workflow {run.get('name')} ended action_required without jobs"
                 ),
