@@ -1,0 +1,15 @@
+schema_version: 1
+task_types:
+  - pipeline_hardening
+  - state_reconciliation
+  - stage_authoring
+  - source_capture
+  - gap_reconciliation
+  - stage_finalization
+  - stage_review
+  - stage_merge
+  - cross_stage_audit
+  - queue_refresh
+  - fixture_collection
+  - manual_evidence_request
+  - documentation_sync
