@@ -2,8 +2,13 @@
 """Deterministic offline end-to-end check for PR A.2."""
 from __future__ import annotations
 
-import json
+import sys
 from pathlib import Path
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+import json
 
 from tools.queue_common import eligible_tasks, load_queue, validate_queue
 from tools.queue_controller import plan
@@ -21,12 +26,18 @@ def main() -> int:
         return 1
     state = json.loads(STATE.read_text(encoding="utf-8"))
     report = plan(queue, state)
-    assert report["mode"] == "dry_run"
-    assert report["selected_task"] == "RQ-0001"
-    assert report["mutations_performed"] == []
+    if report["mode"] != "dry_run":
+        raise AssertionError("controller mode changed")
+    if report["selected_task"] != "RQ-0001":
+        raise AssertionError("unexpected selected task")
+    if report["mutations_performed"] != []:
+        raise AssertionError("dry-run performed mutations")
     codes = {item["code"] for item in report["all_diagnostics"]}
-    assert {"RQ_DUPLICATE_PR", "RQ_WORK_ITEM_DRIFT", "RQ_CI_MISSING_JOBS"} <= codes
-    assert [task["id"] for task in eligible_tasks(queue)] == ["RQ-0001"]
+    required = {"RQ_DUPLICATE_PR", "RQ_WORK_ITEM_DRIFT", "RQ_CI_MISSING_JOBS"}
+    if not required.issubset(codes):
+        raise AssertionError("expected drift diagnostics are missing")
+    if [task["id"] for task in eligible_tasks(queue)] != ["RQ-0001"]:
+        raise AssertionError("eligible task ordering changed")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
