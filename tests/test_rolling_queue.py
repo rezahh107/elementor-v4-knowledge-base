@@ -80,6 +80,15 @@ def test_malformed_external_snapshot_is_fail_closed() -> None:
     assert isinstance(diagnostics, list)
 
 
+def test_finalize_workflow_is_scoped_to_migration_branches() -> None:
+    workflow = (ROOT / ".github" / "workflows" / "finalize-stage.yml").read_text(
+        encoding="utf-8"
+    )
+    assert "startsWith(github.event.pull_request.head.ref, 'migration/')" in workflow
+    assert "startsWith(github.event.pull_request.head.ref, 'migration-')" in workflow
+    assert "github.event.pull_request.head.repo.full_name == github.repository" in workflow
+
+
 @pytest.mark.parametrize(
     "command",
     [
