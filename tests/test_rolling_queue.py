@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -76,3 +78,40 @@ def test_malformed_external_snapshot_is_fail_closed() -> None:
         {"pull_requests": "bad", "workflow_runs": None},
     )
     assert isinstance(diagnostics, list)
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        [sys.executable, "tools/queue_validate.py", "all"],
+        [
+            sys.executable,
+            "tools/queue_reconcile.py",
+            "--repo-state",
+            str(CURRENT),
+        ],
+        [
+            sys.executable,
+            "tools/queue_controller.py",
+            "--repo-state",
+            str(CURRENT),
+        ],
+        [sys.executable, "validation/e2e/run_rolling_queue_check.py"],
+    ],
+    ids=["validate", "reconcile", "controller", "e2e"],
+)
+def test_documented_direct_entrypoints_run_from_clean_checkout(
+    command: list[str],
+) -> None:
+    completed = subprocess.run(
+        command,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        check=False,
+    )
+    assert completed.returncode == 0, (
+        f"command failed: {command}\nstdout:\n{completed.stdout}\nstderr:\n{completed.stderr}"
+    )
+    assert "Traceback" not in completed.stderr
