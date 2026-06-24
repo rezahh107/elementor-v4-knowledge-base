@@ -83,29 +83,31 @@ def test_malformed_external_snapshot_is_fail_closed() -> None:
 @pytest.mark.parametrize(
     "command",
     [
-        [sys.executable, "tools/queue_validate.py", "all"],
+        [sys.executable, str(ROOT / "tools" / "queue_validate.py"), "all"],
         [
             sys.executable,
-            "tools/queue_reconcile.py",
+            str(ROOT / "tools" / "queue_reconcile.py"),
             "--repo-state",
             str(CURRENT),
         ],
         [
             sys.executable,
-            "tools/queue_controller.py",
+            str(ROOT / "tools" / "queue_controller.py"),
             "--repo-state",
             str(CURRENT),
         ],
-        [sys.executable, "validation/e2e/run_rolling_queue_check.py"],
+        [sys.executable, str(ROOT / "validation" / "e2e" / "run_rolling_queue_check.py")],
     ],
     ids=["validate", "reconcile", "controller", "e2e"],
 )
-def test_documented_direct_entrypoints_run_from_clean_checkout(
+def test_documented_direct_entrypoints_run_from_outside_repo(
     command: list[str],
+    tmp_path: Path,
 ) -> None:
+    """Documented scripts must bootstrap imports without relying on cwd=repo root."""
     completed = subprocess.run(
         command,
-        cwd=ROOT,
+        cwd=tmp_path,
         capture_output=True,
         text=True,
         encoding="utf-8",
