@@ -1,0 +1,1 @@
+{"controller_run_id":null,"details":{"mode":"dry_run","seed_task_ids":["RQ-0001","RQ-0002","RQ-0003","RQ-0004","RQ-0005"]},"event_id":"RQEVT-INIT-0001","event_type":"queue_initialized","queue_id":"elementor-v4-evidence","queue_revision":0,"recorded_at":"2026-06-24T13:00:00+03:00","schema_version":1,"task_id":null}
