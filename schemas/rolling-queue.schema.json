@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/rolling-queue.schema.json",
+  "title": "EDIS Rolling Queue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "canonicalization_version", "queue_id", "queue_revision", "controller_policy", "active_cycle", "tasks"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "canonicalization_version": {"const": 1},
+    "queue_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"},
+    "queue_revision": {"type": "integer", "minimum": 0},
+    "controller_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_active_tasks", "max_active_stage_migrations", "pending_target", "refresh_after_completed_work_units", "lease_duration_minutes", "timezone", "mode"],
+      "properties": {
+        "max_active_tasks": {"const": 1},
+        "max_active_stage_migrations": {"const": 1},
+        "pending_target": {"type": "integer", "minimum": 1, "maximum": 20},
+        "refresh_after_completed_work_units": {"type": "integer", "minimum": 1, "maximum": 20},
+        "lease_duration_minutes": {"type": "integer", "minimum": 5, "maximum": 1440},
+        "timezone": {"const": "Europe/Istanbul"},
+        "mode": {"enum": ["dry_run", "write_control_plane", "write_repo"]}
+      }
+    },
+    "active_cycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cycle_id", "cycle_type", "completed_work_units", "refresh_task_id"],
+      "properties": {
+        "cycle_id": {"type": "string", "pattern": "^RQ-CYCLE-[0-9]{2,}$"},
+        "cycle_type": {"enum": ["platform_stabilization", "content_migration", "cross_stage_audit"]},
+        "completed_work_units": {"type": "integer", "minimum": 0},
+        "refresh_task_id": {"type": "string", "pattern": "^RQ-[0-9]{4,}$"}
+      }
+    },
+    "tasks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/task"}}
+  },
+  "$defs": {
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "spec_version", "spec", "spec_hash", "runtime"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^RQ-[0-9]{4,}$"},
+        "spec_version": {"const": 1},
+        "spec": {"$ref": "#/$defs/spec"},
+        "spec_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "runtime": {"$ref": "#/$defs/runtime"}
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "priority", "task_type", "work_unit_id", "stage_id", "scope", "allowed_work", "forbidden_work", "acceptance_criteria", "depends_on", "critique_required"],
+      "properties": {
+        "title": {"type": "string", "minLength": 3},
+        "priority": {"enum": ["P0", "P1", "P2", "P3"]},
+        "task_type": {"enum": ["pipeline_hardening", "state_reconciliation", "stage_authoring", "source_capture", "gap_reconciliation", "stage_finalization", "stage_review", "stage_merge", "cross_stage_audit", "queue_refresh", "fixture_collection", "manual_evidence_request", "documentation_sync"]},
+        "work_unit_id": {"type": "string", "pattern": "^WU-[A-Z0-9-]{3,64}$"},
+        "stage_id": {"type": ["string", "null"], "pattern": "^KB-[0-9]{3}$"},
+        "scope": {"type": "string", "minLength": 10},
+        "allowed_work": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 3}},
+        "forbidden_work": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 3}},
+        "acceptance_criteria": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/acceptance"}},
+        "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^RQ-[0-9]{4,}$"}},
+        "critique_required": {"const": true},
+        "expected_work_item_attempt": {"type": ["integer", "null"], "minimum": 1},
+        "expected_work_item_state": {"type": ["string", "null"]}
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "required_evidence"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^AC-[0-9]{2,}$"},
+        "statement": {"type": "string", "minLength": 5},
+        "required_evidence": {"enum": ["repository_file", "workflow_run", "ci_checks", "diagnostic_record", "pull_request", "review_record", "ledger_event", "source_record", "snapshot", "test_result", "manual_confirmation"]}
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "attempt", "lease", "active_branch", "active_pr", "last_ci_head_sha", "blockers", "critique", "result", "updated_at"],
+      "properties": {
+        "status": {"enum": ["pending", "leased", "executing", "awaiting_external", "needs_review", "blocked", "completed", "superseded", "cancelled"]},
+        "attempt": {"type": "integer", "minimum": 0},
+        "lease": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/lease"}]},
+        "active_branch": {"type": ["string", "null"], "minLength": 1},
+        "active_pr": {"type": ["integer", "null"], "minimum": 1},
+        "last_ci_head_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"},
+        "blockers": {"type": "array", "items": {"$ref": "#/$defs/blocker"}},
+        "critique": {"type": ["object", "null"]},
+        "result": {"type": ["object", "null"]},
+        "updated_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "lease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["controller_run_id", "leased_at", "expires_at", "base_queue_commit_sha", "controller_version"],
+      "properties": {
+        "controller_run_id": {"type": "string", "pattern": "^RQRUN-[A-Za-z0-9-]+$"},
+        "leased_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "base_queue_commit_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "controller_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity", "message", "evidence_refs"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^RQ_[A-Z0-9_]+$"},
+        "severity": {"enum": ["P0", "P1", "P2", "P3"]},
+        "message": {"type": "string", "minLength": 5},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
