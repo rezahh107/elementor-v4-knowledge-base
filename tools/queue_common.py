@@ -21,6 +21,7 @@ WORK_ITEMS_PATH = ROOT / "manifests" / "work-items.yaml"
 STATUS_PATH = ROOT / "STATUS.md"
 
 PRIORITY_RANK = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
+_VALIDATOR_CACHE: dict[Path, Draft202012Validator] = {}
 TERMINAL_STATES = {"completed", "superseded", "cancelled"}
 ALLOWED_TRANSITIONS = {
     "pending": {"leased", "blocked", "cancelled"},
@@ -99,10 +100,13 @@ def load_schema(path: Path) -> dict[str, Any]:
 
 
 def validate_schema(instance: Any, schema_path: Path, label: str) -> list[str]:
-    validator = Draft202012Validator(
-        load_schema(schema_path),
-        format_checker=FormatChecker(),
-    )
+    validator = _VALIDATOR_CACHE.get(schema_path)
+    if validator is None:
+        validator = Draft202012Validator(
+            load_schema(schema_path),
+            format_checker=FormatChecker(),
+        )
+        _VALIDATOR_CACHE[schema_path] = validator
     errors: list[str] = []
     for error in sorted(
         validator.iter_errors(instance),
