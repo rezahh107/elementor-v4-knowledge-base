@@ -1,0 +1,43 @@
+{
+  "captured_at": "2026-06-24T13:00:00+03:00",
+  "pull_requests": [
+    {
+      "draft": true,
+      "head_sha": "0000000000000000000000000000000000000008",
+      "number": 8,
+      "stage_id": "KB-004",
+      "state": "open"
+    },
+    {
+      "draft": true,
+      "head_sha": "0000000000000000000000000000000000000009",
+      "number": 9,
+      "stage_id": "KB-005",
+      "state": "open"
+    },
+    {
+      "draft": false,
+      "head_sha": "5a3b5bf9d0a7f1b3d44c8856b8b666de2666911d",
+      "number": 12,
+      "stage_id": "KB-004",
+      "state": "open"
+    }
+  ],
+  "snapshot_version": 1,
+  "workflow_runs": [
+    {
+      "conclusion": "action_required",
+      "id": 28053544157,
+      "jobs": [],
+      "name": "KB Quality",
+      "stage_id": "KB-004"
+    },
+    {
+      "conclusion": "action_required",
+      "id": 28053544235,
+      "jobs": [],
+      "name": "Capture Source Evidence",
+      "stage_id": "KB-004"
+    }
+  ]
+}
