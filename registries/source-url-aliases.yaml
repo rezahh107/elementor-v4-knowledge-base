@@ -1,0 +1,17 @@
+schema_version: 1
+aliases:
+  - source_id: SRC-KB-007-01
+    legacy_urls:
+      - https://elementor.com/help/create-a-query-in-a-loop-grid/
+    canonical_url: https://elementor.com/help/building-query-loop-grid/
+    verification_state: verified_official_current_page
+  - source_id: SRC-KB-009-01
+    legacy_urls:
+      - https://elementor.com/help/pagination-for-loop/
+    canonical_url: https://elementor.com/help/paginate-loop/
+    verification_state: verified_official_current_page
+  - source_id: SRC-KB-010-01
+    legacy_urls:
+      - https://elementor.com/help/taxonomy-filter/
+    canonical_url: https://elementor.com/help/taxonomy-filter-widget/
+    verification_state: verified_official_current_page
