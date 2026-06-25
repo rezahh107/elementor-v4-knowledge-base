@@ -28,16 +28,16 @@ def main() -> int:
     report = plan(queue, state)
     if report["mode"] != "dry_run":
         raise AssertionError("controller mode changed")
-    if report["selected_task"] != "RQ-0001":
-        raise AssertionError("unexpected selected task")
+    if report["selected_task"] is not None:
+        raise AssertionError("blocked RQ-0001 should leave no selected task")
     if report["mutations_performed"] != []:
         raise AssertionError("dry-run performed mutations")
     codes = {item["code"] for item in report["all_diagnostics"]}
     required = {"RQ_DUPLICATE_PR", "RQ_WORK_ITEM_DRIFT", "RQ_CI_MISSING_JOBS"}
     if not required.issubset(codes):
         raise AssertionError("expected drift diagnostics are missing")
-    if [task["id"] for task in eligible_tasks(queue)] != ["RQ-0001"]:
-        raise AssertionError("eligible task ordering changed")
+    if [task["id"] for task in eligible_tasks(queue)] != []:
+        raise AssertionError("blocked queue should not expose eligible tasks")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
