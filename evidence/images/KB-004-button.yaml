@@ -1,0 +1,10 @@
+images:
+  - image_id: IMG-KB-004-001
+    stage_id: KB-004
+    source_id: SRC-KB-004-01
+    url: https://elementor.com/help/button-element/
+    retrieval_status: discovered
+    inspection_status: not_inspected
+    sha256: null
+    claims_supported: []
+    notes: []
