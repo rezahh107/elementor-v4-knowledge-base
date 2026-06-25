@@ -72,6 +72,11 @@ def _validate_snapshot(
     return errors
 
 
+def _image_inventory_covers(tracked: set[str], recorded: set[str]) -> bool:
+    """Allow a stage-wide inventory while requiring every source-owned image."""
+    return tracked.issubset(recorded)
+
+
 def validate_evidence(stage_id: str) -> list[str]:
     errors: list[str] = []
     stage = find_stage(load_stages(), stage_id)
@@ -173,8 +178,8 @@ def validate_evidence(stage_id: str) -> list[str]:
         )
         tracked = image_ids_by_source.get(source_id, set())
         recorded = set(value.get("image_evidence_ids", []))
-        if tracked != recorded:
-            errors.append(f"{label}: image_evidence_ids do not match image records")
+        if not _image_inventory_covers(tracked, recorded):
+            errors.append(f"{label}: image_evidence_ids omit source-owned image records")
         if tracked:
             if value.get("image_capture_status") != "complete":
                 errors.append(f"{label}: tracked image capture is incomplete")
