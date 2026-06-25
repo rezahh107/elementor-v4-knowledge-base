@@ -1,0 +1,10 @@
+claims:
+  - claim_id: KB-004-C001
+    stage_id: KB-004
+    claim_text: The official source page title is Button element.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1149-1151
+    derived_from: []
+    verification_status: machine_validated
