@@ -1,3 +1,4 @@
+# Non-semantic PR refresh marker: forces a new exact head for GitHub Actions after prior runs ended action_required without jobs.
 schema_version: 1
 gaps:
   - gap_id: GAP-KB-004-IMAGE-INSPECTION
