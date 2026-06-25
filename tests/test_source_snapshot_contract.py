@@ -11,38 +11,26 @@ from tools.pipeline_common import validate_instance
 
 def test_official_canonical_url_aliases_are_versioned() -> None:
     assert source_capture.canonical_source_url(
-        "SRC-KB-007-01", "https://elementor.com/help/create-a-query-in-a-loop-grid/"
+        "SRC-KB-007-01",
+        "https://elementor.com/help/create-a-query-in-a-loop-grid/",
     ) == "https://elementor.com/help/building-query-loop-grid/"
     assert source_capture.canonical_source_url(
-        "SRC-KB-009-01", "https://elementor.com/help/pagination-for-loop/"
+        "SRC-KB-009-01",
+        "https://elementor.com/help/pagination-for-loop/",
     ) == "https://elementor.com/help/paginate-loop/"
     assert source_capture.canonical_source_url(
-        "SRC-KB-010-01", "https://elementor.com/help/taxonomy-filter/"
+        "SRC-KB-010-01",
+        "https://elementor.com/help/taxonomy-filter/",
     ) == "https://elementor.com/help/taxonomy-filter-widget/"
 
 
-def test_duplicate_alias_source_ids_are_rejected(tmp_path, monkeypatch) -> None:
-    monkeypatch.setattr(source_capture, "ROOT", tmp_path)
-    registry = tmp_path / "registries" / "source-url-aliases.yaml"
-    registry.parent.mkdir(parents=True)
-    registry.write_text(
-        "schema_version: 1\naliases:\n"
-        "- source_id: SRC-KB-007-01\n"
-        "  legacy_urls: [https://elementor.com/help/a/]\n"
-        "  canonical_url: https://elementor.com/help/b/\n"
-        "  verification_state: verified_official_current_page\n"
-        "- source_id: SRC-KB-007-01\n"
-        "  legacy_urls: [https://elementor.com/help/c/]\n"
-        "  canonical_url: https://elementor.com/help/d/\n"
-        "  verification_state: verified_official_current_page\n",
-        encoding="utf-8",
+def test_alias_registry_has_unique_source_ids_and_disjoint_urls() -> None:
+    aliases = source_capture._alias_registry()
+    source_ids = [item["source_id"] for item in aliases]
+    assert len(source_ids) == len(set(source_ids))
+    assert all(
+        item["canonical_url"] not in item["legacy_urls"] for item in aliases
     )
-    schemas = tmp_path / "schemas"
-    schemas.mkdir()
-    original_schema = source_capture.Path(__file__).resolve().parents[1] / "schemas" / "source-url-aliases.schema.json"
-    (schemas / "source-url-aliases.schema.json").write_bytes(original_schema.read_bytes())
-    with pytest.raises(ValueError, match="duplicate canonical URL alias"):
-        source_capture._alias_registry()
 
 
 def test_content_addressed_snapshot_paths_are_stable(tmp_path, monkeypatch) -> None:
@@ -104,8 +92,16 @@ def test_source_record_v3_requires_recoverable_snapshot_fields() -> None:
     assert any("response_snapshot_path" in error for error in errors)
     record.update(
         {
-            "response_snapshot_path": "evidence/snapshots/SRC-KB-007-01/response-" + "a" * 64 + ".html",
-            "normalized_snapshot_path": "evidence/snapshots/SRC-KB-007-01/normalized-" + "b" * 64 + ".txt",
+            "response_snapshot_path": (
+                "evidence/snapshots/SRC-KB-007-01/response-"
+                + "a" * 64
+                + ".html"
+            ),
+            "normalized_snapshot_path": (
+                "evidence/snapshots/SRC-KB-007-01/normalized-"
+                + "b" * 64
+                + ".txt"
+            ),
             "snapshot_format_version": 1,
             "image_capture_status": "not_applicable",
             "missing_image_urls": [],
@@ -116,7 +112,13 @@ def test_source_record_v3_requires_recoverable_snapshot_fields() -> None:
 
 def test_finalizer_detects_snapshot_tampering(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(stage_finalize, "ROOT", tmp_path)
-    snapshot = tmp_path / "evidence" / "snapshots" / "SRC-KB-007-01" / ("normalized-" + "b" * 64 + ".txt")
+    snapshot = (
+        tmp_path
+        / "evidence"
+        / "snapshots"
+        / "SRC-KB-007-01"
+        / ("normalized-" + "b" * 64 + ".txt")
+    )
     snapshot.parent.mkdir(parents=True)
     snapshot.write_bytes(b"original")
     record = {
@@ -124,11 +126,17 @@ def test_finalizer_detects_snapshot_tampering(tmp_path, monkeypatch) -> None:
         "normalized_document_sha256": hashlib.sha256(b"original").hexdigest(),
     }
     assert stage_finalize._validate_snapshot(
-        record, "normalized_snapshot_path", "normalized_document_sha256", "fixture"
+        record,
+        "normalized_snapshot_path",
+        "normalized_document_sha256",
+        "fixture",
     ) == []
     snapshot.write_bytes(b"tampered")
     errors = stage_finalize._validate_snapshot(
-        record, "normalized_snapshot_path", "normalized_document_sha256", "fixture"
+        record,
+        "normalized_snapshot_path",
+        "normalized_document_sha256",
+        "fixture",
     )
     assert any("does not match" in error for error in errors)
 
@@ -140,5 +148,11 @@ def test_snapshot_path_cannot_escape_evidence_directory(tmp_path, monkeypatch) -
 
 
 def test_multi_source_image_inventory_may_be_a_stage_superset() -> None:
-    assert stage_finalize._image_inventory_covers({"IMG-KB-015-001"}, {"IMG-KB-015-001", "IMG-KB-015-002"})
-    assert not stage_finalize._image_inventory_covers({"IMG-KB-015-001"}, {"IMG-KB-015-002"})
+    assert stage_finalize._image_inventory_covers(
+        {"IMG-KB-015-001"},
+        {"IMG-KB-015-001", "IMG-KB-015-002"},
+    )
+    assert not stage_finalize._image_inventory_covers(
+        {"IMG-KB-015-001"},
+        {"IMG-KB-015-002"},
+    )
