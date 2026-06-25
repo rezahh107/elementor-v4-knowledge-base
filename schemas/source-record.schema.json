@@ -2,17 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "schema_version": {"const": 2},
+    "schema_version": {
+      "enum": [2, 3]
+    },
     "source_id": {"pattern": "^SRC-KB-[0-9]{3}-[0-9]{2}$", "type": "string"},
     "stage_id": {"pattern": "^KB-[0-9]{3}$", "type": "string"},
     "source_type": {"enum": ["official_help", "official_developer_docs", "official_source_code", "official_changelog"]},
     "requested_url": {"pattern": "^https://", "type": "string"},
     "canonical_url": {"pattern": "^https://", "type": "string"},
-    "redirect_chain": {
-      "type": "array",
-      "minItems": 1,
-      "items": {"pattern": "^https://", "type": "string"}
-    },
+    "redirect_chain": {"type": "array", "minItems": 1, "items": {"pattern": "^https://", "type": "string"}},
     "retrieved_at": {"format": "date-time", "type": "string"},
     "http_status": {"minimum": 200, "maximum": 299, "type": "integer"},
     "content_type": {"enum": ["text/html", "application/xhtml+xml"]},
@@ -26,42 +24,19 @@
     "response_bytes_sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"},
     "normalized_document_sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"},
     "parser_version": {"const": "html-text-v1"},
-    "image_evidence_ids": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": {"pattern": "^IMG-KB-[0-9]{3}-[0-9]{3}$", "type": "string"}
-    },
-    "discovered_image_urls": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": {"pattern": "^https://", "type": "string"}
-    },
+    "response_snapshot_path": {"pattern": "^evidence/snapshots/SRC-KB-[0-9]{3}-[0-9]{2}/response-[a-f0-9]{64}\\.(html|xhtml)$", "type": "string"},
+    "normalized_snapshot_path": {"pattern": "^evidence/snapshots/SRC-KB-[0-9]{3}-[0-9]{2}/normalized-[a-f0-9]{64}\\.txt$", "type": "string"},
+    "snapshot_format_version": {"const": 1},
+    "image_evidence_ids": {"type": "array", "uniqueItems": true, "items": {"pattern": "^IMG-KB-[0-9]{3}-[0-9]{3}$", "type": "string"}},
+    "discovered_image_urls": {"type": "array", "uniqueItems": true, "items": {"pattern": "^https://", "type": "string"}},
+    "image_capture_status": {"enum": ["not_applicable", "complete", "partial", "failed"]},
+    "missing_image_urls": {"type": "array", "uniqueItems": true, "items": {"pattern": "^https://", "type": "string"}},
     "notes": {"type": "array", "items": {"type": "string"}}
   },
-  "required": [
-    "schema_version",
-    "source_id",
-    "stage_id",
-    "source_type",
-    "requested_url",
-    "canonical_url",
-    "redirect_chain",
-    "retrieved_at",
-    "http_status",
-    "content_type",
-    "charset",
-    "content_length",
-    "etag",
-    "last_modified",
-    "page_title",
-    "reported_last_updated",
-    "content_sha256",
-    "response_bytes_sha256",
-    "normalized_document_sha256",
-    "parser_version",
-    "image_evidence_ids",
-    "discovered_image_urls",
-    "notes"
-  ],
+  "required": ["schema_version", "source_id", "stage_id", "source_type", "requested_url", "canonical_url", "redirect_chain", "retrieved_at", "http_status", "content_type", "charset", "content_length", "etag", "last_modified", "page_title", "reported_last_updated", "content_sha256", "response_bytes_sha256", "normalized_document_sha256", "parser_version", "image_evidence_ids", "discovered_image_urls", "notes"],
+  "allOf": [{
+    "if": {"properties": {"schema_version": {"const": 3}}, "required": ["schema_version"]},
+    "then": {"required": ["response_snapshot_path", "normalized_snapshot_path", "snapshot_format_version", "image_capture_status", "missing_image_urls"]}
+  }],
   "type": "object"
 }
