@@ -35,8 +35,11 @@ def test_spec_hashes_are_canonical() -> None:
         assert task["spec_hash"] == sha256_prefixed(task["spec"])
 
 
-def test_only_first_task_is_initially_eligible() -> None:
-    assert [task["id"] for task in eligible_tasks(load_queue())] == ["RQ-0001"]
+def test_blocked_rq0001_leaves_no_task_eligible() -> None:
+    queue = load_queue()
+    tasks = {task["id"]: task for task in queue["tasks"]}
+    assert tasks["RQ-0001"]["runtime"]["status"] == "blocked"
+    assert [task["id"] for task in eligible_tasks(queue)] == []
 
 
 def test_illegal_direct_completion_is_rejected() -> None:
