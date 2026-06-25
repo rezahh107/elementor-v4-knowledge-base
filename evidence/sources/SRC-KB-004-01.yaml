@@ -6,18 +6,18 @@ requested_url: https://elementor.com/help/button-element/
 canonical_url: https://elementor.com/help/button-element/
 redirect_chain:
 - https://elementor.com/help/button-element/
-retrieved_at: 2026-06-23T23:05:07+03:00
+retrieved_at: 2026-06-25T13:25:15+03:00
 http_status: 200
 content_type: text/html
 charset: utf-8
-content_length: 1628761
+content_length: 1634671
 etag: null
-last_modified: Mon, 22 Jun 2026 18:26:06 GMT
+last_modified: null
 page_title: Button element | Elementor
 reported_last_updated: 2025-07-01
-content_sha256: 32b8db1ff4dc88d778b246003c5e4f966204d2f966855470242b286271533df8
-response_bytes_sha256: 32b8db1ff4dc88d778b246003c5e4f966204d2f966855470242b286271533df8
-normalized_document_sha256: 5db33ff9c840f505df463156b2ad8f75cde1dedd1df7c8605bf5219d6465a97f
+content_sha256: c18b03857e750f9872ba1665ac3707457856a62720e1a6ff138d979413aa321f
+response_bytes_sha256: c18b03857e750f9872ba1665ac3707457856a62720e1a6ff138d979413aa321f
+normalized_document_sha256: 07ade010ab9c50b4f35377ef96abb7b9c3cebc43f719f974dd19df2bf86d2e1d
 parser_version: html-text-v1
 image_evidence_ids:
 - IMG-KB-004-001
