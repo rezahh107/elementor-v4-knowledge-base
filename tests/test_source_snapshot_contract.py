@@ -21,6 +21,30 @@ def test_official_canonical_url_aliases_are_versioned() -> None:
     ) == "https://elementor.com/help/taxonomy-filter-widget/"
 
 
+def test_duplicate_alias_source_ids_are_rejected(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(source_capture, "ROOT", tmp_path)
+    registry = tmp_path / "registries" / "source-url-aliases.yaml"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        "schema_version: 1\naliases:\n"
+        "- source_id: SRC-KB-007-01\n"
+        "  legacy_urls: [https://elementor.com/help/a/]\n"
+        "  canonical_url: https://elementor.com/help/b/\n"
+        "  verification_state: verified_official_current_page\n"
+        "- source_id: SRC-KB-007-01\n"
+        "  legacy_urls: [https://elementor.com/help/c/]\n"
+        "  canonical_url: https://elementor.com/help/d/\n"
+        "  verification_state: verified_official_current_page\n",
+        encoding="utf-8",
+    )
+    schemas = tmp_path / "schemas"
+    schemas.mkdir()
+    original_schema = source_capture.Path(__file__).resolve().parents[1] / "schemas" / "source-url-aliases.schema.json"
+    (schemas / "source-url-aliases.schema.json").write_bytes(original_schema.read_bytes())
+    with pytest.raises(ValueError, match="duplicate canonical URL alias"):
+        source_capture._alias_registry()
+
+
 def test_content_addressed_snapshot_paths_are_stable(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(source_capture, "ROOT", tmp_path)
     response_hash = "a" * 64
@@ -107,3 +131,14 @@ def test_finalizer_detects_snapshot_tampering(tmp_path, monkeypatch) -> None:
         record, "normalized_snapshot_path", "normalized_document_sha256", "fixture"
     )
     assert any("does not match" in error for error in errors)
+
+
+def test_snapshot_path_cannot_escape_evidence_directory(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(stage_finalize, "ROOT", tmp_path)
+    with pytest.raises(ValueError, match="escapes evidence/snapshots"):
+        stage_finalize._safe_snapshot_path("../outside.txt", "fixture")
+
+
+def test_multi_source_image_inventory_may_be_a_stage_superset() -> None:
+    assert stage_finalize._image_inventory_covers({"IMG-KB-015-001"}, {"IMG-KB-015-001", "IMG-KB-015-002"})
+    assert not stage_finalize._image_inventory_covers({"IMG-KB-015-001"}, {"IMG-KB-015-002"})
