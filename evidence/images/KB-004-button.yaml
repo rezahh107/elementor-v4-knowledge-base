@@ -2,7 +2,7 @@ images:
   - image_id: IMG-KB-004-001
     stage_id: KB-004
     source_id: SRC-KB-004-01
-    url: https://elementor.com/help/button-element/
+    url: https://elementor.com/help/wp-content/uploads/2025/05/The-widget-3-150x150.png
     retrieval_status: discovered
     inspection_status: not_inspected
     sha256: null
