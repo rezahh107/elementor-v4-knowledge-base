@@ -1,15 +1,5 @@
 schema_version: 1
 gaps:
-  - gap_id: GAP-KB-004-SOURCE-CAPTURE
-    stage_id: KB-004
-    title: Source capture pending
-    status: open
-    severity: high
-    missing_evidence: Source record v2 with HTTP status, canonical URL, response hash and normalized document hash has not been committed by the capture workflow yet.
-    affected_conclusion: KB-004 cannot be authoritative until the official source snapshot is captured.
-    required_source: https://elementor.com/help/button-element/
-    blocks:
-      - authoritative_status
   - gap_id: GAP-KB-004-IMAGE-INSPECTION
     stage_id: KB-004
     title: Image inspection pending
