@@ -1,4 +1,4 @@
-# Non-semantic PR refresh marker: forces a new exact head for GitHub Actions after prior runs ended action_required without jobs.
+# CI recovery marker 2026-06-25T22:18Z: forces a new exact head after prior PR runs ended action_required without jobs.
 schema_version: 1
 gaps:
   - gap_id: GAP-KB-004-IMAGE-INSPECTION
