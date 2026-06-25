@@ -65,7 +65,7 @@ def test_queue_controller_documented_entrypoint() -> None:
     assert_success(result)
     payload = json.loads(result.stdout)
     assert payload["mode"] == "dry_run"
-    assert payload["selected_task"] == "RQ-0001"
+    assert payload["selected_task"] is None
     assert payload["mutations_performed"] == []
 
 
@@ -74,5 +74,5 @@ def test_queue_e2e_documented_entrypoint() -> None:
     assert_success(result)
     payload = json.loads(result.stdout)
     assert payload["mode"] == "dry_run"
-    assert payload["selected_task"] == "RQ-0001"
+    assert payload["selected_task"] is None
     assert payload["mutations_performed"] == []

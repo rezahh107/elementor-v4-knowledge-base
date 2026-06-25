@@ -1,327 +1,332 @@
 {
-  "active_cycle": {
-    "completed_work_units": 0,
-    "cycle_id": "RQ-CYCLE-00",
-    "cycle_type": "platform_stabilization",
-    "refresh_task_id": "RQ-0005"
-  },
+  "schema_version": 1,
   "canonicalization_version": 1,
+  "queue_id": "elementor-v4-evidence",
+  "queue_revision": 1,
   "controller_policy": {
-    "lease_duration_minutes": 55,
-    "max_active_stage_migrations": 1,
     "max_active_tasks": 1,
-    "mode": "dry_run",
+    "max_active_stage_migrations": 1,
     "pending_target": 4,
     "refresh_after_completed_work_units": 4,
-    "timezone": "Europe/Istanbul"
+    "lease_duration_minutes": 55,
+    "timezone": "Europe/Istanbul",
+    "mode": "dry_run"
   },
-  "queue_id": "elementor-v4-evidence",
-  "queue_revision": 0,
-  "schema_version": 1,
+  "active_cycle": {
+    "cycle_id": "RQ-CYCLE-00",
+    "cycle_type": "platform_stabilization",
+    "completed_work_units": 0,
+    "refresh_task_id": "RQ-0005"
+  },
   "tasks": [
     {
       "id": "RQ-0001",
-      "runtime": {
-        "active_branch": null,
-        "active_pr": null,
-        "attempt": 0,
-        "blockers": [],
-        "critique": null,
-        "last_ci_head_sha": null,
-        "lease": null,
-        "result": null,
-        "status": "pending",
-        "updated_at": "2026-06-24T13:00:00+03:00"
-      },
+      "spec_version": 1,
       "spec": {
-        "acceptance_criteria": [
-          {
-            "id": "AC-01",
-            "required_evidence": "diagnostic_record",
-            "statement": "A diagnostic record explains every action_required run without jobs."
-          },
-          {
-            "id": "AC-02",
-            "required_evidence": "workflow_run",
-            "statement": "A test pull request creates Python 3.11 and 3.13 jobs."
-          },
-          {
-            "id": "AC-03",
-            "required_evidence": "ci_checks",
-            "statement": "Both matrix jobs pass on the same head SHA."
-          }
-        ],
+        "title": "Diagnose GitHub Actions runs with no jobs",
+        "priority": "P0",
+        "task_type": "pipeline_hardening",
+        "work_unit_id": "WU-PIPELINE-001",
+        "stage_id": null,
+        "scope": "Identify and enforce the exact cause of workflow runs completing as action_required without creating jobs.",
         "allowed_work": [
           "read workflow metadata and settings",
           "add deterministic preflight diagnostics",
           "add focused tests and documentation"
         ],
-        "critique_required": true,
-        "depends_on": [],
-        "expected_work_item_attempt": null,
-        "expected_work_item_state": null,
         "forbidden_work": [
           "modify Elementor factual content",
           "mark any stage authoritative",
           "start a second unrelated task"
         ],
-        "priority": "P0",
-        "scope": "Identify and enforce the exact cause of workflow runs completing as action_required without creating jobs.",
-        "stage_id": null,
-        "task_type": "pipeline_hardening",
-        "title": "Diagnose GitHub Actions runs with no jobs",
-        "work_unit_id": "WU-PIPELINE-001"
-      },
-      "spec_hash": "sha256:583ae8b14427ff8ae620fa24ae37ebed07cdeb5c53e3e06832360e8c17437add",
-      "spec_version": 1
-    },
-    {
-      "id": "RQ-0002",
-      "runtime": {
-        "active_branch": null,
-        "active_pr": null,
-        "attempt": 0,
-        "blockers": [],
-        "critique": null,
-        "last_ci_head_sha": null,
-        "lease": null,
-        "result": null,
-        "status": "pending",
-        "updated_at": "2026-06-24T13:00:00+03:00"
-      },
-      "spec": {
         "acceptance_criteria": [
           {
             "id": "AC-01",
-            "required_evidence": "repository_file",
-            "statement": "Exactly one active KB-004 attempt is recorded."
+            "statement": "A diagnostic record explains every action_required run without jobs.",
+            "required_evidence": "diagnostic_record"
           },
           {
             "id": "AC-02",
-            "required_evidence": "pull_request",
-            "statement": "Superseded pull requests are explicitly linked."
+            "statement": "A test pull request creates Python 3.11 and 3.13 jobs.",
+            "required_evidence": "workflow_run"
           },
           {
             "id": "AC-03",
-            "required_evidence": "diagnostic_record",
-            "statement": "Queue, work item, and PR draft state agree."
+            "statement": "Both matrix jobs pass on the same head SHA.",
+            "required_evidence": "ci_checks"
           }
         ],
+        "depends_on": [],
+        "critique_required": true,
+        "expected_work_item_attempt": null,
+        "expected_work_item_state": null
+      },
+      "spec_hash": "sha256:583ae8b14427ff8ae620fa24ae37ebed07cdeb5c53e3e06832360e8c17437add",
+      "runtime": {
+        "status": "blocked",
+        "attempt": 1,
+        "lease": null,
+        "active_branch": "migration/KB-004-button-v2",
+        "active_pr": 12,
+        "last_ci_head_sha": "5a3b5bf9d0a7f1b3d44c8856b8b666de2666911d",
+        "blockers": [
+          {
+            "code": "RQ_ACTION_REQUIRED_NO_JOBS",
+            "severity": "P0",
+            "message": "PR 12 exact head has KB Quality and Capture Source Evidence completed as action_required with no jobs; no exact-head Python 3.11/3.13 CI evidence exists yet.",
+            "evidence_refs": [
+              "PR-12",
+              "HEAD-5a3b5bf9d0a7f1b3d44c8856b8b666de2666911d",
+              "RUN-28053544157",
+              "RUN-28053544235"
+            ]
+          }
+        ],
+        "critique": {
+          "closed_gap": false,
+          "reason": "Diagnostic evidence was recorded, but AC-02 and AC-03 remain unsatisfied until a refreshed PR head produces real workflow jobs and passing matrix checks.",
+          "edis_boundary_preserved": true,
+          "peer_reviewed_claimed": false
+        },
+        "result": {
+          "diagnostic_recorded": true,
+          "merge_allowed": false,
+          "next_required_action": "Refresh PR 12 on current main or otherwise produce a new exact head that triggers real KB Quality Python 3.11 and 3.13 jobs."
+        },
+        "updated_at": "2026-06-25T06:18:45+03:00"
+      }
+    },
+    {
+      "id": "RQ-0002",
+      "spec_version": 1,
+      "spec": {
+        "title": "Reconcile current KB migration state",
+        "priority": "P0",
+        "task_type": "state_reconciliation",
+        "work_unit_id": "WU-STATE-001",
+        "stage_id": "KB-004",
+        "scope": "Reconcile PR 12, superseded PRs, work-item attempt, draft state, and stale source-capture gap without changing factual claims.",
         "allowed_work": [
           "read main and open pull requests",
           "record deterministic drift diagnostics",
           "prepare a bounded reconciliation patch"
         ],
-        "critique_required": true,
-        "depends_on": [
-          "RQ-0001"
-        ],
-        "expected_work_item_attempt": 2,
-        "expected_work_item_state": "evidence_draft",
         "forbidden_work": [
           "silently choose one conflicting state as truth",
           "mark peer_reviewed",
           "release KB-005"
         ],
-        "priority": "P0",
-        "scope": "Reconcile PR 12, superseded PRs, work-item attempt, draft state, and stale source-capture gap without changing factual claims.",
-        "stage_id": "KB-004",
-        "task_type": "state_reconciliation",
-        "title": "Reconcile current KB migration state",
-        "work_unit_id": "WU-STATE-001"
-      },
-      "spec_hash": "sha256:161b5ab4a7a5b71843faf98250176df918abc088f0d369752e0d6b2b0a2d090e",
-      "spec_version": 1
-    },
-    {
-      "id": "RQ-0003",
-      "runtime": {
-        "active_branch": null,
-        "active_pr": null,
-        "attempt": 0,
-        "blockers": [],
-        "critique": null,
-        "last_ci_head_sha": null,
-        "lease": null,
-        "result": null,
-        "status": "pending",
-        "updated_at": "2026-06-24T13:00:00+03:00"
-      },
-      "spec": {
         "acceptance_criteria": [
           {
             "id": "AC-01",
-            "required_evidence": "snapshot",
-            "statement": "Source snapshot metadata is schema-valid and recoverable."
+            "statement": "Exactly one active KB-004 attempt is recorded.",
+            "required_evidence": "repository_file"
           },
           {
             "id": "AC-02",
-            "required_evidence": "source_record",
-            "statement": "Locator v2 is tied to a snapshot fingerprint."
+            "statement": "Superseded pull requests are explicitly linked.",
+            "required_evidence": "pull_request"
           },
           {
             "id": "AC-03",
-            "required_evidence": "test_result",
-            "statement": "Unchanged normalized content does not create content churn."
+            "statement": "Queue, work item, and PR draft state agree.",
+            "required_evidence": "diagnostic_record"
           }
         ],
+        "depends_on": ["RQ-0001"],
+        "critique_required": true,
+        "expected_work_item_attempt": 2,
+        "expected_work_item_state": "evidence_draft"
+      },
+      "spec_hash": "sha256:161b5ab4a7a5b71843faf98250176df918abc088f0d369752e0d6b2b0a2d090e",
+      "runtime": {
+        "status": "pending",
+        "attempt": 0,
+        "lease": null,
+        "active_branch": null,
+        "active_pr": null,
+        "last_ci_head_sha": null,
+        "blockers": [],
+        "critique": null,
+        "result": null,
+        "updated_at": "2026-06-24T13:00:00+03:00"
+      }
+    },
+    {
+      "id": "RQ-0003",
+      "spec_version": 1,
+      "spec": {
+        "title": "Harden source snapshots and locators",
+        "priority": "P1",
+        "task_type": "pipeline_hardening",
+        "work_unit_id": "WU-EVIDENCE-001",
+        "stage_id": "KB-004",
+        "scope": "Add immutable snapshot metadata, locator versioning, and capture idempotency before finalizing the KB-004 pilot.",
         "allowed_work": [
           "add versioned schemas and fixtures",
           "add capture idempotency tests",
           "preserve existing evidence states"
         ],
-        "critique_required": true,
-        "depends_on": [
-          "RQ-0002"
-        ],
-        "expected_work_item_attempt": 2,
-        "expected_work_item_state": "evidence_draft",
         "forbidden_work": [
           "invent Elementor behavior",
           "rewrite unrelated documents",
           "claim image inspection without evidence"
         ],
-        "priority": "P1",
-        "scope": "Add immutable snapshot metadata, locator versioning, and capture idempotency before finalizing the KB-004 pilot.",
-        "stage_id": "KB-004",
-        "task_type": "pipeline_hardening",
-        "title": "Harden source snapshots and locators",
-        "work_unit_id": "WU-EVIDENCE-001"
-      },
-      "spec_hash": "sha256:9119cc438448c767ca1bee24894dbd068645383a80a7ee49b3d2239930c67c0b",
-      "spec_version": 1
-    },
-    {
-      "id": "RQ-0004",
-      "runtime": {
-        "active_branch": null,
-        "active_pr": null,
-        "attempt": 0,
-        "blockers": [],
-        "critique": null,
-        "last_ci_head_sha": null,
-        "lease": null,
-        "result": null,
-        "status": "pending",
-        "updated_at": "2026-06-24T13:00:00+03:00"
-      },
-      "spec": {
         "acceptance_criteria": [
           {
             "id": "AC-01",
-            "required_evidence": "ledger_event",
-            "statement": "Blocking KB-004 gaps are resolved or explicitly retained."
+            "statement": "Source snapshot metadata is schema-valid and recoverable.",
+            "required_evidence": "snapshot"
           },
           {
             "id": "AC-02",
-            "required_evidence": "ci_checks",
-            "statement": "Python 3.11 and 3.13 pass on the merge head."
+            "statement": "Locator v2 is tied to a snapshot fingerprint.",
+            "required_evidence": "source_record"
           },
           {
             "id": "AC-03",
-            "required_evidence": "review_record",
-            "statement": "Independent review is recorded before authoritative status."
-          },
-          {
-            "id": "AC-04",
-            "required_evidence": "test_result",
-            "statement": "Post-merge main validation passes."
+            "statement": "Unchanged normalized content does not create content churn.",
+            "required_evidence": "test_result"
           }
         ],
+        "depends_on": ["RQ-0002"],
+        "critique_required": true,
+        "expected_work_item_attempt": 2,
+        "expected_work_item_state": "evidence_draft"
+      },
+      "spec_hash": "sha256:9119cc438448c767ca1bee24894dbd068645383a80a7ee49b3d2239930c67c0b",
+      "runtime": {
+        "status": "pending",
+        "attempt": 0,
+        "lease": null,
+        "active_branch": null,
+        "active_pr": null,
+        "last_ci_head_sha": null,
+        "blockers": [],
+        "critique": null,
+        "result": null,
+        "updated_at": "2026-06-24T13:00:00+03:00"
+      }
+    },
+    {
+      "id": "RQ-0004",
+      "spec_version": 1,
+      "spec": {
+        "title": "Complete KB-004 pilot through verified merge",
+        "priority": "P1",
+        "task_type": "stage_finalization",
+        "work_unit_id": "WU-KB-004",
+        "stage_id": "KB-004",
+        "scope": "Complete the KB-004 pilot through gap reconciliation, finalization, CI, independent review, merge, and post-merge validation.",
         "allowed_work": [
           "finalize canonical stage artifacts",
           "run strict validation and tests",
           "request independent review",
           "merge only with exact green head SHA"
         ],
-        "critique_required": true,
-        "depends_on": [
-          "RQ-0003"
-        ],
-        "expected_work_item_attempt": 2,
-        "expected_work_item_state": "evidence_draft",
         "forbidden_work": [
           "self-assert peer_reviewed",
           "merge action_required or missing-job runs",
           "release the next stage early"
         ],
-        "priority": "P1",
-        "scope": "Complete the KB-004 pilot through gap reconciliation, finalization, CI, independent review, merge, and post-merge validation.",
-        "stage_id": "KB-004",
-        "task_type": "stage_finalization",
-        "title": "Complete KB-004 pilot through verified merge",
-        "work_unit_id": "WU-KB-004"
-      },
-      "spec_hash": "sha256:512cea99223fb7bc9e5a3601fcc140b187392c67591d3560bd6ea0bf44a61ffc",
-      "spec_version": 1
-    },
-    {
-      "id": "RQ-0005",
-      "runtime": {
-        "active_branch": null,
-        "active_pr": null,
-        "attempt": 0,
-        "blockers": [
-          {
-            "code": "RQ_DEPENDENCIES_INCOMPLETE",
-            "evidence_refs": [
-              "RQ-0001",
-              "RQ-0002",
-              "RQ-0003",
-              "RQ-0004"
-            ],
-            "message": "Cycle refresh is locked until RQ-0001 through RQ-0004 complete.",
-            "severity": "P1"
-          }
-        ],
-        "critique": null,
-        "last_ci_head_sha": null,
-        "lease": null,
-        "result": null,
-        "status": "blocked",
-        "updated_at": "2026-06-24T13:00:00+03:00"
-      },
-      "spec": {
         "acceptance_criteria": [
           {
             "id": "AC-01",
-            "required_evidence": "repository_file",
-            "statement": "All four prior work units have acceptance evidence."
+            "statement": "Blocking KB-004 gaps are resolved or explicitly retained.",
+            "required_evidence": "ledger_event"
           },
           {
             "id": "AC-02",
-            "required_evidence": "repository_file",
-            "statement": "The next cycle contains exactly four bounded work units."
+            "statement": "Python 3.11 and 3.13 pass on the merge head.",
+            "required_evidence": "ci_checks"
+          },
+          {
+            "id": "AC-03",
+            "statement": "Independent review is recorded before authoritative status.",
+            "required_evidence": "review_record"
+          },
+          {
+            "id": "AC-04",
+            "statement": "Post-merge main validation passes.",
+            "required_evidence": "test_result"
           }
         ],
+        "depends_on": ["RQ-0003"],
+        "critique_required": true,
+        "expected_work_item_attempt": 2,
+        "expected_work_item_state": "evidence_draft"
+      },
+      "spec_hash": "sha256:512cea99223fb7bc9e5a3601fcc140b187392c67591d3560bd6ea0bf44a61ffc",
+      "runtime": {
+        "status": "pending",
+        "attempt": 0,
+        "lease": null,
+        "active_branch": null,
+        "active_pr": null,
+        "last_ci_head_sha": null,
+        "blockers": [],
+        "critique": null,
+        "result": null,
+        "updated_at": "2026-06-24T13:00:00+03:00"
+      }
+    },
+    {
+      "id": "RQ-0005",
+      "spec_version": 1,
+      "spec": {
+        "title": "Audit Cycle 00 and refresh the queue",
+        "priority": "P1",
+        "task_type": "queue_refresh",
+        "work_unit_id": "WU-REFRESH-000",
+        "stage_id": null,
+        "scope": "Audit the four completed stabilization work units, freeze the pilot contract, and create the next four bounded work units.",
         "allowed_work": [
           "audit completed queue evidence",
           "update priorities and queue plan",
           "create exactly four next work units"
         ],
-        "critique_required": true,
-        "depends_on": [
-          "RQ-0001",
-          "RQ-0002",
-          "RQ-0003",
-          "RQ-0004"
-        ],
-        "expected_work_item_attempt": null,
-        "expected_work_item_state": null,
         "forbidden_work": [
           "skip incomplete dependencies",
           "change frozen EDIS truth contracts",
           "create factual claims"
         ],
-        "priority": "P1",
-        "scope": "Audit the four completed stabilization work units, freeze the pilot contract, and create the next four bounded work units.",
-        "stage_id": null,
-        "task_type": "queue_refresh",
-        "title": "Audit Cycle 00 and refresh the queue",
-        "work_unit_id": "WU-REFRESH-000"
+        "acceptance_criteria": [
+          {
+            "id": "AC-01",
+            "statement": "All four prior work units have acceptance evidence.",
+            "required_evidence": "repository_file"
+          },
+          {
+            "id": "AC-02",
+            "statement": "The next cycle contains exactly four bounded work units.",
+            "required_evidence": "repository_file"
+          }
+        ],
+        "depends_on": ["RQ-0001", "RQ-0002", "RQ-0003", "RQ-0004"],
+        "critique_required": true,
+        "expected_work_item_attempt": null,
+        "expected_work_item_state": null
       },
       "spec_hash": "sha256:5fab13d64d568e9e32eab5eb9aa8d63788169d202f1b5fb569422c27b137a8f5",
-      "spec_version": 1
+      "runtime": {
+        "status": "blocked",
+        "attempt": 0,
+        "lease": null,
+        "active_branch": null,
+        "active_pr": null,
+        "last_ci_head_sha": null,
+        "blockers": [
+          {
+            "code": "RQ_DEPENDENCIES_INCOMPLETE",
+            "severity": "P1",
+            "message": "Cycle refresh is locked until RQ-0001 through RQ-0004 complete.",
+            "evidence_refs": ["RQ-0001", "RQ-0002", "RQ-0003", "RQ-0004"]
+          }
+        ],
+        "critique": null,
+        "result": null,
+        "updated_at": "2026-06-24T13:00:00+03:00"
+      }
     }
   ]
 }
