@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Finalize one evidence draft after source and record validation."""
+"""Finalize one evidence draft after snapshot, source, claim, and image validation."""
 from __future__ import annotations
 
 import argparse
-import json
+import hashlib
 import re
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools.pipeline_common import (
     ROOT,
@@ -33,6 +36,40 @@ def records(path: Path, key: str) -> list[dict[str, Any]]:
     if not isinstance(result, list) or not all(isinstance(item, dict) for item in result):
         raise ValueError(f"{path.relative_to(ROOT)} must contain a {key} list")
     return result
+
+
+def _safe_snapshot_path(value: Any, label: str) -> Path | None:
+    if not isinstance(value, str):
+        return None
+    path = (ROOT / value).resolve()
+    snapshots_root = (ROOT / "evidence" / "snapshots").resolve()
+    if path != snapshots_root and snapshots_root not in path.parents:
+        raise ValueError(f"{label}: snapshot path escapes evidence/snapshots")
+    return path
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _validate_snapshot(
+    value: dict[str, Any], path_field: str, hash_field: str, label: str
+) -> list[str]:
+    errors: list[str] = []
+    try:
+        path = _safe_snapshot_path(value.get(path_field), label)
+    except ValueError as exc:
+        return [str(exc)]
+    if path is None:
+        return [f"{label}: missing {path_field}"]
+    if not path.is_file():
+        return [f"{label}: missing snapshot {path.relative_to(ROOT)}"]
+    expected = value.get(hash_field)
+    if not isinstance(expected, str) or not SHA256_RE.fullmatch(expected):
+        errors.append(f"{label}: invalid {hash_field}")
+    elif _sha256(path) != expected:
+        errors.append(f"{label}: {hash_field} does not match {path.relative_to(ROOT)}")
+    return errors
 
 
 def validate_evidence(stage_id: str) -> list[str]:
@@ -68,6 +105,7 @@ def validate_evidence(stage_id: str) -> list[str]:
         errors.append(f"{stage_id}: empty claim set")
 
     image_ids: set[str] = set()
+    image_ids_by_source: dict[str, set[str]] = {}
     for path in image_paths:
         try:
             items = records(path, "images")
@@ -84,28 +122,71 @@ def validate_evidence(stage_id: str) -> list[str]:
                 errors.append(f"duplicate image_id: {image_id}")
             if isinstance(image_id, str):
                 image_ids.add(image_id)
+                source_id = item.get("source_id")
+                if isinstance(source_id, str):
+                    image_ids_by_source.setdefault(source_id, set()).add(image_id)
             for supported in item.get("claims_supported", []):
                 if supported not in claim_ids:
                     errors.append(f"{label}: unknown supported claim {supported}")
-            if item.get("inspection_status") == "inspected" and item.get("retrieval_status") != "retrieved":
-                errors.append(f"{label}: inspected image must be retrieved")
+            must_be_recoverable = bool(item.get("claims_supported")) or (
+                item.get("inspection_status") == "inspected"
+            )
+            if must_be_recoverable:
+                if item.get("retrieval_status") != "retrieved":
+                    errors.append(f"{label}: claim-bearing image must be retrieved")
+                if item.get("snapshot_format_version") != 1:
+                    errors.append(f"{label}: claim-bearing image lacks snapshot format v1")
+                errors.extend(_validate_snapshot(item, "snapshot_path", "sha256", label))
+                snapshot = _safe_snapshot_path(item.get("snapshot_path"), label)
+                if snapshot and snapshot.is_file():
+                    if item.get("content_length") != snapshot.stat().st_size:
+                        errors.append(f"{label}: image content_length mismatch")
 
     for source in stage["sources"]:
-        path = ROOT / "evidence" / "sources" / f"{source['source_id']}.yaml"
+        source_id = source["source_id"]
+        path = ROOT / "evidence" / "sources" / f"{source_id}.yaml"
+        label = str(path.relative_to(ROOT))
         if not path.exists():
-            errors.append(f"{stage_id}: missing source record {path.relative_to(ROOT)}")
+            errors.append(f"{stage_id}: missing source record {label}")
             continue
         value = load_yaml(path)
-        errors.extend(validate_instance(value, "source-record.schema.json", str(path.relative_to(ROOT))))
+        errors.extend(validate_instance(value, "source-record.schema.json", label))
         if value.get("stage_id") != stage_id:
-            errors.append(f"{path.relative_to(ROOT)}: stage_id mismatch")
-        if not SHA256_RE.fullmatch(str(value.get("response_bytes_sha256", ""))):
-            errors.append(f"{path.relative_to(ROOT)}: invalid response byte hash")
+            errors.append(f"{label}: stage_id mismatch")
+        if value.get("schema_version") != 3:
+            errors.append(f"{label}: finalization requires recoverable source record v3")
+            continue
+        if value.get("snapshot_format_version") != 1:
+            errors.append(f"{label}: unsupported snapshot format")
+        errors.extend(
+            _validate_snapshot(
+                value, "response_snapshot_path", "response_bytes_sha256", label
+            )
+        )
+        errors.extend(
+            _validate_snapshot(
+                value,
+                "normalized_snapshot_path",
+                "normalized_document_sha256",
+                label,
+            )
+        )
+        tracked = image_ids_by_source.get(source_id, set())
+        recorded = set(value.get("image_evidence_ids", []))
+        if tracked != recorded:
+            errors.append(f"{label}: image_evidence_ids do not match image records")
+        if tracked:
+            if value.get("image_capture_status") != "complete":
+                errors.append(f"{label}: tracked image capture is incomplete")
+            if value.get("missing_image_urls"):
+                errors.append(f"{label}: missing_image_urls must be empty")
+        elif value.get("image_capture_status") != "not_applicable":
+            errors.append(f"{label}: image capture must be not_applicable without records")
 
     document_path = ROOT / stage["output_path"]
     if not document_path.exists():
         errors.append(f"{stage_id}: missing document {stage['output_path']}")
-    return errors
+    return sorted(set(errors))
 
 
 def head_sha() -> str:
@@ -165,7 +246,7 @@ def finalize(stage_id: str) -> int:
             "content_commit_sha": content_sha,
             "output_path": stage["output_path"],
             "notes": [
-                "source bytes and normalized text were hashed by GitHub Actions",
+                "source and claim-bearing image snapshots were recovered and hash-verified",
                 "claim and image records passed schema validation",
                 "review_status is machine_validated and not peer_reviewed",
             ],
