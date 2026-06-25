@@ -1,0 +1,54 @@
+schema_version: 2
+source_id: SRC-KB-004-01
+stage_id: KB-004
+source_type: official_help
+requested_url: https://elementor.com/help/button-element/
+canonical_url: https://elementor.com/help/button-element/
+redirect_chain:
+- https://elementor.com/help/button-element/
+retrieved_at: 2026-06-23T23:05:07+03:00
+http_status: 200
+content_type: text/html
+charset: utf-8
+content_length: 1628761
+etag: null
+last_modified: Mon, 22 Jun 2026 18:26:06 GMT
+page_title: Button element | Elementor
+reported_last_updated: 2025-07-01
+content_sha256: 32b8db1ff4dc88d778b246003c5e4f966204d2f966855470242b286271533df8
+response_bytes_sha256: 32b8db1ff4dc88d778b246003c5e4f966204d2f966855470242b286271533df8
+normalized_document_sha256: 5db33ff9c840f505df463156b2ad8f75cde1dedd1df7c8605bf5219d6465a97f
+parser_version: html-text-v1
+image_evidence_ids:
+- IMG-KB-004-001
+discovered_image_urls:
+- https://elementor.com/help/wp-content/uploads/2025/05/Add-teh-element-to-the-canvas-scaled.webp
+- https://elementor.com/help/wp-content/uploads/2025/05/Click-the-Style-tab-3-233x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Click-the-adjust-borders-icon-1-126x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Click-the-ellipses-1-151x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Click-the-plus-sign-2-241x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Enter-get-started-scaled.webp
+- https://elementor.com/help/wp-content/uploads/2025/05/Open-the-Border-section-1-152x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Open-the-color-picker-2-174x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Open-the-size-field-1-148x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Select-hover-from-the-dropdown-1-137x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Set-border-color-1-112x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Set-border-width-to-2-1-113x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Set-opacity-to-0-1-171x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Set-the-border-radius-1-121x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Set-the-size-to-200-1-141x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Style-tab-2-504x1024.png
+- https://elementor.com/help/wp-content/uploads/2025/05/The-result-1-1024x584.png
+- https://elementor.com/help/wp-content/uploads/2025/05/The-result.webp
+- https://elementor.com/help/wp-content/uploads/2025/05/The-widget-3-150x150.png
+- https://elementor.com/help/wp-content/uploads/2025/05/click-the-border-plus-sign-1-133x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/click-the-trasparent-patch-1-138x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/enter-the-url-2-202x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/open-the-background-field-1-150x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/open-the-typography-field-1-143x300.png
+- https://elementor.com/help/wp-content/uploads/2025/05/typography-settings-1-121x300.png
+- https://elementor.com/help/wp-content/uploads/2025/06/General-content-3.png
+- https://elementor.com/help/wp-content/uploads/2025/06/General-settings-1.png
+notes:
+- response_bytes_sha256 hashes exact HTTP response bytes
+- normalized_document_sha256 hashes deterministic visible-ish HTML text
