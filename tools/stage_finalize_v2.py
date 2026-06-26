@@ -90,6 +90,7 @@ def prepare(stage_id: str, expected_head: str | None = None) -> int:
     stage["review_status"] = "machine_validated"
     stage["content_commit_sha"] = content_commit
     stage["completed_at"] = completed_at
+    item["expected_head_sha"] = content_commit
     item["github_state_observed_at"] = completed_at
     item["required_check_runs"] = {
         "head_sha": content_commit,
