@@ -1,64 +1,44 @@
 #!/usr/bin/env python3
-"""Validate the optional append-only v2 execution ledger."""
+"""Validate the v2 suffix of the canonical execution ledger."""
 from __future__ import annotations
 
-import json
+import hashlib
 import sys
-from collections import Counter
-from pathlib import Path
 
-from tools.ledger_chain import ZERO_SHA256, event_sha256
-from tools.pipeline_common import ROOT, canonical_json_line, validate_instance
-
-LEDGER_V2_PATH = ROOT / "ledger" / "executions-v2.jsonl"
+from tools.ledger_chain import ZERO_SHA256, event_sha256, load_jsonl
+from tools.pipeline_common import LEDGER_PATH, canonical_json_line, validate_instance
 
 
-def validate(path: Path = LEDGER_V2_PATH) -> list[str]:
-    if not path.exists():
-        return []
+def validate() -> list[str]:
+    raw, records = load_jsonl(LEDGER_PATH)
     errors: list[str] = []
-    events: list[dict[str, object]] = []
-    for line_number, raw in enumerate(
-        path.read_text(encoding="utf-8").splitlines(), start=1
-    ):
-        if not raw.strip():
+    prefix = b""
+    previous: str | None = None
+    chain_started = False
+    lines = raw.splitlines(keepends=True)
+
+    for index, (line, event) in enumerate(zip(lines, records), start=1):
+        if event.get("ledger_version") != 2:
+            if chain_started:
+                errors.append(f"ledger line {index}: legacy event after v2 chain")
+            prefix += line
             continue
-        try:
-            event = json.loads(raw)
-        except json.JSONDecodeError as exc:
-            errors.append(f"{path}:{line_number}: invalid JSON: {exc.msg}")
-            continue
-        if not isinstance(event, dict):
-            errors.append(f"{path}:{line_number}: event must be an object")
-            continue
-        errors.extend(
-            validate_instance(
-                event,
-                "ledger-event-v2.schema.json",
-                f"{path}:{line_number}",
-            )
-        )
-        if canonical_json_line(event) != raw:
-            errors.append(f"{path}:{line_number}: event is not canonical JSON")
+        chain_started = True
+        errors.extend(validate_instance(event, "execution-event.schema.json", f"ledger line {index}"))
         if event.get("event_sha256") != event_sha256(event, canonical_json_line):
-            errors.append(f"{path}:{line_number}: event_sha256 mismatch")
-        events.append(event)
-
-    ids = [event.get("event_id") for event in events]
-    duplicates = sorted(key for key, count in Counter(ids).items() if count > 1)
-    if duplicates:
-        errors.append(f"{path}: duplicate event IDs: {duplicates}")
-
-    previous = ZERO_SHA256
-    for index, event in enumerate(events):
-        expected_scope = "genesis" if index == 0 else "event"
-        if event.get("chain_scope") != expected_scope:
-            errors.append(f"{path}:{index + 1}: invalid chain_scope")
-        if event.get("previous_event_sha256") != previous:
-            errors.append(f"{path}:{index + 1}: previous event hash mismatch")
+            errors.append(f"ledger line {index}: event_sha256 mismatch")
+        if previous is None:
+            expected = hashlib.sha256(prefix).hexdigest() if prefix else ZERO_SHA256
+            scope = "legacy_prefix" if prefix else "genesis"
+        else:
+            expected = previous
+            scope = "event"
+        if event.get("chain_scope") != scope:
+            errors.append(f"ledger line {index}: invalid chain_scope")
+        if event.get("previous_event_sha256") != expected:
+            errors.append(f"ledger line {index}: previous hash mismatch")
         current = event.get("event_sha256")
-        if isinstance(current, str):
-            previous = current
+        previous = current if isinstance(current, str) else previous
     return sorted(set(errors))
 
 
@@ -66,8 +46,7 @@ def main() -> int:
     errors = validate()
     for error in errors:
         print(f"ERROR: {error}", file=sys.stderr)
-    if not errors:
-        print("LEDGER_V2_VALID")
+    print("EXECUTION_LEDGER_VALID" if not errors else "EXECUTION_LEDGER_INVALID")
     return 1 if errors else 0
 
 
