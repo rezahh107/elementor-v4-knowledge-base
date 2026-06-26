@@ -12,9 +12,11 @@
     },
     "derived_from": {
       "items": {
+        "pattern": "^KB-[0-9]{3}-C[0-9]{3,}$",
         "type": "string"
       },
-      "type": "array"
+      "type": "array",
+      "uniqueItems": true
     },
     "evidence_state": {
       "enum": [
@@ -29,21 +31,34 @@
     },
     "source_locators": {
       "items": {
+        "additionalProperties": false,
         "properties": {
           "locator": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "locator_version": {
+            "const": 1
+          },
+          "snapshot_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
             "type": "string"
           },
           "source_id": {
+            "pattern": "^SRC-KB-[0-9]{3}-[0-9]{2}$",
             "type": "string"
           }
         },
         "required": [
           "source_id",
-          "locator"
+          "locator",
+          "locator_version",
+          "snapshot_sha256"
         ],
         "type": "object"
       },
-      "type": "array"
+      "type": "array",
+      "uniqueItems": true
     },
     "stage_id": {
       "pattern": "^KB-[0-9]{3}$",
@@ -67,6 +82,35 @@
     "source_locators",
     "derived_from",
     "verification_status"
+  ],
+  "allOf": [
+    {
+      "if": {"properties": {"evidence_state": {"const": "derived"}}},
+      "then": {
+        "properties": {
+          "derived_from": {"minItems": 1},
+          "source_locators": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"evidence_state": {"const": "documented"}}},
+      "then": {
+        "properties": {
+          "source_locators": {"minItems": 1},
+          "derived_from": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"evidence_state": {"const": "observed"}}},
+      "then": {
+        "properties": {
+          "source_locators": {"maxItems": 0},
+          "derived_from": {"maxItems": 0}
+        }
+      }
+    }
   ],
   "type": "object"
 }
