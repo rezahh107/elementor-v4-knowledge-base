@@ -9,7 +9,7 @@ items:
   source_capture_status: captured
   attempt: 2
   idempotency_key: migration-cycle-01:KB-004
-  updated_at: 2026-06-26T01:19:16+03:00
+  updated_at: '2026-06-26T01:19:16+03:00'
   last_error: null
 - work_id: migration-cycle-01:KB-005
   cycle_id: migration-cycle-01
@@ -20,7 +20,7 @@ items:
   source_capture_status: pending
   attempt: 1
   idempotency_key: migration-cycle-01:KB-005
-  updated_at: 2026-06-23T19:55:00+03:00
+  updated_at: '2026-06-23T19:55:00+03:00'
   last_error: null
 - work_id: migration-cycle-01:KB-018
   cycle_id: migration-cycle-01
@@ -31,7 +31,7 @@ items:
   source_capture_status: pending
   attempt: 1
   idempotency_key: migration-cycle-01:KB-018
-  updated_at: 2026-06-23T19:55:00+03:00
+  updated_at: '2026-06-23T19:55:00+03:00'
   last_error: null
 - work_id: migration-cycle-01:KB-019
   cycle_id: migration-cycle-01
@@ -42,5 +42,5 @@ items:
   source_capture_status: pending
   attempt: 1
   idempotency_key: migration-cycle-01:KB-019
-  updated_at: 2026-06-23T19:55:00+03:00
+  updated_at: '2026-06-23T19:55:00+03:00'
   last_error: null
