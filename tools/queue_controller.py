@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plan exactly one safe rolling-queue action. PR A.2 is dry-run only."""
+"""Plan exactly one safe rolling-queue action. The repository controller is dry-run only."""
 from __future__ import annotations
 
 import sys
@@ -19,13 +19,20 @@ from tools.queue_reconcile import reconcile
 def plan(queue: dict[str, Any], repo_state: dict[str, Any]) -> dict[str, Any]:
     diagnostics = reconcile(queue, repo_state)
     blocking = [item for item in diagnostics if item["severity"] == "P0"]
-    eligible = eligible_tasks(queue)
+
+    # Fail closed: reconciliation truth outranks queue execution intent.  A P0
+    # diagnostic must never be bypassed by an otherwise independent task.
+    eligible = [] if blocking else eligible_tasks(queue)
     selected = eligible[0] if eligible else None
     return {
         "mode": queue["controller_policy"]["mode"],
         "queue_revision": queue["queue_revision"],
         "selected_task": selected["id"] if selected else None,
-        "action": "report_and_plan_only",
+        "action": (
+            "blocked_by_reconciliation"
+            if blocking
+            else "report_and_plan_only"
+        ),
         "blocking_diagnostics": blocking,
         "all_diagnostics": diagnostics,
         "mutations_performed": [],
@@ -43,7 +50,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
     if queue["controller_policy"]["mode"] != "dry_run":
-        print("ERROR: PR A.2 controller only supports dry_run", file=sys.stderr)
+        print("ERROR: repository controller only supports dry_run", file=sys.stderr)
         return 1
     try:
         repo_state = json.loads(args.repo_state.read_text(encoding="utf-8"))
