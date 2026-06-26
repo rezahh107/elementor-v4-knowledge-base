@@ -119,10 +119,11 @@ def validate() -> list[str]:
 
 
 def main() -> int:
+    document = load_work_items()
     errors = validate()
     for error in errors:
         print(f"ERROR: {error}", file=sys.stderr)
-    print(f"INFO: validated {len(load_work_items()['Items'])} work items")
+    print(f"INFO: validated {len(document['items'])} work items")
     return 1 if errors else 0
 
 
