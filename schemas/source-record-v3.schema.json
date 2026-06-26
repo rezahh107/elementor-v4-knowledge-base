@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/source-record-v3.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "source_id", "stage_id", "source_type", "requested_url", "canonical_url",
+    "redirect_chain", "redirect_chain_complete", "retrieved_at", "http_status", "content_type", "charset",
+    "content_length", "etag", "last_modified", "page_title", "page_title_source", "reported_last_updated",
+    "reported_last_updated_source", "reported_last_updated_hint", "content_sha256", "response_bytes_sha256",
+    "normalized_document_sha256", "parser_version", "source_locator_version", "capture_id", "snapshot",
+    "image_evidence_ids", "discovered_image_urls", "notes"
+  ],
+  "properties": {
+    "schema_version": {"const": 3},
+    "source_id": {"type": "string", "pattern": "^SRC-KB-[0-9]{3}-[0-9]{2}$"},
+    "stage_id": {"type": "string", "pattern": "^KB-[0-9]{3}$"},
+    "source_type": {"enum": ["official_help", "official_developer_docs", "official_source_code", "official_changelog"]},
+    "requested_url": {"type": "string", "pattern": "^https://"},
+    "canonical_url": {"type": "string", "pattern": "^https://"},
+    "redirect_chain": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^https://"}},
+    "redirect_chain_complete": {"const": true},
+    "retrieved_at": {"type": "string", "format": "date-time"},
+    "http_status": {"type": "integer", "minimum": 200, "maximum": 299},
+    "content_type": {"enum": ["text/html", "application/xhtml+xml"]},
+    "charset": {"type": "string", "minLength": 1},
+    "content_length": {"type": "integer", "minimum": 1, "maximum": 8388608},
+    "etag": {"type": ["string", "null"]},
+    "last_modified": {"type": ["string", "null"]},
+    "page_title": {"type": "string", "minLength": 1},
+    "page_title_source": {"enum": ["html_title", "stage_fallback"]},
+    "reported_last_updated": {"type": ["string", "null"], "format": "date"},
+    "reported_last_updated_source": {"enum": ["html_metadata", "http_last_modified", "unavailable"]},
+    "reported_last_updated_hint": {"type": ["string", "null"], "format": "date"},
+    "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "response_bytes_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "normalized_document_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "parser_version": {"const": "html-text-v2"},
+    "source_locator_version": {"const": 1},
+    "capture_id": {"type": "string", "pattern": "^CAP-[a-f0-9]{64}$"},
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storage", "artifact_name", "relative_path", "run_id", "response_bytes_sha256"],
+      "properties": {
+        "storage": {"enum": ["workflow_artifact", "local_ephemeral"]},
+        "artifact_name": {"type": "string", "minLength": 1},
+        "relative_path": {"type": "string", "pattern": "^source-snapshots/.+\\.bin$"},
+        "run_id": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "response_bytes_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "image_evidence_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^IMG-KB-[0-9]{3}-[0-9]{3}$"}},
+    "discovered_image_urls": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^https://"}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
