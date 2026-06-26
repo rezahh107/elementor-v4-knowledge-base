@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/repository-state.schema.json",
+  "title": "GitHub repository-state snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["snapshot_version", "captured_at", "pull_requests", "workflow_runs"],
+  "properties": {
+    "snapshot_version": {"const": 1},
+    "captured_at": {"type": "string", "format": "date-time"},
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_branch", "head_sha"],
+      "properties": {
+        "default_branch": {"type": "string", "minLength": 1},
+        "head_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"}
+      }
+    },
+    "pull_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["number", "stage_id", "state", "draft", "head_sha"],
+        "properties": {
+          "number": {"type": "integer", "minimum": 1},
+          "stage_id": {"type": ["string", "null"], "pattern": "^KB-[0-9]{3}$"},
+          "state": {"enum": ["open", "closed"]},
+          "draft": {"type": "boolean"},
+          "merged": {"type": "boolean"},
+          "mergeable": {"type": ["boolean", "null"]},
+          "head_ref": {"type": "string", "minLength": 1},
+          "base_ref": {"type": "string", "minLength": 1},
+          "head_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+          "merge_commit_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"},
+          "updated_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "workflow_runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "conclusion", "jobs", "stage_id"],
+        "properties": {
+          "id": {"type": "integer", "minimum": 1},
+          "name": {"type": "string", "minLength": 1},
+          "stage_id": {"type": ["string", "null"], "pattern": "^KB-[0-9]{3}$"},
+          "head_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+          "status": {"enum": ["queued", "in_progress", "completed", "waiting", "pending", "requested"]},
+          "conclusion": {"type": ["string", "null"]},
+          "action_required_reason": {"type": ["string", "null"]},
+          "updated_at": {"type": "string", "format": "date-time"},
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": ["name"],
+              "properties": {
+                "name": {"type": "string", "minLength": 1},
+                "status": {"type": "string"},
+                "conclusion": {"type": ["string", "null"]}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

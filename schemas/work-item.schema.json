@@ -30,6 +30,22 @@
           "source_capture_status": {"enum": ["pending", "captured", "failed"]},
           "attempt": {"type": "integer", "minimum": 0},
           "idempotency_key": {"minLength": 8, "type": "string"},
+          "expected_head_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"},
+          "merged_commit_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"},
+          "github_state_observed_at": {"type": ["string", "null"], "format": "date-time"},
+          "required_check_runs": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["head_sha", "python_3_11", "python_3_13", "strict_validation", "generated_artifacts", "pytest"],
+            "properties": {
+              "head_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+              "python_3_11": {"enum": ["pending", "success", "failure", "action_required"]},
+              "python_3_13": {"enum": ["pending", "success", "failure", "action_required"]},
+              "strict_validation": {"enum": ["pending", "success", "failure", "action_required"]},
+              "generated_artifacts": {"enum": ["pending", "success", "failure", "action_required"]},
+              "pytest": {"enum": ["pending", "success", "failure", "action_required"]}
+            }
+          },
           "updated_at": {"format": "date-time", "type": "string"},
           "last_error": {"type": ["string", "null"]}
         },
@@ -45,6 +61,37 @@
           "idempotency_key",
           "updated_at",
           "last_error"
+        ],
+        "allOf": [
+          {
+            "if": {"properties": {"state": {"enum": ["machine_validated", "merged"]}}},
+            "then": {
+              "required": ["expected_head_sha", "github_state_observed_at"],
+              "properties": {
+                "expected_head_sha": {"type": "string"},
+                "github_state_observed_at": {"type": "string"}
+              }
+            }
+          },
+          {
+            "if": {"properties": {"state": {"const": "merged"}}},
+            "then": {
+              "required": ["merged_commit_sha", "required_check_runs"],
+              "properties": {
+                "merged_commit_sha": {"type": "string"},
+                "required_check_runs": {
+                  "type": "object",
+                  "properties": {
+                    "python_3_11": {"const": "success"},
+                    "python_3_13": {"const": "success"},
+                    "strict_validation": {"const": "success"},
+                    "generated_artifacts": {"const": "success"},
+                    "pytest": {"const": "success"}
+                  }
+                }
+              }
+            }
+          }
         ]
       }
     }

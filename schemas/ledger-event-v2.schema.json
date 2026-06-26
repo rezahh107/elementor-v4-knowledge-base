@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/ledger-event-v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ledger_version", "chain_scope", "previous_event_sha256", "event_sha256", "event_id", "stage_id", "event_type", "status", "recorded_at", "content_commit_sha", "finalization_commit_sha", "output_path", "notes"],
+  "properties": {
+    "ledger_version": {"const": 2},
+    "chain_scope": {"enum": ["genesis", "legacy_prefix", "event"]},
+    "previous_event_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "event_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "event_id": {"type": "string", "minLength": 8},
+    "stage_id": {"type": "string", "pattern": "^KB-[0-9]{3}$"},
+    "event_type": {"enum": ["scheduled", "started", "completed", "completed_with_gaps", "failed", "blocked", "migration_recorded", "reviewed", "superseded"]},
+    "status": {"enum": ["draft", "not_scheduled", "scheduled", "running", "completed", "completed_with_gaps", "blocked", "failed", "stale", "superseded"]},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "content_commit_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "finalization_commit_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "output_path": {"type": "string", "pattern": "^docs/.+\\.md$"},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}

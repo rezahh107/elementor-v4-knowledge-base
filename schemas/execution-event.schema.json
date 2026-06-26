@@ -2,75 +2,29 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "content_commit_sha": {
-      "pattern": "^[a-f0-9]{40}$",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "event_id": {
-      "minLength": 8,
-      "type": "string"
-    },
-    "event_type": {
-      "enum": [
-        "scheduled",
-        "started",
-        "completed",
-        "completed_with_gaps",
-        "failed",
-        "blocked",
-        "migration_recorded",
-        "reviewed",
-        "superseded"
-      ]
-    },
-    "notes": {
-      "items": {
-        "type": "string"
-      },
-      "type": "array"
-    },
-    "output_path": {
-      "pattern": "^docs/.+\\.md$",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "recorded_at": {
-      "format": "date-time",
-      "type": "string"
-    },
-    "stage_id": {
-      "pattern": "^KB-[0-9]{3}$",
-      "type": "string"
-    },
-    "status": {
-      "enum": [
-        "draft",
-        "not_scheduled",
-        "scheduled",
-        "running",
-        "completed",
-        "completed_with_gaps",
-        "blocked",
-        "failed",
-        "stale",
-        "superseded"
-      ]
-    }
+    "ledger_version": {"const": 2},
+    "chain_scope": {"enum": ["genesis", "legacy_prefix", "event"]},
+    "previous_event_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "event_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "content_commit_sha": {"pattern": "^[a-f0-9]{40}$", "type": ["string", "null"]},
+    "finalization_commit_sha": {"pattern": "^[a-f0-9]{40}$", "type": ["string", "null"]},
+    "event_id": {"minLength": 8, "type": "string"},
+    "event_type": {"enum": ["scheduled", "started", "completed", "completed_with_gaps", "failed", "blocked", "migration_recorded", "reviewed", "superseded"]},
+    "notes": {"items": {"type": "string"}, "type": "array"},
+    "output_path": {"pattern": "^docs/.+\\.md$", "type": ["string", "null"]},
+    "recorded_at": {"format": "date-time", "type": "string"},
+    "stage_id": {"pattern": "^KB-[0-9]{3}$", "type": "string"},
+    "status": {"enum": ["draft", "not_scheduled", "scheduled", "running", "completed", "completed_with_gaps", "blocked", "failed", "stale", "superseded"]}
   },
-  "required": [
-    "event_id",
-    "stage_id",
-    "event_type",
-    "status",
-    "recorded_at",
-    "content_commit_sha",
-    "output_path",
-    "notes"
+  "required": ["event_id", "stage_id", "event_type", "status", "recorded_at", "content_commit_sha", "output_path", "notes"],
+  "allOf": [
+    {
+      "if": {"required": ["ledger_version"]},
+      "then": {
+        "required": ["chain_scope", "previous_event_sha256", "event_sha256", "finalization_commit_sha"],
+        "properties": {"content_commit_sha": {"type": "string"}, "finalization_commit_sha": {"type": "string"}}
+      }
+    }
   ],
   "type": "object"
 }

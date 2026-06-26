@@ -4,102 +4,164 @@ on:
   workflow_dispatch:
     inputs:
       stage_id:
-        description: Stage ID such as KB-004
         required: true
         type: string
       branch:
-        description: Existing migration branch
         required: true
         type: string
-  pull_request:
+  pull_request_target:
     types: [ready_for_review]
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: stage-finalize-${{ github.event.pull_request.number || inputs.stage_id }}
   cancel-in-progress: false
 
 jobs:
-  finalize:
+  compute:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (
-        github.event.pull_request.head.repo.full_name == github.repository &&
-        (
-          startsWith(github.event.pull_request.head.ref, 'migration/') ||
-          startsWith(github.event.pull_request.head.ref, 'migration-')
-        )
-      )
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+       (startsWith(github.event.pull_request.head.ref, 'migration/') ||
+        startsWith(github.event.pull_request.head.ref, 'migration-')))
     runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.target.outputs.branch }}
+      head: ${{ steps.target.outputs.head }}
+      base: ${{ steps.target.outputs.base }}
+      stage: ${{ steps.stage.outputs.value }}
     steps:
-      - name: Resolve branch
-        id: target
+      - id: target
         shell: bash
         env:
-          EVENT_NAME: ${{ github.event_name }}
+          EVENT: ${{ github.event_name }}
           INPUT_BRANCH: ${{ inputs.branch }}
-          INPUT_STAGE: ${{ inputs.stage_id }}
           PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           set -euo pipefail
-          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+          if [[ "$EVENT" == workflow_dispatch ]]; then
             branch="$INPUT_BRANCH"
-            stage="$INPUT_STAGE"
+            [[ "$branch" == migration/* || "$branch" == migration-* ]]
+            head="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$branch" | awk '{print $1}')"
+            base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH" | awk '{print $1}')"
           else
             branch="$PR_BRANCH"
-            stage=""
+            head="$PR_HEAD"
+            base="$PR_BASE"
           fi
-          [[ "$branch" == migration/* || "$branch" == migration-* ]]
+          [[ "$head" =~ ^[a-f0-9]{40}$ && "$base" =~ ^[a-f0-9]{40}$ ]]
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
-          echo "stage=$stage" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v7
+          echo "head=$head" >> "$GITHUB_OUTPUT"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
-          ref: ${{ steps.target.outputs.branch }}
+          ref: ${{ steps.target.outputs.head }}
           fetch-depth: 0
-      - uses: actions/setup-python@v6
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
-          python-version: '3.13'
+          python-version: "3.13"
           cache: pip
-      - run: python -m pip install -e '.[dev]'
-      - name: Resolve stage ID
-        id: stage
+      - name: Restore trusted tooling
+        env:
+          BASE: ${{ steps.target.outputs.base }}
+        run: |
+          git fetch --no-tags origin "$BASE"
+          git restore --source="$BASE" --worktree -- tools schemas pyproject.toml
+          python -m pip install -e ".[dev]"
+      - id: stage
         shell: bash
         env:
-          EXPLICIT_STAGE: ${{ steps.target.outputs.stage }}
-          TARGET_BRANCH: ${{ steps.target.outputs.branch }}
+          EVENT: ${{ github.event_name }}
+          EXPLICIT: ${{ inputs.stage_id }}
+          BRANCH: ${{ steps.target.outputs.branch }}
         run: |
           set -euo pipefail
-          if [[ -n "$EXPLICIT_STAGE" ]]; then
-            value="$EXPLICIT_STAGE"
+          if [[ "$EVENT" == workflow_dispatch ]]; then
+            value="$EXPLICIT"
           else
-            value="$(python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["TARGET_BRANCH"]))')"
+            value="$(python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["BRANCH"]))')"
           fi
           [[ "$value" =~ ^KB-[0-9]{3}$ ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
-      - name: Finalize canonical stage data
-        run: python tools/stage_finalize.py --stage '${{ steps.stage.outputs.value }}'
-      - name: Generate derived artifacts
-        run: python tools/kb.py generate
-      - name: Validate work-item state
-        run: python tools/work_item_validate.py
-      - name: Validate repository strictly
-        run: python tools/kb.py validate --strict
-      - name: Verify generated artifacts
-        run: python tools/kb.py generate --check
-      - name: Run tests
-        run: python -m pytest
-      - name: Commit finalization artifacts
-        shell: bash
+      - name: Prepare and validate
+        env:
+          HEAD_SHA: ${{ steps.target.outputs.head }}
+        run: |
+          python tools/stage_finalize.py --stage '${{ steps.stage.outputs.value }}' --phase prepare --expected-head "$HEAD_SHA"
+          python tools/kb.py generate
+          python tools/work_item_validate.py
+          python tools/kb.py generate --check
+          python -m pytest -q
+      - name: Build allowlisted patch
+        env:
+          HEAD_SHA: ${{ steps.target.outputs.head }}
         run: |
           set -euo pipefail
+          git restore --source="$HEAD_SHA" --worktree -- tools schemas pyproject.toml
+          allowed='^(manifests/(stages|work-items|coverage|sources)\.yaml|STATUS\.md|docs/_index\.md)$'
+          git diff --name-only "$HEAD_SHA" | grep -Ev "$allowed" | (! grep .)
+          mkdir -p "$RUNNER_TEMP/out"
+          git diff --binary "$HEAD_SHA" -- manifests/stages.yaml manifests/work-items.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md > "$RUNNER_TEMP/out/finalization.patch"
+          test -s "$RUNNER_TEMP/out/finalization.patch"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: stage-finalization-${{ steps.target.outputs.head }}
+          path: ${{ runner.temp }}/out/finalization.patch
+          if-no-files-found: error
+          retention-days: 30
+
+  writeback:
+    needs: compute
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          ref: ${{ needs.compute.outputs.head }}
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.13"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: stage-finalization-${{ needs.compute.outputs.head }}
+          path: ${{ runner.temp }}/out
+      - name: Commit finalization and attestation
+        shell: bash
+        env:
+          BRANCH: ${{ needs.compute.outputs.branch }}
+          HEAD_SHA: ${{ needs.compute.outputs.head }}
+          BASE_SHA: ${{ needs.compute.outputs.base }}
+          STAGE: ${{ needs.compute.outputs.stage }}
+        run: |
+          set -euo pipefail
+          remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
+          [[ "$remote" == "$HEAD_SHA" ]]
+          patch="$RUNNER_TEMP/out/finalization.patch"
+          git apply --check "$patch"
+          git apply "$patch"
+          allowed='^(manifests/(stages|work-items|coverage|sources)\.yaml|STATUS\.md|docs/_index\.md)$'
+          git diff --name-only "$HEAD_SHA" | grep -Ev "$allowed" | (! grep .)
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add manifests/stages.yaml manifests/work-items.yaml ledger/executions.jsonl STATUS.md docs/_index.md manifests/coverage.yaml manifests/sources.yaml
-          if git diff --cached --quiet; then
-            echo 'No finalization changes to commit.'
-            exit 0
-          fi
-          git commit -m 'chore: finalize evidence stage ${{ steps.stage.outputs.value }}'
-          git push origin HEAD:${{ steps.target.outputs.branch }}
+          git add manifests/stages.yaml manifests/work-items.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md
+          git commit -m "chore: finalize evidence stage $STAGE"
+          finalization_sha="$(git rev-parse HEAD)"
+          mkdir -p "$RUNNER_TEMP/trusted/tools" "$RUNNER_TEMP/trusted/schemas"
+          git show "$BASE_SHA:tools/stage_attest.py" > "$RUNNER_TEMP/trusted/tools/stage_attest.py"
+          git show "$BASE_SHA:schemas/execution-event.schema.json" > "$RUNNER_TEMP/trusted/schemas/execution-event.schema.json"
+          python -m pip install PyYAML jsonschema
+          python -I "$RUNNER_TEMP/trusted/tools/stage_attest.py" --repo "$PWD" --stage "$STAGE" --finalization-commit "$finalization_sha"
+          [[ "$(git diff --name-only)" == "ledger/executions.jsonl" ]]
+          git add ledger/executions.jsonl
+          git commit -m "ledger: attest finalization for $STAGE"
+          remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
+          [[ "$remote" == "$HEAD_SHA" ]]
+          git push origin "HEAD:refs/heads/$BRANCH"
