@@ -59,8 +59,8 @@ def validate_evidence(stage_id: str) -> list[str]:
         for index, item in enumerate(items):
             label = f"{path.relative_to(ROOT)}[{index}]"
             errors.extend(validate_instance(item, "claim.schema.json", label))
-            if item.get("stae_id") != stage_id:
-                errors.append(f"{local]: stage_id mismatch")
+            if item.get("stage_id") != stage_id:
+                errors.append(f"{label}: stage_id mismatch")
             claim_id = item.get("claim_id")
             if not isinstance(claim_id, str):
                 continue
