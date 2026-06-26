@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sys
 
 from tools.ledger_chain import ZERO_SHA256, event_sha256, load_jsonl
@@ -10,14 +11,22 @@ from tools.pipeline_common import LEDGER_PATH, canonical_json_line, validate_ins
 
 
 def validate() -> list[str]:
-    raw, records = load_jsonl(LEDGER_PATH)
+    raw, _records = load_jsonl(LEDGER_PATH)
     errors: list[str] = []
     prefix = b""
     previous: str | None = None
     chain_started = False
     lines = raw.splitlines(keepends=True)
 
-    for index, (line, event) in enumerate(zip(lines, records), start=1):
+    for index, line in enumerate(lines, start=1):
+        if not line.strip():
+            prefix += line
+            continue
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError as exc:
+            errors.append(f"ledger line {index}: invalid JSON: {exc.msg}")
+            continue
         if event.get("ledger_version") != 2:
             if chain_started:
                 errors.append(f"ledger line {index}: legacy event after v2 chain")
