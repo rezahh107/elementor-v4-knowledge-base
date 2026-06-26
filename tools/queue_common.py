@@ -4,6 +4,9 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
+import time
+from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -23,6 +26,8 @@ STATUS_PATH = ROOT / "STATUS.md"
 PRIORITY_RANK = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
 _VALIDATOR_CACHE: dict[Path, Draft202012Validator] = {}
 TERMINAL_STATES = {"completed", "superseded", "cancelled"}
+MAX_CANONICAL_DEPTH = 128
+ZERO_SHA256 = "0" * 64
 ALLOWED_TRANSITIONS = {
     "pending": {"leased", "blocked", "cancelled"},
     "leased": {"executing", "pending", "blocked"},
@@ -36,24 +41,40 @@ ALLOWED_TRANSITIONS = {
 }
 
 
-def _reject_non_finite(value: Any) -> None:
+def _reject_non_finite(
+    value: Any,
+    *,
+    active: set[int] | None = None,
+    depth: int = 0,
+) -> None:
+    if depth > MAX_CANONICAL_DEPTH:
+        raise TypeError(f"canonical JSON exceeds maximum depth {MAX_CANONICAL_DEPTH}")
     if isinstance(value, bool) or value is None or isinstance(value, (str, int)):
         return
     if isinstance(value, float):
         if not math.isfinite(value):
             raise ValueError("NaN and infinity are forbidden")
         return
-    if isinstance(value, list):
-        for item in value:
-            _reject_non_finite(item)
-        return
-    if isinstance(value, dict):
-        for key in sorted(value):
-            if not isinstance(key, str):
-                raise TypeError("canonical JSON object keys must be strings")
-            _reject_non_finite(value[key])
-        return
-    raise TypeError(f"unsupported canonical JSON type: {type(value).__name__}")
+    if not isinstance(value, (list, dict)):
+        raise TypeError(f"unsupported canonical JSON type: {type(value).__name__}")
+
+    if active is None:
+        active = set()
+    identity = id(value)
+    if identity in active:
+        raise TypeError("canonical JSON contains a reference cycle")
+    active.add(identity)
+    try:
+        if isinstance(value, list):
+            for item in value:
+                _reject_non_finite(item, active=active, depth=depth + 1)
+        else:
+            for key in sorted(value):
+                if not isinstance(key, str):
+                    raise TypeError("canonical JSON object keys must be strings")
+                _reject_non_finite(value[key], active=active, depth=depth + 1)
+    finally:
+        active.remove(identity)
 
 
 def canonical_json(value: Any) -> str:
@@ -70,6 +91,11 @@ def canonical_json(value: Any) -> str:
 
 def sha256_prefixed(value: Any) -> str:
     return "sha256:" + hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
+
+
+def event_sha256(event: dict[str, Any]) -> str:
+    payload = {key: value for key, value in event.items() if key != "event_sha256"}
+    return hashlib.sha256(canonical_json(payload).encode("utf-8")).hexdigest()
 
 
 def load_json(path: Path) -> Any:
@@ -129,10 +155,46 @@ def validate_spec_hashes(queue: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _canonical_cycle(nodes: list[str]) -> tuple[str, ...]:
+    """Return a stable rotation for one closed dependency cycle."""
+    ring = nodes[:-1]
+    rotations = [tuple(ring[index:] + ring[:index]) for index in range(len(ring))]
+    chosen = min(rotations)
+    return chosen + (chosen[0],)
+
+
+def _dependency_cycles(tasks_by_id: dict[str, dict[str, Any]]) -> list[tuple[str, ...]]:
+    state: dict[str, int] = {task_id: 0 for task_id in tasks_by_id}
+    stack: list[str] = []
+    position: dict[str, int] = {}
+    cycles: set[tuple[str, ...]] = set()
+
+    def visit(task_id: str) -> None:
+        state[task_id] = 1
+        position[task_id] = len(stack)
+        stack.append(task_id)
+        dependencies = tasks_by_id[task_id].get("spec", {}).get("depends_on", [])
+        for dependency in sorted(item for item in dependencies if item in tasks_by_id):
+            if state[dependency] == 0:
+                visit(dependency)
+            elif state[dependency] == 1:
+                start = position[dependency]
+                cycles.add(_canonical_cycle(stack[start:] + [dependency]))
+        stack.pop()
+        position.pop(task_id, None)
+        state[task_id] = 2
+
+    for task_id in sorted(tasks_by_id):
+        if state[task_id] == 0:
+            visit(task_id)
+    return sorted(cycles)
+
+
 def validate_identity(queue: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     task_ids: set[str] = set()
     work_unit_ids: set[str] = set()
+    tasks_by_id: dict[str, dict[str, Any]] = {}
     for task in queue.get("tasks", []):
         task_id = task.get("id")
         work_unit_id = task.get("spec", {}).get("work_unit_id")
@@ -142,6 +204,7 @@ def validate_identity(queue: dict[str, Any]) -> list[str]:
             errors.append(f"duplicate work unit id: {work_unit_id}")
         if isinstance(task_id, str):
             task_ids.add(task_id)
+            tasks_by_id.setdefault(task_id, task)
         if isinstance(work_unit_id, str):
             work_unit_ids.add(work_unit_id)
     for task in queue.get("tasks", []):
@@ -151,6 +214,8 @@ def validate_identity(queue: dict[str, Any]) -> list[str]:
                 errors.append(f"{task_id}: unknown dependency {dependency}")
             if dependency == task_id:
                 errors.append(f"{task_id}: self dependency is forbidden")
+    for cycle in _dependency_cycles(tasks_by_id):
+        errors.append("dependency cycle: " + " -> ".join(cycle))
     return errors
 
 
@@ -185,7 +250,12 @@ def validate_runtime_invariants(queue: dict[str, Any]) -> list[str]:
     ):
         errors.append("RQ_ACTIVE_STAGE_CONFLICT: multiple stage migrations are active")
 
-    now = datetime.now(ZoneInfo("Europe/Istanbul"))
+    timezone_name = queue.get("controller_policy", {}).get("timezone", "Europe/Istanbul")
+    try:
+        now = datetime.now(ZoneInfo(timezone_name))
+    except (KeyError, TypeError, ValueError):
+        errors.append(f"RQ_TIMEZONE_INVALID: {timezone_name!r}")
+        now = datetime.now(ZoneInfo("Europe/Istanbul"))
     for task in queue.get("tasks", []):
         runtime = task.get("runtime", {})
         state = runtime.get("status")
@@ -258,23 +328,79 @@ def eligible_tasks(queue: dict[str, Any]) -> list[dict[str, Any]]:
     )
 
 
+def _lock_path(path: Path) -> Path:
+    return path.with_name(path.name + ".lock")
+
+
+def _acquire_lock(path: Path) -> int:
+    lock = _lock_path(path)
+    lock.parent.mkdir(parents=True, exist_ok=True)
+    for _ in range(200):
+        try:
+            return os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+        except FileExistsError:
+            time.sleep(0.01)
+    raise TimeoutError(f"could not acquire append lock for {path}")
+
+
+def _release_lock(path: Path, descriptor: int) -> None:
+    os.close(descriptor)
+    try:
+        _lock_path(path).unlink()
+    except FileNotFoundError:
+        pass
+
+
+def _load_event_lines(path: Path) -> tuple[bytes, list[dict[str, Any]]]:
+    raw = path.read_bytes() if path.exists() else b""
+    records: list[dict[str, Any]] = []
+    for line_number, line in enumerate(raw.decode("utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            value = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"{path}:{line_number}: invalid JSONL") from exc
+        if not isinstance(value, dict):
+            raise ValueError(f"{path}:{line_number}: event must be an object")
+        records.append(value)
+    return raw, records
+
+
 def append_event(event: dict[str, Any], path: Path = EVENTS_PATH) -> None:
-    errors = validate_schema(event, EVENT_SCHEMA_PATH, "queue event")
-    if errors:
-        raise ValueError("; ".join(errors))
-    existing: list[dict[str, Any]] = []
-    if path.exists():
-        for line_number, line in enumerate(
-            path.read_text(encoding="utf-8").splitlines(), start=1
-        ):
-            if not line.strip():
-                continue
-            try:
-                existing.append(json.loads(line))
-            except json.JSONDecodeError as exc:
-                raise ValueError(f"{path}:{line_number}: invalid JSONL") from exc
-    if any(item["event_id"] == event["event_id"] for item in existing):
-        raise ValueError(f"duplicate queue event id: {event['event_id']}")
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8", newline="\n") as handle:
-        handle.write(canonical_json(event) + "\n")
+    """Append one schema-v2 hash-chained event under an exclusive file lock."""
+    descriptor = _acquire_lock(path)
+    try:
+        raw, existing = _load_event_lines(path)
+        if any(item.get("event_id") == event.get("event_id") for item in existing):
+            raise ValueError(f"duplicate queue event id: {event.get('event_id')}")
+
+        chained = deepcopy(event)
+        chained["schema_version"] = 2
+        if existing and existing[-1].get("schema_version") == 2:
+            previous = existing[-1].get("event_sha256")
+            if not isinstance(previous, str) or len(previous) != 64:
+                raise ValueError("last queue event has an invalid event_sha256")
+            chained["chain_scope"] = "event"
+            chained["previous_event_sha256"] = previous
+        elif raw:
+            chained["chain_scope"] = "legacy_prefix"
+            chained["previous_event_sha256"] = hashlib.sha256(raw).hexdigest()
+        else:
+            chained["chain_scope"] = "genesis"
+            chained["previous_event_sha256"] = ZERO_SHA256
+        chained["event_sha256"] = event_sha256(chained)
+
+        errors = validate_schema(chained, EVENT_SCHEMA_PATH, "queue event")
+        if errors:
+            raise ValueError("; ".join(errors))
+        line = (canonical_json(chained) + "\n").encode("utf-8")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd = os.open(path, os.O_CREAT | os.O_APPEND | os.O_WRONLY, 0o644)
+        try:
+            os.write(fd, line)
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+    finally:
+        _release_lock(path, descriptor)
