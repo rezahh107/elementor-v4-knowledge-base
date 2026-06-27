@@ -36,8 +36,8 @@ def main() -> int:
     required = {"RQ_DUPLICATE_PR", "RQ_CI_MISSING_JOBS"}
     if not required.issubset(codes):
         raise AssertionError("expected drift diagnostics are missing")
-    if [task["id"] for task in eligible_tasks(queue)] != ["RQ-0002"]:
-        raise AssertionError("completed RQ-0001 should expose RQ-0002 as next eligible task")
+    if [task["id"] for task in eligible_tasks(queue)] != ["RQ-0003"]:
+        raise AssertionError("completed RQ-0002 should expose RQ-0003 as next eligible task")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
