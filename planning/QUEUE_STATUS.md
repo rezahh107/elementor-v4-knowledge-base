@@ -10,7 +10,7 @@
 - Active task: none
 - Pending tasks: `3`
 - Blocked tasks: `2`
-- Last controller run: `2026-06-27T06:50:43+03:30`
+- Last controller run: `2026-06-27T06:50:43+03:00`
 - Automation activation: enabled through external controller; repository queue remains dry-run execution intent
 
 ## Current planned work
