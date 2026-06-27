@@ -40,11 +40,11 @@ def test_spec_hashes_are_canonical() -> None:
         assert task["spec_hash"] == sha256_prefixed(task["spec"])
 
 
-def test_completed_rq0001_exposes_rq0002_as_next_eligible_task() -> None:
+def test_completed_rq0002_exposes_rq0003_as_next_eligible_task() -> None:
     queue = load_queue()
     tasks = {task["id"]: task for task in queue["tasks"]}
-    assert tasks["RQ-0001"]["runtime"]["status"] == "completed"
-    assert [task["id"] for task in eligible_tasks(queue)] == ["RQ-0002"]
+    assert tasks["RQ-0002"]["runtime"]["status"] == "completed"
+    assert [task["id"] for task in eligible_tasks(queue)] == ["RQ-0003"]
 
 
 def test_p0_reconciliation_blocks_an_otherwise_eligible_task() -> None:
@@ -62,7 +62,7 @@ def test_p0_reconciliation_blocks_an_otherwise_eligible_task() -> None:
 def test_illegal_direct_completion_is_rejected() -> None:
     queue = load_queue()
     tasks = {task["id"]: task for task in queue["tasks"]}
-    task = copy.deepcopy(tasks["RQ-0002"])
+    task = copy.deepcopy(tasks["RQ-0003"])
     with pytest.raises(ValueError, match="RQ_ILLEGAL_TRANSITION"):
         transition_task(task, "completed")
 
