@@ -11,7 +11,7 @@
 - Completed work units: `2`
 - Pending tasks: `2`
 - Blocked tasks: `1`
-- Last controller run: `2026-06-27T14:47:11+03:30`
+- Last controller run: `2026-06-27T14:17:11+03:00`
 - Automation activation: enabled through external controller; repository queue remains dry-run execution intent
 
 ## Current planned work
