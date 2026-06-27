@@ -54,7 +54,7 @@
     }
   },
   "$defs": {
-    "source_locator_base": {
+    "source_locator_v1": {
       "additionalProperties": false,
       "properties": {
         "source_id": {
@@ -66,7 +66,34 @@
           "type": "string"
         },
         "locator_version": {
-          "enum": [1, 2]
+          "const": 1
+        },
+        "snapshot_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "locator",
+        "locator_version",
+        "snapshot_sha256"
+      ],
+      "type": "object"
+    },
+    "source_locator_v2": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "pattern": "^SRC-KB-[0-9]{3}-[0-9]{2}$",
+          "type": "string"
+        },
+        "locator": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "locator_version": {
+          "const": 2
         },
         "snapshot_sha256": {
           "pattern": "^[a-f0-9]{64}$",
@@ -81,47 +108,15 @@
           "type": "string"
         }
       },
+      "required": [
+        "source_id",
+        "locator",
+        "locator_version",
+        "snapshot_sha256",
+        "normalized_document_sha256",
+        "locator_fingerprint"
+      ],
       "type": "object"
-    },
-    "source_locator_v1": {
-      "allOf": [
-        {"$ref": "#/$defs/source_locator_base"},
-        {
-          "properties": {
-            "locator_version": {"const": 1}
-          },
-          "required": [
-            "source_id",
-            "locator",
-            "locator_version",
-            "snapshot_sha256"
-          ],
-          "not": {
-            "anyOf": [
-              {"required": ["normalized_document_sha256"]},
-              {"required": ["locator_fingerprint"]}
-            ]
-          }
-        }
-      ]
-    },
-    "source_locator_v2": {
-      "allOf": [
-        {"$ref": "#/$defs/source_locator_base"},
-        {
-          "properties": {
-            "locator_version": {"const": 2}
-          },
-          "required": [
-            "source_id",
-            "locator",
-            "locator_version",
-            "snapshot_sha256",
-            "normalized_document_sha256",
-            "locator_fingerprint"
-          ]
-        }
-      ]
     }
   },
   "required": [
@@ -135,7 +130,10 @@
   ],
   "allOf": [
     {
-      "if": {"properties": {"evidence_state": {"const": "derived"}}},
+      "if": {
+        "required": ["evidence_state"],
+        "properties": {"evidence_state": {"const": "derived"}}
+      },
       "then": {
         "properties": {
           "derived_from": {"minItems": 1},
@@ -144,7 +142,10 @@
       }
     },
     {
-      "if": {"properties": {"evidence_state": {"const": "documented"}}},
+      "if": {
+        "required": ["evidence_state"],
+        "properties": {"evidence_state": {"const": "documented"}}
+      },
       "then": {
         "properties": {
           "source_locators": {"minItems": 1},
@@ -153,7 +154,10 @@
       }
     },
     {
-      "if": {"properties": {"evidence_state": {"const": "observed"}}},
+      "if": {
+        "required": ["evidence_state"],
+        "properties": {"evidence_state": {"const": "observed"}}
+      },
       "then": {
         "properties": {
           "source_locators": {"maxItems": 0},
