@@ -2,7 +2,7 @@
   "schema_version": 1,
   "canonicalization_version": 1,
   "queue_id": "elementor-v4-evidence",
-  "queue_revision": 2,
+  "queue_revision": 3,
   "controller_policy": {
     "max_active_tasks": 1,
     "max_active_stage_migrations": 1,
@@ -15,7 +15,7 @@
   "active_cycle": {
     "cycle_id": "RQ-CYCLE-00",
     "cycle_type": "platform_stabilization",
-    "completed_work_units": 1,
+    "completed_work_units": 2,
     "refresh_task_id": "RQ-0005"
   },
   "tasks": [
@@ -135,16 +135,32 @@
       },
       "spec_hash": "sha256:161b5ab4a7a5b71843faf98250176df918abc088f0d369752e0d6b2b0a2d090e",
       "runtime": {
-        "status": "pending",
-        "attempt": 0,
+        "status": "completed",
+        "attempt": 1,
         "lease": null,
-        "active_branch": null,
+        "active_branch": "queue/rq-0002-kb004-reconciliation",
         "active_pr": null,
         "last_ci_head_sha": null,
         "blockers": [],
-        "critique": null,
-        "result": null,
-        "updated_at": "2026-06-24T13:00:00+03:00"
+        "critique": {
+          "closed_gap": true,
+          "reason": "Current main records exactly one KB-004 Work Item attempt: PR #18, attempt 2, state evidence_draft, source_capture_status pending. PR #18 is merged; PR #12 is closed unmerged and contains no remaining changes; PR #9 is closed unmerged and remains legacy KB-005 evidence that must not be released before KB-004 gates complete. No factual claims, stage truth, or peer_reviewed status changed.",
+          "edis_boundary_preserved": true,
+          "peer_reviewed_claimed": false
+        },
+        "result": {
+          "active_kb004_pr": 18,
+          "active_kb004_branch": "migration/KB-004-button-v2",
+          "active_kb004_attempt": 2,
+          "work_item_state": "evidence_draft",
+          "source_capture_status": "pending",
+          "superseded_prs": [12],
+          "legacy_blocked_prs": [9],
+          "kb004_merge_commit": "b4f0b150fe8806c50cfc9697cc4dc4ecf09ed16f",
+          "kb004_ci_run": 28274153349,
+          "next_required_action": "Run RQ-0003 to harden source snapshots and locators before any KB-004 finalization or KB-005 replacement work."
+        },
+        "updated_at": "2026-06-27T14:47:11+03:30"
       }
     },
     {
@@ -200,7 +216,7 @@
         "blockers": [],
         "critique": null,
         "result": null,
-        "updated_at": "2026-06-24T13:00:00+03:00"
+        "updated_at": "2026-06-27T14:47:11+03:30"
       }
     },
     {
@@ -314,13 +330,13 @@
           {
             "code": "RQ_DEPENDENCIES_INCOMPLETE",
             "severity": "P1",
-            "message": "Cycle refresh is locked until RQ-0002 through RQ-0004 complete.",
-            "evidence_refs": ["RQ-0002", "RQ-0003", "RQ-0004"]
+            "message": "Cycle refresh is locked until RQ-0003 and RQ-0004 complete.",
+            "evidence_refs": ["RQ-0003", "RQ-0004"]
           }
         ],
         "critique": null,
         "result": null,
-        "updated_at": "2026-06-27T09:44:53+03:00"
+        "updated_at": "2026-06-27T14:47:11+03:30"
       }
     }
   ]
