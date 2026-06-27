@@ -2,153 +2,59 @@
 id: elementor.help.button-element
 title: Button element
 source_url: https://elementor.com/help/button-element/
+canonical_url: https://elementor.com/help/button-element/
 source_type: official_help
 version_scope: editor_v4
 last_updated: 2025-07-01
-researched_at: 2026-06-23T10:47:13+03:00
+researched_at: 2026-06-23T21:30:05+03:00
 evidence_status: completed_with_gaps
 storage_status: committed
 language: fa
 stage_id: KB-004
+review_status: machine_validated
+provenance_status: claim_level
+claim_record: evidence/claims/KB-004-button.yaml
+source_record: evidence/sources/SRC-KB-004-01.yaml
+image_evidence: evidence/images/KB-004-button.yaml
+gap_record: evidence/gaps/KB-004-button.yaml
 ---
 
-# جزوه جامع Button element در Elementor Editor V4
+# Button element در Elementor Editor V4
 
-## مشخصات منبع
+این سند Draft مرحله KB-004 است. منبع فقط صفحه رسمی Elementor Help برای Button element است. این سند peer reviewed نیست.
 
-- مقاله رسمی: `Button element`
-- آخرین به‌روزرسانی: `July 1, 2025`
-- دامنه صریح: مقاله برای کاربران `Editor v4` است و کاربران V3 را به مقاله جداگانه `Button Widget` ارجاع می‌دهد.
+## دامنه
 
-## هدف Element
+صفحه رسمی عنوان Button element دارد، تاریخ Last Update آن July 1, 2025 است و صفحه آن را برای Editor v4 معرفی می‌کند. برای Editor v3، منبع رسمی به مقاله جداگانه Button Widget ارجاع می‌دهد.
 
-Button element برای ایجاد دکمه‌های تعاملی و بصری معرفی شده است. کاربرد اصلی مستندشده، هدایت کاربر به یک Action یا مقصد از طریق Link است.
+## هدف
 
-## افزودن و حذف
-
-### افزودن
-
-1. در Elementor Editor روی `+` کلیک کنید.
-2. Element موردنظر را با کلیک یا Drag به Canvas اضافه کنید.
-
-### حذف
-
-1. Element را روی Canvas انتخاب کنید.
-2. کلید Delete صفحه‌کلید را فشار دهید.
-
-مقاله در چند بخش به اشتباه از واژه Widget برای Element استفاده می‌کند؛ این ناسازگاری اصطلاحی ثبت می‌شود و نباید به تغییر نوع محصول تفسیر شود.
+Button element برای ساخت دکمه‌های تعاملی، ایجاد Call to Action و هدایت اقدام کاربر معرفی شده است. مثال صفحه، دکمه‌ای در Hero section است که کاربر را به صفحه ثبت‌نام می‌برد.
 
 ## کاربردهای مستند
 
-- CTA برای هدایت بازدیدکننده به صفحه ثبت‌نام؛
-- لینک‌دادن از دکمه به صفحه پروژه یا نمای جزئیات؛
-- استفاده در بنر یا پوستر رویداد و وبینار؛
-- استفاده برای نمایش محتوای before/after.
+منبع رسمی این کاربردها را ذکر می‌کند: لینک دادن از دکمه‌های Portfolio gallery به صفحه پروژه یا نمای جزئیات، استفاده در بنر یا پوستر رویداد و وبینار، و نمایش before/after transformation.
+
+## افزودن و حذف
+
+برای افزودن، کاربر در Elementor Editor روی + کلیک می‌کند و سپس element را با کلیک یا drag روی canvas قرار می‌دهد. برای حذف، element روی canvas انتخاب می‌شود و کلید Delete زده می‌شود. متن منبع در همین بخش از واژه widget هم استفاده کرده است، اما عنوان و مسیر صفحه Button element است؛ بنابراین این ناسازگاری به‌عنوان anomaly ثبت شده است.
+
+## مثال رسمی
+
+مقادیر مثال رسمی عبارت‌اند از: Button text برابر Get Started، Link به صفحه مقصد، Width برابر 200، Height برابر 50، Font Family برابر Sora، Font Weight برابر 600، Font Size برابر 16، Background opacity برابر 0 درصد، Border radius برابر 50، Border width برابر 2 و Border color برابر #FFFFFF. این مقادیر فقط example هستند و default محصول محسوب نمی‌شوند.
 
 ## General tab
 
-### Button text — متن دکمه
-
-متنی که داخل دکمه نمایش داده می‌شود.
-
-### Link — پیوند
-
-با کلیک روی علامت Plus می‌توان Link را وارد کرد. بازدیدکننده با کلیک روی دکمه، مقصد Link را باز می‌کند.
-
-#### Open in a new tab — بازکردن در تب جدید
-
-اگر Button دارای Link باشد، این Toggle تعیین می‌کند مقصد در تب جدید باز شود.
-
-### ID — شناسه
-
-برای Tag کردن یک Element مشخص در صفحه استفاده می‌شود و می‌تواند مقصد لینک داخلی به همان Element باشد.
-
-## مثال گام‌به‌گام رسمی
-
-مقاله این مقادیر را فقط به‌عنوان مثال طراحی وارد می‌کند، نه Default محصول:
-
-- `Button text`: Get Started
-- `Width`: 200
-- `Height`: 50
-- `Font Family`: Sora
-- `Font Weight`: 600
-- `Font Size`: 16
-- Background opacity: 0%
-- Border radius همه Cornerها: 50
-- Border width: 2
-- Border color: `#FFFFFF`
-
-این اعداد به‌عنوان `documented_example` ثبت می‌شوند و نباید Default تلقی شوند.
+General tab شامل Button text، Link، Open in a new tab و ID است. Button text متن داخل دکمه است. Link با plus sign وارد می‌شود و کلیک بازدیدکننده لینک را باز می‌کند. Open in a new tab فقط وقتی Button لینک دارد مطرح شده است. ID برای tag کردن یک element مشخص در صفحه و لینک دادن به همان element توضیح داده شده است.
 
 ## Style tab
 
-صفحه نام خانواده‌های Style زیر را ثبت می‌کند و برای جزئیات به مقاله‌های مستقل ارجاع می‌دهد:
+Style tab در این صفحه به مقاله‌های جدا برای Layout، Spacing، Size، Position، Typography، Background، Border و Effects ارجاع می‌دهد. جزئیات کامل این خانواده‌ها از همین صفحه نتیجه‌گیری نشده است.
 
-- `Layout`
-- `Spacing`
-- `Size`
-- `Position`
-- `Typography`
-- `Background`
-- `Border`
-- `Effects`
+## وضعیت Hover
 
-تنها جزئیاتی که خود مقاله مستقیماً در مثال نشان می‌دهد، تنظیم Width/Height، Typography، Background opacity، Border radius و Border است.
+منبع رسمی Hover را state معرفی می‌کند و می‌گوید ظاهر element می‌تواند بر اساس state تغییر کند. در مثال، از منوی کنار local، Hover انتخاب می‌شود، واژه hover در Classes text box ظاهر می‌شود، رنگ به #FFFFFF و opacity به 100 درصد تغییر می‌کند و Button هنگام mouse hover سفید می‌شود.
 
-## Element states
+## محدوده شواهد
 
-مقاله یک نمونه صریح از State ارائه می‌دهد:
-
-1. در `Classes text field` منوی Ellipsis کنار `local` باز می‌شود.
-2. State برابر `Hover` انتخاب می‌شود.
-3. واژه hover در Classes text box با رنگ صورتی ظاهر می‌شود.
-4. Color و Opacity برای حالت Hover تغییر داده می‌شوند.
-
-مقاله می‌گوید Element می‌تواند بسته به State ظاهر متفاوتی داشته باشد. در مثال، Button هنگام Mouse hover سفید می‌شود.
-
-## observed
-
-تصاویر رسمی مقاله مراحل زیر را نمایش می‌دهند:
-
-- افزودن Element؛
-- General panel؛
-- Button text و Link؛
-- Size؛
-- Typography؛
-- Background؛
-- Border؛
-- Hover state در Classes text box.
-
-جزئیات تصویری که متن مقاله توضیح نداده، بدون مشاهده کنترل‌شده به‌عنوان Fact ثبت نمی‌شود.
-
-## derived
-
-- Button در V4 از Style system مشترک و local class استفاده می‌کند.
-- مثال Hover نشان می‌دهد ویرایش State از Class context انجام می‌شود؛ اما این مقاله Schema یا ترتیب Cascade را اثبات نمی‌کند.
-- `ID` در مقاله به‌عنوان مقصد لینک داخلی مطرح شده، ولی قواعد uniqueness یا escaping را توضیح نمی‌دهد.
-
-## insufficient_evidence
-
-شواهد این صفحه برای موارد زیر کافی نیست:
-
-- Default واقعی همه کنترل‌ها؛
-- مجموعه کامل Stateها غیر از Hover؛
-- Keyboard focus و Focus-visible؛
-- ARIA role/name و خروجی Markup؛
-- رفتار Link protocolها و sanitization؛
-- Dynamic Tags؛
-- Responsive overrideها؛
-- Variables و Global Classes؛
-- Loading، disabled یا submit behavior؛
-- Analytics و click tracking؛
-- Free/Pro prerequisite؛
-- نسخه دقیق افزونه سازگار؛
-- رفتار Runtime در Browserها.
-
-## وضعیت نهایی
-
-```yaml
-status: completed_with_gaps
-verified_scope: official_article_text_and_listed_images
-not_verified: runtime_markup_accessibility_defaults_responsive_dynamic_data
-```
+Claimهای documented در فایل claim record ثبت شده‌اند. هیچ observed claim در این commit ساخته نشده چون image evidence فعلاً discovered و not_inspected است. مواردی مثل default واقعی کنترل‌ها، همه stateها، keyboard focus، ARIA، markup، link behavior، responsive behavior، dynamic data، exact plugin version و runtime behavior در gap record باز مانده‌اند.

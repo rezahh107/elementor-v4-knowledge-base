@@ -1,0 +1,140 @@
+claims:
+  - claim_id: KB-004-C001
+    stage_id: KB-004
+    claim_text: The official source page title is Button element.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1149-1151
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C002
+    stage_id: KB-004
+    claim_text: The official source reports Last Update as July 1, 2025.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page line 1151
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C003
+    stage_id: KB-004
+    claim_text: The official article is for Editor v4 users and links Editor v3 users to the separate Button Widget article.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1153-1155
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C004
+    stage_id: KB-004
+    claim_text: Buttons are described as guiding user actions, providing calls to action, and adding interactive visual buttons.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1175-1178
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C005
+    stage_id: KB-004
+    claim_text: The main official example links a hero-section button to a registration page.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1178-1181
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C006
+    stage_id: KB-004
+    claim_text: Additional official use cases include portfolio links, event or webinar banners, and before-after transformations.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1185-1189
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C007
+    stage_id: KB-004
+    claim_text: The official example uses Button text Get Started and adds a Link URL.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1192-1201
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C008
+    stage_id: KB-004
+    claim_text: The official example sets Width to 200 and Height to 50.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1202-1208
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C009
+    stage_id: KB-004
+    claim_text: The official example uses Font Family Sora, Font Weight 600, and Font Size 16.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1213-1217
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C010
+    stage_id: KB-004
+    claim_text: The official example sets background opacity to 0 percent, border radius to 50, border width to 2, and border color to #FFFFFF.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1218-1242
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C011
+    stage_id: KB-004
+    claim_text: The General tab documents Button text, Link, Open in a new tab, and ID.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1258-1278
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C012
+    stage_id: KB-004
+    claim_text: The Style tab refers to separate articles for Layout, Spacing, Size, Position, Typography, Background, Border, and Effects.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1279-1296
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C013
+    stage_id: KB-004
+    claim_text: Hover is documented as a state that can change the element appearance.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1242-1248
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C014
+    stage_id: KB-004
+    claim_text: The official hover example changes Hex color to #FFFFFF and opacity to 100 percent, making the button white on mouse hover.
+    evidence_state: documented
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: official page lines 1249-1252
+    derived_from: []
+    verification_status: machine_validated
+  - claim_id: KB-004-C015
+    stage_id: KB-004
+    claim_text: The documented numeric and design values are example values, not documented product defaults.
+    evidence_state: derived
+    source_locators:
+      - source_id: SRC-KB-004-01
+        locator: derived from the step-by-step example framing lines 1190-1254
+    derived_from:
+      - KB-004-C007
+      - KB-004-C008
+      - KB-004-C009
+      - KB-004-C010
+    verification_status: machine_validated

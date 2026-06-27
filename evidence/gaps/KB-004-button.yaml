@@ -1,0 +1,33 @@
+# CI recovery marker 2026-06-25T22:18Z: forces a new exact head after prior PR runs ended action_required without jobs.
+schema_version: 1
+gaps:
+  - gap_id: GAP-KB-004-IMAGE-INSPECTION
+    stage_id: KB-004
+    title: Image inspection pending
+    status: open
+    severity: medium
+    missing_evidence: Official article images are only discovered in this draft and have not been retrieved and inspected with hashes.
+    affected_conclusion: No observed claim may be made from official images in this draft.
+    required_source: https://elementor.com/help/button-element/
+    blocks:
+      - observed_claims
+  - gap_id: GAP-KB-004-RUNTIME-BEHAVIOR
+    stage_id: KB-004
+    title: Runtime behavior not established
+    status: open
+    severity: medium
+    missing_evidence: The official article does not fully document runtime markup, keyboard focus, responsive overrides, dynamic data, exact plugin version, default values, or link behavior.
+    affected_conclusion: These behaviors must remain insufficient evidence unless another accepted source or fixture validates them.
+    required_source: accepted official documentation or controlled fixture
+    blocks:
+      - runtime_claims
+  - gap_id: GAP-KB-004-REVIEW
+    stage_id: KB-004
+    title: Human review pending
+    status: open
+    severity: medium
+    missing_evidence: No human peer review has approved this migrated stage.
+    affected_conclusion: review_status must not be peer_reviewed.
+    required_source: human review record
+    blocks:
+      - peer_reviewed_status

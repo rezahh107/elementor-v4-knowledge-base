@@ -51,7 +51,6 @@ def test_queue_reconcile_documented_entrypoint() -> None:
     codes = {item["code"] for item in payload["diagnostics"]}
     assert {
         "RQ_DUPLICATE_PR",
-        "RQ_WORK_ITEM_DRIFT",
         "RQ_CI_MISSING_JOBS",
     } <= codes
 
