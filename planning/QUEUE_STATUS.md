@@ -4,7 +4,7 @@
 
 - Queue: `elementor-v4-evidence`
 - Schema version: `1`
-- Queue revision: `1`
+- Queue revision: `2`
 - Controller mode: `dry_run`
 - Active cycle: `RQ-CYCLE-00`
 - Active task: none
