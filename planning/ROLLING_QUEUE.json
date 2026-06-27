@@ -2,7 +2,7 @@
   "schema_version": 1,
   "canonicalization_version": 1,
   "queue_id": "elementor-v4-evidence",
-  "queue_revision": 1,
+  "queue_revision": 2,
   "controller_policy": {
     "max_active_tasks": 1,
     "max_active_stage_migrations": 1,
