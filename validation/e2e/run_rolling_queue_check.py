@@ -29,15 +29,15 @@ def main() -> int:
     if report["mode"] != "dry_run":
         raise AssertionError("controller mode changed")
     if report["selected_task"] is not None:
-        raise AssertionError("blocked RQ-0001 should leave no selected task")
+        raise AssertionError("P0 reconciliation diagnostics should leave no selected task")
     if report["mutations_performed"] != []:
         raise AssertionError("dry-run performed mutations")
     codes = {item["code"] for item in report["all_diagnostics"]}
     required = {"RQ_DUPLICATE_PR", "RQ_CI_MISSING_JOBS"}
     if not required.issubset(codes):
         raise AssertionError("expected drift diagnostics are missing")
-    if [task["id"] for task in eligible_tasks(queue)] != []:
-        raise AssertionError("blocked queue should not expose eligible tasks")
+    if [task["id"] for task in eligible_tasks(queue)] != ["RQ-0002"]:
+        raise AssertionError("completed RQ-0001 should expose RQ-0002 as next eligible task")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 

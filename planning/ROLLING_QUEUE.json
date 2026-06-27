@@ -2,7 +2,7 @@
   "schema_version": 1,
   "canonicalization_version": 1,
   "queue_id": "elementor-v4-evidence",
-  "queue_revision": 1,
+  "queue_revision": 2,
   "controller_policy": {
     "max_active_tasks": 1,
     "max_active_stage_migrations": 1,
@@ -15,7 +15,7 @@
   "active_cycle": {
     "cycle_id": "RQ-CYCLE-00",
     "cycle_type": "platform_stabilization",
-    "completed_work_units": 0,
+    "completed_work_units": 1,
     "refresh_task_id": "RQ-0005"
   },
   "tasks": [
@@ -63,37 +63,32 @@
       },
       "spec_hash": "sha256:583ae8b14427ff8ae620fa24ae37ebed07cdeb5c53e3e06832360e8c17437add",
       "runtime": {
-        "status": "blocked",
-        "attempt": 1,
+        "status": "completed",
+        "attempt": 2,
         "lease": null,
-        "active_branch": "migration/KB-004-button-v2",
-        "active_pr": 12,
-        "last_ci_head_sha": "5a3b5bf9d0a7f1b3d44c8856b8b666de2666911d",
-        "blockers": [
-          {
-            "code": "RQ_ACTION_REQUIRED_NO_JOBS",
-            "severity": "P0",
-            "message": "PR 12 exact head has KB Quality and Capture Source Evidence completed as action_required with no jobs; no exact-head Python 3.11/3.13 CI evidence exists yet.",
-            "evidence_refs": [
-              "PR-12",
-              "HEAD-5a3b5bf9d0a7f1b3d44c8856b8b666de2666911d",
-              "RUN-28053544157",
-              "RUN-28053544235"
-            ]
-          }
-        ],
+        "active_branch": "hardening/edis-control-plane-v2",
+        "active_pr": 19,
+        "last_ci_head_sha": "5f1e22c3e2e18f23d882bbd21c1650e93f6a9e01",
+        "blockers": [],
         "critique": {
-          "closed_gap": false,
-          "reason": "Diagnostic evidence was recorded, but AC-02 and AC-03 remain unsatisfied until a refreshed PR head produces real workflow jobs and passing matrix checks.",
+          "closed_gap": true,
+          "reason": "PR #19 merged the control-plane hardening and exact-head KB Quality run 28234748532 created and passed both Python 3.11 and 3.13 matrix jobs. The original PR #12 action_required/no-jobs evidence is retained only as historical diagnostic context.",
           "edis_boundary_preserved": true,
           "peer_reviewed_claimed": false
         },
         "result": {
           "diagnostic_recorded": true,
+          "test_pr": 19,
+          "workflow_run": 28234748532,
+          "jobs": [
+            "validate (3.11)",
+            "validate (3.13)"
+          ],
+          "merge_commit": "9e6d38110f81476d075497c71af59ce6a445d8b8",
           "merge_allowed": false,
-          "next_required_action": "Refresh PR 12 on current main or otherwise produce a new exact head that triggers real KB Quality Python 3.11 and 3.13 jobs."
+          "next_required_action": "Run RQ-0002 to reconcile KB-004 queue, Work Item, and superseded PR state before any later content stage is released."
         },
-        "updated_at": "2026-06-25T06:18:45+03:00"
+        "updated_at": "2026-06-27T09:44:53+03:00"
       }
     },
     {
@@ -319,13 +314,13 @@
           {
             "code": "RQ_DEPENDENCIES_INCOMPLETE",
             "severity": "P1",
-            "message": "Cycle refresh is locked until RQ-0001 through RQ-0004 complete.",
-            "evidence_refs": ["RQ-0001", "RQ-0002", "RQ-0003", "RQ-0004"]
+            "message": "Cycle refresh is locked until RQ-0002 through RQ-0004 complete.",
+            "evidence_refs": ["RQ-0002", "RQ-0003", "RQ-0004"]
           }
         ],
         "critique": null,
         "result": null,
-        "updated_at": "2026-06-24T13:00:00+03:00"
+        "updated_at": "2026-06-27T09:44:53+03:00"
       }
     }
   ]

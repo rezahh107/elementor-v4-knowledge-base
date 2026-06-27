@@ -4,22 +4,23 @@
 
 - Queue: `elementor-v4-evidence`
 - Schema version: `1`
-- Queue revision: `1`
+- Queue revision: `2`
 - Controller mode: `dry_run`
 - Active cycle: `RQ-CYCLE-00`
 - Active task: none
+- Completed work units: `1`
 - Pending tasks: `3`
-- Blocked tasks: `2`
-- Last controller run: `2026-06-27T06:50:43+03:00`
+- Blocked tasks: `1`
+- Last controller run: `2026-06-27T09:44:53+03:00`
 - Automation activation: enabled through external controller; repository queue remains dry-run execution intent
 
 ## Current planned work
 
-1. `RQ-0001` — Diagnose GitHub Actions runs with no jobs; stale blocker detected: queue still points to PR #12, but current GitHub state shows PR #19 has merged the control-plane hardening.
-2. `RQ-0002` — Reconcile current KB migration state; pending after RQ-0001 is unblocked or completed by a dedicated queue-state transition.
-3. `RQ-0003` — Harden source snapshots and locators.
-4. `RQ-0004` — Complete KB-004 pilot through verified merge.
-5. `RQ-0005` — Audit Cycle 00 and refresh the queue; blocked by the first four tasks.
+1. `RQ-0001` — Diagnose GitHub Actions runs with no jobs; completed from PR #19 exact-head evidence: KB Quality run `28234748532` created and passed `validate (3.11)` and `validate (3.13)` on head `5f1e22c3e2e18f23d882bbd21c1650e93f6a9e01`.
+2. `RQ-0002` — Reconcile current KB migration state; now the next eligible P0 task.
+3. `RQ-0003` — Harden source snapshots and locators; still depends on RQ-0002.
+4. `RQ-0004` — Complete KB-004 pilot through verified merge; still depends on RQ-0003.
+5. `RQ-0005` — Audit Cycle 00 and refresh the queue; blocked by RQ-0002 through RQ-0004.
 
 ## Latest diagnostic
 
