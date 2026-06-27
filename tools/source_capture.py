@@ -218,11 +218,12 @@ def locator_fingerprint(
     locator: str,
     snapshot_sha256: str,
     normalized_document_sha256: str,
+    version: int = SOURCE_LOCATOR_VERSION,
 ) -> str:
-    """Return the deterministic fingerprint required by locator v2 bindings."""
+    """Return the deterministic fingerprint required by locator bindings."""
     payload = "\0".join(
         [
-            f"locator-v{SOURCE_LOCATOR_VERSION}",
+            f"locator-v{version}",
             source_id,
             locator,
             snapshot_sha256,
@@ -353,11 +354,15 @@ def _same_capture(existing: Any, candidate: dict[str, Any]) -> bool:
     }
     snapshot = existing.get("snapshot")
     candidate_snapshot = candidate.get("snapshot")
-    return all(existing.get(key) == candidate.get(key) for key in stable_keys) and isinstance(
-        snapshot, dict
-    ) and isinstance(candidate_snapshot, dict) and snapshot.get("response_bytes_sha256") == candidate_snapshot.get(
-        "response_bytes_sha256"
-    ) and snapshot.get("normalized_document_sha256") == candidate_snapshot.get("normalized_document_sha256")
+    if not isinstance(snapshot, dict) or not isinstance(candidate_snapshot, dict):
+        return False
+
+    return (
+        all(existing.get(key) == candidate.get(key) for key in stable_keys)
+        and snapshot.get("response_bytes_sha256") == candidate_snapshot.get("response_bytes_sha256")
+        and snapshot.get("normalized_document_sha256")
+        == candidate_snapshot.get("normalized_document_sha256")
+    )
 
 
 def _atomic_write_bytes(path: Path, data: bytes) -> None:
