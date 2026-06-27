@@ -40,18 +40,15 @@ def test_spec_hashes_are_canonical() -> None:
         assert task["spec_hash"] == sha256_prefixed(task["spec"])
 
 
-def test_blocked_rq0001_leaves_no_task_eligible() -> None:
+def test_completed_rq0001_exposes_rq0002_as_next_eligible_task() -> None:
     queue = load_queue()
     tasks = {task["id"]: task for task in queue["tasks"]}
-    assert tasks["RQ-0001"]["runtime"]["status"] == "blocked"
-    assert [task["id"] for task in eligible_tasks(queue)] == []
+    assert tasks["RQ-0001"]["runtime"]["status"] == "completed"
+    assert [task["id"] for task in eligible_tasks(queue)] == ["RQ-0002"]
 
 
 def test_p0_reconciliation_blocks_an_otherwise_eligible_task() -> None:
-    queue = copy.deepcopy(load_queue())
-    tasks = {task["id"]: task for task in queue["tasks"]}
-    tasks["RQ-0001"]["runtime"]["status"] = "completed"
-    tasks["RQ-0001"]["runtime"]["blockers"] = []
+    queue = load_queue()
     state = json.loads(CURRENT.read_text(encoding="utf-8"))
 
     result = plan(queue, state)
@@ -63,7 +60,9 @@ def test_p0_reconciliation_blocks_an_otherwise_eligible_task() -> None:
 
 
 def test_illegal_direct_completion_is_rejected() -> None:
-    task = copy.deepcopy(load_queue()["tasks"][0])
+    queue = load_queue()
+    tasks = {task["id"]: task for task in queue["tasks"]}
+    task = copy.deepcopy(tasks["RQ-0002"])
     with pytest.raises(ValueError, match="RQ_ILLEGAL_TRANSITION"):
         transition_task(task, "completed")
 
