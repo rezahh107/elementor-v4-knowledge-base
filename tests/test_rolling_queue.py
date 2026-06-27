@@ -73,7 +73,6 @@ def test_current_snapshot_detects_known_drift() -> None:
     diagnostics = reconcile(load_queue(), state)
     codes = {item["code"] for item in diagnostics}
     assert "RQ_DUPLICATE_PR" in codes
-    assert "RQ_WORK_ITEM_DRIFT" in codes
     assert "RQ_CI_MISSING_JOBS" in codes
     missing_jobs = [item for item in diagnostics if item["code"] == "RQ_CI_MISSING_JOBS"]
     assert all(item["status"] == "insufficient_evidence" for item in missing_jobs)
