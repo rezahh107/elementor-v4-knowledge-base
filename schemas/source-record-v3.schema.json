@@ -36,18 +36,19 @@
     "response_bytes_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "normalized_document_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "parser_version": {"const": "html-text-v2"},
-    "source_locator_version": {"const": 1},
+    "source_locator_version": {"const": 2},
     "capture_id": {"type": "string", "pattern": "^CAP-[a-f0-9]{64}$"},
     "snapshot": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["storage", "artifact_name", "relative_path", "run_id", "response_bytes_sha256"],
+      "required": ["storage", "artifact_name", "relative_path", "run_id", "response_bytes_sha256", "normalized_document_sha256"],
       "properties": {
         "storage": {"enum": ["workflow_artifact", "local_ephemeral"]},
         "artifact_name": {"type": "string", "minLength": 1},
         "relative_path": {"type": "string", "pattern": "^source-snapshots/.+\\.bin$"},
         "run_id": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
-        "response_bytes_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        "response_bytes_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "normalized_document_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
       }
     },
     "image_evidence_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^IMG-KB-[0-9]{3}-[0-9]{3}$"}},
