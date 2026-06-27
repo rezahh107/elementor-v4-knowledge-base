@@ -62,7 +62,7 @@ def test_p0_reconciliation_blocks_an_otherwise_eligible_task() -> None:
 def test_illegal_direct_completion_is_rejected() -> None:
     queue = load_queue()
     tasks = {task["id"]: task for task in queue["tasks"]}
-    task = copy.deepcopy(tasks["RQ-0002"])
+    task = copy.deepcopy(tasks["RQ-0003"])
     with pytest.raises(ValueError, match="RQ_ILLEGAL_TRANSITION"):
         transition_task(task, "completed")
 
