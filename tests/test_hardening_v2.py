@@ -54,6 +54,41 @@ def test_claim_schema_requires_snapshot_binding_for_documented_claim() -> None:
     assert errors
 
 
+def test_claim_schema_accepts_locator_v2_and_rejects_incomplete_v2() -> None:
+    schema = json.loads((ROOT / "schemas" / "claim.schema.json").read_text(encoding="utf-8"))
+    fingerprint = locator_fingerprint(
+        source_id="SRC-KB-004-01",
+        locator="official page lines 1-2",
+        snapshot_sha256="a" * 64,
+        normalized_document_sha256="b" * 64,
+    )
+    claim = {
+        "claim_id": "KB-004-C001",
+        "stage_id": "KB-004",
+        "claim_text": "Documented statement",
+        "evidence_state": "documented",
+        "source_locators": [
+            {
+                "source_id": "SRC-KB-004-01",
+                "locator": "official page lines 1-2",
+                "locator_version": 2,
+                "snapshot_sha256": "a" * 64,
+                "normalized_document_sha256": "b" * 64,
+                "locator_fingerprint": fingerprint,
+            }
+        ],
+        "derived_from": [],
+        "verification_status": "unreviewed",
+    }
+    incomplete = copy.deepcopy(claim)
+    del incomplete["source_locators"][0]["locator_fingerprint"]
+
+    validator = Draft202012Validator(schema)
+
+    assert not list(validator.iter_errors(claim))
+    assert list(validator.iter_errors(incomplete))
+
+
 def test_image_v2_requires_retrieved_inspected_bytes() -> None:
     schema = json.loads(
         (ROOT / "schemas" / "image-evidence-v2.schema.json").read_text(encoding="utf-8")
