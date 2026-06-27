@@ -31,6 +31,7 @@ from tools.pipeline_common import (
 
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
 PARSER_VERSION = "html-text-v2"
+SOURCE_LOCATOR_VERSION = 2
 USER_AGENT = "elementor-evidence-kb-source-capture/2.0"
 ALLOWED_HOSTS = {"elementor.com", "developers.elementor.com"}
 DEFAULT_ARTIFACT_DIR = ROOT / ".capture-artifacts"
@@ -211,6 +212,26 @@ def _capture_id(source_id: str, response_hash: str, canonical_url: str) -> str:
     return "CAP-" + hashlib.sha256(payload).hexdigest()
 
 
+def locator_fingerprint(
+    *,
+    source_id: str,
+    locator: str,
+    snapshot_sha256: str,
+    normalized_document_sha256: str,
+) -> str:
+    """Return the deterministic fingerprint required by locator v2 bindings."""
+    payload = "\0".join(
+        [
+            f"locator-v{SOURCE_LOCATOR_VERSION}",
+            source_id,
+            locator,
+            snapshot_sha256,
+            normalized_document_sha256,
+        ]
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def build_record(
     *,
     stage: dict[str, Any],
@@ -273,7 +294,7 @@ def build_record(
         "response_bytes_sha256": response_hash,
         "normalized_document_sha256": normalized_hash,
         "parser_version": PARSER_VERSION,
-        "source_locator_version": 1,
+        "source_locator_version": SOURCE_LOCATOR_VERSION,
         "capture_id": _capture_id(source["source_id"], response_hash, final_url),
         "snapshot": {
             "storage": storage,
@@ -281,12 +302,14 @@ def build_record(
             "relative_path": relative_snapshot.as_posix(),
             "run_id": run_id,
             "response_bytes_sha256": response_hash,
+            "normalized_document_sha256": normalized_hash,
         },
         "image_evidence_ids": image_ids(stage["stage_id"]),
         "discovered_image_urls": sorted(parser.image_urls),
         "notes": [
             "response_bytes_sha256 hashes exact HTTP response bytes",
             "normalized_document_sha256 hashes deterministic visible-ish HTML text",
+            "source_locator_version 2 requires claim locators to bind both snapshot and normalized document fingerprints",
             "reported_last_updated_hint is unverified manifest input and is not an observed date",
         ],
     }
@@ -328,7 +351,13 @@ def _same_capture(existing: Any, candidate: dict[str, Any]) -> bool:
         "discovered_image_urls",
         "notes",
     }
-    return all(existing.get(key) == candidate.get(key) for key in stable_keys)
+    snapshot = existing.get("snapshot")
+    candidate_snapshot = candidate.get("snapshot")
+    return all(existing.get(key) == candidate.get(key) for key in stable_keys) and isinstance(
+        snapshot, dict
+    ) and isinstance(candidate_snapshot, dict) and snapshot.get("response_bytes_sha256") == candidate_snapshot.get(
+        "response_bytes_sha256"
+    ) and snapshot.get("normalized_document_sha256") == candidate_snapshot.get("normalized_document_sha256")
 
 
 def _atomic_write_bytes(path: Path, data: bytes) -> None:
