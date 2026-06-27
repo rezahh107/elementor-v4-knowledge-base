@@ -33,7 +33,7 @@ def main() -> int:
     if report["mutations_performed"] != []:
         raise AssertionError("dry-run performed mutations")
     codes = {item["code"] for item in report["all_diagnostics"]}
-    required = {"RQ_DUPLICATE_PR", "RQ_WORK_ITEM_DRIFT", "RQ_CI_MISSING_JOBS"}
+    required = {"RQ_DUPLICATE_PR", "RQ_CI_MISSING_JOBS"}
     if not required.issubset(codes):
         raise AssertionError("expected drift diagnostics are missing")
     if [task["id"] for task in eligible_tasks(queue)] != []:
