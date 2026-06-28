@@ -37,10 +37,12 @@ def main() -> int:
     if not required.issubset(codes):
         raise AssertionError("expected drift diagnostics are missing")
     tasks = {task["id"]: task for task in queue["tasks"]}
-    if tasks["RQ-0003"]["runtime"]["status"] != "needs_review":
-        raise AssertionError("RQ-0003 should remain active until exact-head review gates pass")
-    if eligible_tasks(queue) != []:
-        raise AssertionError("active RQ-0003 should block new eligible tasks")
+    if tasks["RQ-0003"]["runtime"]["status"] != "completed":
+        raise AssertionError("RQ-0003 should be completed after merged hardening evidence")
+    if tasks["RQ-0004"]["runtime"]["status"] != "pending":
+        raise AssertionError("RQ-0004 should remain the next pending task")
+    if eligible_tasks(queue)[0]["id"] != "RQ-0004":
+        raise AssertionError("RQ-0004 should be the next queue-eligible task before reconciliation diagnostics")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
