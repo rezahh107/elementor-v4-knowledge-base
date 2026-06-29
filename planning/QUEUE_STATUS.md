@@ -7,12 +7,12 @@
 - Queue revision: `5`
 - Controller mode: `dry_run`
 - Active cycle: `RQ-CYCLE-00`
-- Active task: none
+- Active task: `RQ-0004`
 - Completed work units: `3`
 - Pending tasks: `1`
 - Needs-review tasks: `0`
 - Blocked tasks: `1`
-- Last controller run: `2026-06-27T22:20:00+03:00`
+- Last controller run: `2026-06-30T00:50:36+03:30`
 - Automation activation: enabled through external controller; repository queue remains dry-run execution intent
 
 ## Current planned work
@@ -20,16 +20,16 @@
 1. `RQ-0001` — Diagnose GitHub Actions runs with no jobs; completed from PR #19 exact-head evidence: KB Quality run `28234748532` created and passed `validate (3.11)` and `validate (3.13)` on head `5f1e22c3e2e18f23d882bbd21c1650e93f6a9e01`.
 2. `RQ-0002` — Reconcile current KB migration state; completed from current `main` state: PR #18 is the single active KB-004 attempt, PR #12 is closed/unmerged and superseded, PR #9 is closed/unmerged legacy KB-005 evidence, and Work Item `migration-cycle-01:KB-004` remains attempt 2 `evidence_draft` with `source_capture_status: pending`.
 3. `RQ-0003` — Harden source snapshots and locators; completed from PR #23 exact-head evidence: KB Quality run `28300622324` passed `validate (3.11)` and `validate (3.13)` on head `1e3ccde2a7d1dd44efe7fe25c6dd653ee30a3a42`, then PR #23 merged as `ac65a8143e5e0b7ed2886efeeadbf54a785b4b24`.
-4. `RQ-0004` — Complete KB-004 pilot through verified merge; now the next eligible task.
+4. `RQ-0004` — Complete KB-004 pilot through verified merge; active on PR #25 and blocked from finalization until canonical source-record-v3 evidence is produced for `SRC-KB-004-01` and the Work Item records source capture as captured.
 5. `RQ-0005` — Audit Cycle 00 and refresh the queue; blocked until RQ-0004 completes.
 
 ## Latest diagnostic
 
 - PR #14 is merged and its exact-head KB Quality passed on Python 3.11 and 3.13.
-- PR #19 is merged with merge commit `9e6d38110f81476d075497c71af59ce6a445d8b8`.
-- PR #18 is merged with merge commit `b4f0b150fe8806c50cfc9697cc4dc4ecf09ed16f`; exact-head KB Quality run `28274153349` passed on head `f21eba69f40b81d35a6153852cfeda8152754a4f`.
-- PR #23 is merged with merge commit `ac65a8143e5e0b7ed2886efeeadbf54a785b4b24`; exact-head KB Quality run `28300622324` passed on head `1e3ccde2a7d1dd44efe7fe25c6dd653ee30a3a42`.
-- `manifests/work-items.yaml` on `main` still records KB-004 attempt 2 as `evidence_draft` with `source_capture_status: pending`; RQ-0004 must handle the canonical KB-004 source-capture/finalization gates before KB-005 is released.
+- PR #25 is open, non-draft, and mergeable on head `7249a2a69fcc3444a2da79cd0c5b005d5b132c1f` before this status refresh.
+- Exact-head KB Quality run `28364712003` passed on PR #25 head `7249a2a69fcc3444a2da79cd0c5b005d5b132c1f`, including `validate (3.13)` job `84027614901` and `validate (3.11)` job `84027615113`.
+- `evidence/sources/SRC-KB-004-01.yaml` on that PR head remains `schema_version: 2`, and `manifests/work-items.yaml` still records `migration-cycle-01:KB-004` as `source_capture_status: pending`.
+- This status-only refresh is intentionally scoped to retrigger repository-owned PR workflows for PR #25 after stale source-capture inactivity; finalization and merge remain blocked until a trusted source-capture writeback changes the evidence and Work Item state.
 - No `peer_reviewed` or authoritative stage state is claimed by this queue update.
 
 ## Truth boundary
