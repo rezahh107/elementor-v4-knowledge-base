@@ -12,7 +12,7 @@
 - Pending tasks: `1`
 - Needs-review tasks: `0`
 - Blocked tasks: `1`
-- Last controller run: `2026-06-30T00:50:36+03:30`
+- Last controller run: `2026-06-30T22:45:42+03:30`
 - Automation activation: enabled through external controller; repository queue remains dry-run execution intent
 
 ## Current planned work
@@ -26,10 +26,10 @@
 ## Latest diagnostic
 
 - PR #14 is merged and its exact-head KB Quality passed on Python 3.11 and 3.13.
-- PR #25 is open, non-draft, and mergeable on head `7249a2a69fcc3444a2da79cd0c5b005d5b132c1f` before this status refresh.
-- Exact-head KB Quality run `28364712003` passed on PR #25 head `7249a2a69fcc3444a2da79cd0c5b005d5b132c1f`, including `validate (3.13)` job `84027614901` and `validate (3.11)` job `84027615113`.
+- PR #25 is open, non-draft, and mergeable on head `4159017e86cc961b71adf029787cb7855e138acd` before this status refresh.
+- Exact-head KB Quality run `28403567179` passed on PR #25 head `4159017e86cc961b71adf029787cb7855e138acd`, including `validate (3.11)` job `84160639144` and `validate (3.13)` job `84160639254`.
 - `evidence/sources/SRC-KB-004-01.yaml` on that PR head remains `schema_version: 2`, and `manifests/work-items.yaml` still records `migration-cycle-01:KB-004` as `source_capture_status: pending`.
-- This status-only refresh is intentionally scoped to retrigger repository-owned PR workflows for PR #25 after stale source-capture inactivity; finalization and merge remain blocked until a trusted source-capture writeback changes the evidence and Work Item state.
+- This status-only refresh records the current blocker after stale source-capture inactivity; finalization and merge remain blocked until a trusted source-capture writeback changes the evidence and Work Item state.
 - No `peer_reviewed` or authoritative stage state is claimed by this queue update.
 
 ## Truth boundary
