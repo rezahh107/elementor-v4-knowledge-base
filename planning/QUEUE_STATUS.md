@@ -4,7 +4,7 @@
 
 - Queue: `elementor-v4-evidence`
 - Schema version: `1`
-- Queue revision: `5`
+- Queue revision: `6`
 - Controller mode: `dry_run`
 - Active cycle: `RQ-CYCLE-00`
 - Active task: `RQ-0004` pending external source-capture retry on PR #29
