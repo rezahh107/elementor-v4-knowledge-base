@@ -4,13 +4,15 @@ items:
   cycle_id: migration-cycle-01
   stage_id: KB-004
   branch: migration/KB-004-button-v2
-  pr_number: 18
+  pr_number: 29
   state: evidence_draft
-  source_capture_status: pending
+  source_capture_status: captured
   attempt: 2
   idempotency_key: migration-cycle-01:KB-004
-  updated_at: '2026-06-26T19:49:37+03:30'
-  last_error: 'canonical source capture pending: existing SRC-KB-004-01 record is schema_version 2, but current Work Item validation requires source-record-v3 snapshot attestation before source_capture_status may be captured'
+  updated_at: 2026-07-01T22:26:09+03:00
+  last_error: null
+  expected_head_sha: 5ee769c2a91b459bbf2034a2ddad6a2bed103fa7
+  github_state_observed_at: 2026-07-01T22:26:09+03:00
 - work_id: migration-cycle-01:KB-005
   cycle_id: migration-cycle-01
   stage_id: KB-005
@@ -20,7 +22,7 @@ items:
   source_capture_status: pending
   attempt: 1
   idempotency_key: migration-cycle-01:KB-005
-  updated_at: '2026-06-23T19:55:00+03:00'
+  updated_at: 2026-06-23T19:55:00+03:00
   last_error: null
 - work_id: migration-cycle-01:KB-018
   cycle_id: migration-cycle-01
@@ -31,7 +33,7 @@ items:
   source_capture_status: pending
   attempt: 1
   idempotency_key: migration-cycle-01:KB-018
-  updated_at: '2026-06-23T19:55:00+03:00'
+  updated_at: 2026-06-23T19:55:00+03:00
   last_error: null
 - work_id: migration-cycle-01:KB-019
   cycle_id: migration-cycle-01
@@ -42,5 +44,5 @@ items:
   source_capture_status: pending
   attempt: 1
   idempotency_key: migration-cycle-01:KB-019
-  updated_at: '2026-06-23T19:55:00+03:00'
+  updated_at: 2026-06-23T19:55:00+03:00
   last_error: null
