@@ -12,7 +12,7 @@
 - Pending tasks: `1`
 - Needs-review tasks: `0`
 - Blocked tasks: `1`
-- Last controller run: `2026-07-01T05:53:04+03:30`
+- Last controller run: `2026-07-01T09:52:39+03:30`
 - Automation activation: enabled through external controller; repository queue remains dry-run execution intent
 
 ## Current planned work
@@ -26,10 +26,10 @@
 ## Latest diagnostic
 
 - PR #14 is merged and its exact-head KB Quality passed on Python 3.11 and 3.13.
-- PR #25 is open, non-draft, and mergeable on head `092790f887fc88ca018de2b183d398ce733ac847` before this status refresh.
-- Exact-head KB Quality run `28469808095` passed on PR #25 head `092790f887fc88ca018de2b183d398ce733ac847`, including `validate (3.11)` job `84379073668` and `validate (3.13)` job `84379073836`.
-- `evidence/sources/SRC-KB-004-01.yaml` on that PR head remains `schema_version: 2`, and `manifests/work-items.yaml` still records `migration-cycle-01:KB-004` as `source_capture_status: pending`.
-- The trusted source-capture workflow is configured for `pull_request_target` opened/reopened/synchronize and `workflow_dispatch`, but no Capture Source Evidence run is present for this PR head in the commit workflow-run snapshot. This status-only refresh records the current blocker after stale source-capture inactivity; finalization and merge remain blocked until a trusted source-capture writeback changes the evidence and Work Item state.
+- PR #25 is open, non-draft, and mergeable on head `d1d6ce0dbfbc21e9bfa8e9156b1c96a05632454c` before this status refresh.
+- Exact-head KB Quality run `28489216194` passed on PR #25 head `d1d6ce0dbfbc21e9bfa8e9156b1c96a05632454c`, including both `validate (3.11)` and `validate (3.13)` jobs.
+- On current `main`, `evidence/sources/SRC-KB-004-01.yaml` remains `schema_version: 2`, while the PR branch still records `migration-cycle-01:KB-004` as `source_capture_status: pending`.
+- The trusted source-capture workflow is configured for `pull_request_target` opened/reopened/synchronize and `workflow_dispatch`, but no source-record-v3 writeback has changed the PR branch yet. This status-only refresh records the stale source-capture blocker; finalization and merge remain blocked until a trusted source-capture writeback changes the evidence and Work Item state.
 - No `peer_reviewed` or authoritative stage state is claimed by this queue update.
 
 ## Truth boundary
