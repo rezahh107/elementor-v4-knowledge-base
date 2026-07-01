@@ -7,30 +7,30 @@ canonical_url: https://elementor.com/help/button-element/
 redirect_chain:
 - https://elementor.com/help/button-element/
 redirect_chain_complete: true
-retrieved_at: 2026-07-01T22:26:09+03:00
+retrieved_at: 2026-07-01T22:26:41+03:00
 http_status: 200
 content_type: text/html
 charset: utf-8
 content_length: 1632401
 etag: null
-last_modified: Tue, 30 Jun 2026 23:04:19 GMT
+last_modified: Wed, 01 Jul 2026 01:33:04 GMT
 page_title: Button element | Elementor
 page_title_source: html_title
-reported_last_updated: 2026-06-30
+reported_last_updated: 2026-07-01
 reported_last_updated_source: http_last_modified
 reported_last_updated_hint: 2025-07-01
-content_sha256: be79b7cb2bd84beb4e0691c11b314a05bc0ec4d75ac1e6468b29dc31c28bdd55
-response_bytes_sha256: be79b7cb2bd84beb4e0691c11b314a05bc0ec4d75ac1e6468b29dc31c28bdd55
+content_sha256: 9fc55b4821542c0eec4f7cb44a0c8d0b5dcab30f0770ecdac6669e8543f2009c
+response_bytes_sha256: 9fc55b4821542c0eec4f7cb44a0c8d0b5dcab30f0770ecdac6669e8543f2009c
 normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 parser_version: html-text-v2
 source_locator_version: 2
-capture_id: CAP-999493470c81d58abb23972c7325f433f77a79f88e8cb19de6b321941d7ee55c
+capture_id: CAP-f403a34b14ac363c02bd70fddafde6c9f97ab43a4b9ecedc9f10df0c4d138841
 snapshot:
   storage: workflow_artifact
-  artifact_name: source-snapshot-KB-004-28542289151
-  relative_path: source-snapshots/SRC-KB-004-01/be79b7cb2bd84beb4e0691c11b314a05bc0ec4d75ac1e6468b29dc31c28bdd55.bin
-  run_id: '28542289151'
-  response_bytes_sha256: be79b7cb2bd84beb4e0691c11b314a05bc0ec4d75ac1e6468b29dc31c28bdd55
+  artifact_name: source-snapshot-KB-004-28542327246
+  relative_path: source-snapshots/SRC-KB-004-01/9fc55b4821542c0eec4f7cb44a0c8d0b5dcab30f0770ecdac6669e8543f2009c.bin
+  run_id: '28542327246'
+  response_bytes_sha256: 9fc55b4821542c0eec4f7cb44a0c8d0b5dcab30f0770ecdac6669e8543f2009c
   normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 image_evidence_ids:
 - IMG-KB-004-001
