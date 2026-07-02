@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: "Branch, tag, or SHA to validate"
+        description: Branch, tag, or SHA to validate
         required: true
         type: string
       expected_sha:
-        description: "Exact commit SHA that the ref must resolve to"
+        description: Exact commit SHA expected after checkout
         required: true
         type: string
 
@@ -21,33 +21,47 @@ permissions:
 
 concurrency:
   group: kb-quality-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || github.sha }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   validate:
+    name: validate (${{ matrix.python-version }})
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.11", "3.13"]
     runs-on: ubuntu-latest
     steps:
+      - name: Resolve checkout target
+        id: target
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "ref=${{ inputs.ref }}" >> "$GITHUB_OUTPUT"
+            echo "expected_sha=${{ inputs.expected_sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+            echo "expected_sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          fi
       - name: Checkout exact revision
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.sha }}
+          ref: ${{ steps.target.outputs.ref }}
           fetch-depth: 0
           persist-credentials: false
-      - name: Verify workflow_dispatch expected SHA
-        if: github.event_name == 'workflow_dispatch'
+      - name: Verify exact checked-out SHA
         shell: bash
         run: |
-          set -euo pipefail
           actual_sha="$(git rev-parse HEAD)"
-          if [ "$actual_sha" != "${{ inputs.expected_sha }}" ]; then
-            echo "::error title=Expected SHA mismatch::ref '${{ inputs.ref }}' resolved to '$actual_sha', expected '${{ inputs.expected_sha }}'"
+          expected_sha="${{ steps.target.outputs.expected_sha }}"
+          echo "event=${{ github.event_name }}"
+          echo "ref=${{ steps.target.outputs.ref }}"
+          echo "expected_sha=$expected_sha"
+          echo "actual_sha=$actual_sha"
+          if [ "$actual_sha" != "$expected_sha" ]; then
+            echo "::error::Checked-out SHA $actual_sha does not match expected SHA $expected_sha."
             exit 1
           fi
-          echo "Validated exact workflow_dispatch head $actual_sha"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
