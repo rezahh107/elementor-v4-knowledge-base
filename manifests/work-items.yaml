@@ -9,10 +9,10 @@ items:
   source_capture_status: captured
   attempt: 2
   idempotency_key: migration-cycle-01:KB-004
-  updated_at: 2026-07-02T15:17:01+03:00
+  updated_at: 2026-07-02T17:02:10+03:00
   last_error: null
-  expected_head_sha: 9d8e86315da559e39d624098fd0d14fc3cbd3341
-  github_state_observed_at: 2026-07-02T15:17:01+03:00
+  expected_head_sha: e5eacac504194244246abd57c6c447197731baf9
+  github_state_observed_at: 2026-07-02T17:02:10+03:00
 - work_id: migration-cycle-01:KB-005
   cycle_id: migration-cycle-01
   stage_id: KB-005
