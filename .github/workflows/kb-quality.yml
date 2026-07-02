@@ -6,13 +6,22 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch, tag, or SHA to validate"
+        required: true
+        type: string
+      expected_sha:
+        description: "Exact commit SHA that the ref must resolve to"
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: kb-quality-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: kb-quality-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || github.sha }}
+  cancel-in-progress: false
 
 jobs:
   validate:
@@ -25,8 +34,20 @@ jobs:
       - name: Checkout exact revision
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Verify workflow_dispatch expected SHA
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual_sha="$(git rev-parse HEAD)"
+          if [ "$actual_sha" != "${{ inputs.expected_sha }}" ]; then
+            echo "::error title=Expected SHA mismatch::ref '${{ inputs.ref }}' resolved to '$actual_sha', expected '${{ inputs.expected_sha }}'"
+            exit 1
+          fi
+          echo "Validated exact workflow_dispatch head $actual_sha"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
