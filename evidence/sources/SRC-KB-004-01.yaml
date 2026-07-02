@@ -7,7 +7,7 @@ canonical_url: https://elementor.com/help/button-element/
 redirect_chain:
 - https://elementor.com/help/button-element/
 redirect_chain_complete: true
-retrieved_at: 2026-07-02T05:17:50+03:00
+retrieved_at: 2026-07-02T07:24:00+03:00
 http_status: 200
 content_type: text/html
 charset: utf-8
@@ -19,18 +19,18 @@ page_title_source: html_title
 reported_last_updated: 2026-06-30
 reported_last_updated_source: http_last_modified
 reported_last_updated_hint: 2025-07-01
-content_sha256: 1a75cc30cb36981963aeb9f0589e9acf8f38575984ba01dc410d1b219509b6e8
-response_bytes_sha256: 1a75cc30cb36981963aeb9f0589e9acf8f38575984ba01dc410d1b219509b6e8
+content_sha256: 007953a9f4943177a7e33b4e4282c76ac7d881ef852d38452f961f0ca8ddb309
+response_bytes_sha256: 007953a9f4943177a7e33b4e4282c76ac7d881ef852d38452f961f0ca8ddb309
 normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 parser_version: html-text-v2
 source_locator_version: 2
-capture_id: CAP-5791b1c9e247baf6485675446beec5d8580eb639c2087814a5ca15dea0093fbc
+capture_id: CAP-1797d9050394655a7db0c94236a20f68ea1a00fbc7b181bd24d1ee95323de409
 snapshot:
   storage: workflow_artifact
-  artifact_name: source-snapshot-KB-004-28560727852
-  relative_path: source-snapshots/SRC-KB-004-01/1a75cc30cb36981963aeb9f0589e9acf8f38575984ba01dc410d1b219509b6e8.bin
-  run_id: '28560727852'
-  response_bytes_sha256: 1a75cc30cb36981963aeb9f0589e9acf8f38575984ba01dc410d1b219509b6e8
+  artifact_name: source-snapshot-KB-004-28565253261
+  relative_path: source-snapshots/SRC-KB-004-01/007953a9f4943177a7e33b4e4282c76ac7d881ef852d38452f961f0ca8ddb309.bin
+  run_id: '28565253261'
+  response_bytes_sha256: 007953a9f4943177a7e33b4e4282c76ac7d881ef852d38452f961f0ca8ddb309
   normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 image_evidence_ids:
 - IMG-KB-004-001
