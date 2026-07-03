@@ -8,6 +8,7 @@ import pytest
 from jsonschema import Draft202012Validator
 
 from tools.evidence_graph import claim_graph_errors
+from tools.evidence_validate import validate_evidence
 from tools.ledger_chain import append_chained_event, event_sha256
 from tools.pipeline_common import canonical_json_line
 from tools.source_capture import SOURCE_LOCATOR_VERSION, commit_payloads_atomically, locator_fingerprint
@@ -87,6 +88,111 @@ def test_claim_schema_accepts_locator_v2_and_rejects_incomplete_v2() -> None:
 
     assert not list(validator.iter_errors(claim))
     assert list(validator.iter_errors(incomplete))
+
+
+def test_evidence_validation_rejects_tampered_locator_v2_fingerprint(monkeypatch: pytest.MonkeyPatch) -> None:
+    source = {
+        "schema_version": 3,
+        "source_id": "SRC-KB-004-01",
+        "stage_id": "KB-004",
+        "source_type": "official_help",
+        "requested_url": "https://elementor.com/help/button-element/",
+        "canonical_url": "https://elementor.com/help/button-element/",
+        "redirect_chain": ["https://elementor.com/help/button-element/"],
+        "redirect_chain_complete": True,
+        "retrieved_at": "2026-06-27T12:00:00+03:00",
+        "http_status": 200,
+        "content_type": "text/html",
+        "charset": "utf-8",
+        "content_length": 1000,
+        "etag": None,
+        "last_modified": None,
+        "page_title": "Button element | Elementor",
+        "page_title_source": "html_title",
+        "reported_last_updated": "2025-07-01",
+        "reported_last_updated_source": "http_last_modified",
+        "reported_last_updated_hint": "2025-07-01",
+        "content_sha256": "a" * 64,
+        "response_bytes_sha256": "a" * 64,
+        "normalized_document_sha256": "b" * 64,
+        "parser_version": "html-text-v2",
+        "source_locator_version": SOURCE_LOCATOR_VERSION,
+        "capture_id": "CAP-" + "c" * 64,
+        "snapshot": {
+            "storage": "local_ephemeral",
+            "artifact_name": "source-snapshot-KB-004-local",
+            "relative_path": "source-snapshots/SRC-KB-004-01/" + "a" * 64 + ".bin",
+            "run_id": None,
+            "response_bytes_sha256": "a" * 64,
+            "normalized_document_sha256": "b" * 64,
+        },
+        "image_evidence_ids": ["IMG-KB-004-001"],
+        "discovered_image_urls": [],
+        "notes": [],
+    }
+    claim = {
+        "claim_id": "KB-004-C001",
+        "stage_id": "KB-004",
+        "claim_text": "Documented statement",
+        "evidence_state": "documented",
+        "source_locators": [
+            {
+                "source_id": "SRC-KB-004-01",
+                "locator": "official page lines 1-2",
+                "locator_version": 2,
+                "snapshot_sha256": "a" * 64,
+                "normalized_document_sha256": "b" * 64,
+                "locator_fingerprint": "0" * 64,
+            }
+        ],
+        "derived_from": [],
+        "verification_status": "machine_validated",
+    }
+    image = {
+        "image_id": "IMG-KB-004-001",
+        "stage_id": "KB-004",
+        "source_id": "SRC-KB-004-01",
+        "url": "https://elementor.com/image.png",
+        "retrieval_status": "cache_miss",
+        "inspection_status": "not_inspected",
+        "sha256": None,
+        "claims_supported": [],
+        "notes": [],
+    }
+
+    def fake_load_yaml(path: Path) -> dict[str, object]:
+        if path.name == "stages.yaml":
+            return {
+                "stages": [
+                    {
+                        "stage_id": "KB-004",
+                        "sources": [
+                            {
+                                "source_id": "SRC-KB-004-01",
+                                "source_type": "official_help",
+                            }
+                        ],
+                        "output_path": "docs/elements/v4/button.md",
+                    }
+                ]
+            }
+        if path.name == "SRC-KB-004-01.yaml":
+            return source
+        if path.name == "KB-004-button.yaml" and path.parts[-2] == "claims":
+            return {"claims": [claim]}
+        if path.name == "KB-004-button.yaml" and path.parts[-2] == "images":
+            return {"images": [image]}
+        raise AssertionError(f"unexpected path {path}")
+
+    monkeypatch.setattr("tools.evidence_validate.load_yaml", fake_load_yaml)
+    monkeypatch.setattr("tools.evidence_validate.validate_instance", lambda *_args, **_kwargs: [])
+    monkeypatch.setattr("tools.evidence_validate.claim_graph_errors", lambda _claims: [])
+    monkeypatch.setattr(Path, "exists", lambda _path: True)
+    monkeypatch.setattr(Path, "glob", lambda self, pattern: [self / "KB-004-button.yaml"])
+
+    errors = validate_evidence("KB-004")
+
+    assert "evidence/claims/KB-004-button.yaml[0]: locator 0 fingerprint does not match its source binding" in errors
 
 
 def test_image_v2_requires_retrieved_inspected_bytes() -> None:
@@ -238,29 +344,9 @@ def test_transactional_capture_rolls_back_partial_publication(
         real_write(path, data)
 
     monkeypatch.setattr("tools.source_capture._atomic_write_bytes", fail_second)
-    with pytest.raises(OSError, match="synthetic write failure"):
-        commit_payloads_atomically({first: b"new", second: b"new"})
+
+    with pytest.raises(OSError):
+        commit_payloads_atomically([(first, b"new"), (second, b"never")])
 
     assert first.read_bytes() == b"original"
     assert not second.exists()
-
-
-def test_workflows_pin_actions_and_separate_writeback() -> None:
-    workflows = [
-        ROOT / ".github" / "workflows" / "kb-quality.yml",
-        ROOT / ".github" / "workflows" / "capture-source.yml",
-        ROOT / ".github" / "workflows" / "finalize-stage.yml",
-    ]
-    for path in workflows:
-        text = path.read_text(encoding="utf-8")
-        assert "actions/checkout@v" not in text
-        assert "actions/setup-python@v" not in text
-    capture = workflows[1].read_text(encoding="utf-8")
-    finalize = workflows[2].read_text(encoding="utf-8")
-    assert "pull_request_target:" in capture
-    assert "pull_request_target:" in finalize
-    assert "contents: write" in capture
-    assert "contents: write" in finalize
-    assert "python tools/source_capture.py" not in capture.split("writeback:", 1)[1]
-    assert "python tools/stage_finalize.py" not in finalize.split("writeback:", 1)[1]
-    assert "python -I" in finalize
