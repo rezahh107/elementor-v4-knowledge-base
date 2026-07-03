@@ -7,30 +7,30 @@ canonical_url: https://elementor.com/help/button-element/
 redirect_chain:
 - https://elementor.com/help/button-element/
 redirect_chain_complete: true
-retrieved_at: 2026-07-03T23:59:21+03:00
+retrieved_at: 2026-07-04T00:01:39+03:00
 http_status: 200
 content_type: text/html
 charset: utf-8
 content_length: 1632401
 etag: null
-last_modified: Fri, 03 Jul 2026 08:11:51 GMT
+last_modified: Fri, 03 Jul 2026 12:23:04 GMT
 page_title: Button element | Elementor
 page_title_source: html_title
 reported_last_updated: 2026-07-03
 reported_last_updated_source: http_last_modified
 reported_last_updated_hint: 2025-07-01
-content_sha256: 0b4bd5a554e6465fd8eb5943e9d50c5e910c6871dbe0122b638178f8867d076c
-response_bytes_sha256: 0b4bd5a554e6465fd8eb5943e9d50c5e910c6871dbe0122b638178f8867d076c
+content_sha256: 6e5b392b04b1c7d329be2fc2406c80b36185a85256f2a15fc6d87029d68605ce
+response_bytes_sha256: 6e5b392b04b1c7d329be2fc2406c80b36185a85256f2a15fc6d87029d68605ce
 normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 parser_version: html-text-v2
 source_locator_version: 2
-capture_id: CAP-aa1e5672cc0fbca9a4d5103bf51e8ec50608f3803452b509d05c4fd5cce5e6b1
+capture_id: CAP-c5137ebeebc19e92461620fb592a56134ec8bd2ccd1e6b1498844a915cce927f
 snapshot:
   storage: workflow_artifact
-  artifact_name: source-snapshot-KB-004-28683125319
-  relative_path: source-snapshots/SRC-KB-004-01/0b4bd5a554e6465fd8eb5943e9d50c5e910c6871dbe0122b638178f8867d076c.bin
-  run_id: '28683125319'
-  response_bytes_sha256: 0b4bd5a554e6465fd8eb5943e9d50c5e910c6871dbe0122b638178f8867d076c
+  artifact_name: source-snapshot-KB-004-28683211652
+  relative_path: source-snapshots/SRC-KB-004-01/6e5b392b04b1c7d329be2fc2406c80b36185a85256f2a15fc6d87029d68605ce.bin
+  run_id: '28683211652'
+  response_bytes_sha256: 6e5b392b04b1c7d329be2fc2406c80b36185a85256f2a15fc6d87029d68605ce
   normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 image_evidence_ids:
 - IMG-KB-004-001
