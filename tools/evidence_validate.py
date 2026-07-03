@@ -7,6 +7,7 @@ from typing import Any
 
 from tools.evidence_graph import claim_graph_errors
 from tools.pipeline_common import ROOT, find_stage, load_stages, load_yaml, validate_instance
+from tools.source_capture import locator_fingerprint
 
 
 def records(path: Path, key: str) -> list[dict[str, Any]]:
@@ -106,8 +107,24 @@ def validate_evidence(stage_id: str) -> list[str]:
                 source = source_records.get(locator.get("source_id")) if isinstance(locator, dict) else None
                 if source is None:
                     errors.append(f"{label}: locator {index} references an unknown source")
-                elif locator.get("snapshot_sha256") != source.get("response_bytes_sha256"):
+                    continue
+                if locator.get("snapshot_sha256") != source.get("response_bytes_sha256"):
                     errors.append(f"{label}: locator {index} is not bound to the captured snapshot")
+                if locator.get("locator_version") == 2:
+                    if locator.get("normalized_document_sha256") != source.get("normalized_document_sha256"):
+                        errors.append(
+                            f"{label}: locator {index} is not bound to the captured normalized document"
+                        )
+                    expected_fingerprint = locator_fingerprint(
+                        source_id=locator.get("source_id", ""),
+                        locator=locator.get("locator", ""),
+                        snapshot_sha256=locator.get("snapshot_sha256", ""),
+                        normalized_document_sha256=locator.get("normalized_document_sha256", ""),
+                    )
+                    if locator.get("locator_fingerprint") != expected_fingerprint:
+                        errors.append(
+                            f"{label}: locator {index} fingerprint does not match its source binding"
+                        )
         elif state == "observed":
             valid = [
                 image
