@@ -3,7 +3,7 @@ items:
 - work_id: migration-cycle-01:KB-004
   cycle_id: migration-cycle-01
   stage_id: KB-004
-  branch: kb-004-finalization-state
+  branch: migration/KB-004-finalization
   pr_number: 35
   state: finalization_pending
   source_capture_status: captured
