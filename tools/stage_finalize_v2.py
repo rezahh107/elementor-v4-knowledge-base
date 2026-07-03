@@ -6,13 +6,17 @@ import argparse
 import re
 import subprocess
 import sys
+from pathlib import Path
+from typing import Any
 
 from tools.evidence_validate import validate_evidence
+from tools.kb import parse_front_matter
 from tools.ledger_chain import append_chained_event
 from tools.pipeline_common import (
     LEDGER_PATH,
     ROOT,
     canonical_json_line,
+    dump_yaml,
     find_stage,
     find_work_item,
     load_stages,
@@ -25,6 +29,8 @@ from tools.pipeline_common import (
 )
 
 COMMIT_RE = re.compile(r"^[a-f0-9]{40}$")
+GAPS_PATH = ROOT / "manifests" / "evidence-gaps.yaml"
+ACTIVE_GAP_STATUSES = {"open", "accepted_risk"}
 
 
 def git_head() -> str:
@@ -45,6 +51,112 @@ def _fail(errors: list[str]) -> int:
     for error in sorted(set(errors)):
         print(f"ERROR: {error}", file=sys.stderr)
     return 1
+
+
+def _safe_repo_path(value: Any) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ValueError("missing repository path")
+    relative = Path(value)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError(f"unsafe repository path: {value!r}")
+    resolved = (ROOT / relative).resolve()
+    resolved.relative_to(ROOT.resolve())
+    return resolved
+
+
+def rewrite_document_trust(stage: dict[str, Any]) -> dict[str, Any]:
+    """Promote only machine trust fields while preserving document body."""
+    path = ROOT / stage["output_path"]
+    front_matter, body = parse_front_matter(path)
+    front_matter["review_status"] = "machine_validated"
+    front_matter["provenance_status"] = "claim_level"
+    path.write_text(
+        "---\n" + dump_yaml(front_matter) + "---\n" + body,
+        encoding="utf-8",
+        newline="\n",
+    )
+    return front_matter
+
+
+def reconcile_gap_records(
+    stage_id: str,
+    stage: dict[str, Any],
+    global_document: dict[str, Any],
+    local_document: dict[str, Any],
+) -> None:
+    """Resolve legacy migration gaps and bind current stage gaps canonically."""
+    global_records = global_document["gaps"]
+    local_records = local_document["gaps"]
+    local_ids = [record["gap_id"] for record in local_records]
+    if len(local_ids) != len(set(local_ids)):
+        raise ValueError(f"{stage_id}: duplicate local gap IDs")
+    if any(record.get("stage_id") != stage_id for record in local_records):
+        raise ValueError(f"{stage_id}: local gap record contains another stage")
+
+    replacements = {record["gap_id"]: record for record in local_records}
+    legacy_ids = {
+        f"GAP-{stage_id}-PROVENANCE",
+        f"GAP-{stage_id}-SNAPSHOT",
+    }
+    seen: set[str] = set()
+    reconciled: list[dict[str, Any]] = []
+    for record in global_records:
+        gap_id = record["gap_id"]
+        if gap_id in replacements:
+            reconciled.append(replacements[gap_id])
+            seen.add(gap_id)
+            continue
+        if gap_id in legacy_ids:
+            record = dict(record)
+            record["status"] = "resolved"
+        reconciled.append(record)
+
+    for record in local_records:
+        if record["gap_id"] not in seen:
+            reconciled.append(record)
+
+    global_document["gaps"] = reconciled
+    stage["gap_ids"] = [
+        record["gap_id"]
+        for record in local_records
+        if record["status"] in ACTIVE_GAP_STATUSES
+    ]
+
+
+def sync_gap_truth(
+    stage_id: str,
+    stage: dict[str, Any],
+    front_matter: dict[str, Any],
+) -> None:
+    gap_path = _safe_repo_path(front_matter.get("gap_record"))
+    local_document = load_yaml(gap_path)
+    global_document = load_yaml(GAPS_PATH)
+    errors = []
+    errors.extend(
+        validate_instance(
+            local_document,
+            "evidence-gaps.schema.json",
+            str(gap_path.relative_to(ROOT)),
+        )
+    )
+    errors.extend(
+        validate_instance(
+            global_document,
+            "evidence-gaps.schema.json",
+            "manifests/evidence-gaps.yaml",
+        )
+    )
+    if errors:
+        raise ValueError("; ".join(errors))
+    reconcile_gap_records(stage_id, stage, global_document, local_document)
+    errors = validate_instance(
+        global_document,
+        "evidence-gaps.schema.json",
+        "manifests/evidence-gaps.yaml",
+    )
+    if errors:
+        raise ValueError("; ".join(errors))
+    write_yaml(GAPS_PATH, global_document)
 
 
 def prepare(stage_id: str, expected_head: str | None = None) -> int:
@@ -90,6 +202,12 @@ def prepare(stage_id: str, expected_head: str | None = None) -> int:
     stage["review_status"] = "machine_validated"
     stage["content_commit_sha"] = content_commit
     stage["completed_at"] = completed_at
+    try:
+        front_matter = rewrite_document_trust(stage)
+        sync_gap_truth(stage_id, stage, front_matter)
+    except (OSError, ValueError) as exc:
+        return _fail([f"{stage_id}: finalization truth reconciliation failed: {exc}"])
+
     item["expected_head_sha"] = content_commit
     item["github_state_observed_at"] = completed_at
     item["required_check_runs"] = {
