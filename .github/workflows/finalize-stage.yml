@@ -32,6 +32,7 @@ jobs:
       head: ${{ steps.target.outputs.head }}
       base: ${{ steps.target.outputs.base }}
       stage: ${{ steps.stage.outputs.value }}
+      document: ${{ steps.document.outputs.value }}
     steps:
       - id: target
         shell: bash
@@ -89,6 +90,15 @@ jobs:
           fi
           [[ "$value" =~ ^KB-[0-9]{3}$ ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
+      - id: document
+        shell: bash
+        env:
+          STAGE: ${{ steps.stage.outputs.value }}
+        run: |
+          set -euo pipefail
+          value="$(python -c 'from tools.pipeline_common import find_stage, load_stages; import os; print(find_stage(load_stages(), os.environ["STAGE"])["output_path"])')"
+          [[ "$value" == docs/*.md ]]
+          echo "value=$value" >> "$GITHUB_OUTPUT"
       - name: Prepare and validate
         env:
           HEAD_SHA: ${{ steps.target.outputs.head }}
@@ -96,18 +106,24 @@ jobs:
           python tools/stage_finalize.py --stage '${{ steps.stage.outputs.value }}' --phase prepare --expected-head "$HEAD_SHA"
           python tools/kb.py generate
           python tools/work_item_validate.py
+          python tools/repository_consistency_validate.py
           python tools/kb.py generate --check
           python -m pytest -q
       - name: Build allowlisted patch
         env:
           HEAD_SHA: ${{ steps.target.outputs.head }}
+          DOCUMENT: ${{ steps.document.outputs.value }}
         run: |
           set -euo pipefail
           git restore --source="$HEAD_SHA" --worktree -- tools schemas pyproject.toml
-          allowed='^(manifests/(stages|work-items|coverage|sources)\.yaml|STATUS\.md|docs/_index\.md)$'
-          git diff --name-only "$HEAD_SHA" | grep -Ev "$allowed" | (! grep .)
+          while IFS= read -r path; do
+            case "$path" in
+              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT") ;;
+              *) echo "unexpected finalization path: $path" >&2; exit 1 ;;
+            esac
+          done < <(git diff --name-only "$HEAD_SHA")
           mkdir -p "$RUNNER_TEMP/out"
-          git diff --binary "$HEAD_SHA" -- manifests/stages.yaml manifests/work-items.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md > "$RUNNER_TEMP/out/finalization.patch"
+          git diff --binary "$HEAD_SHA" -- manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT" > "$RUNNER_TEMP/out/finalization.patch"
           test -s "$RUNNER_TEMP/out/finalization.patch"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -140,6 +156,7 @@ jobs:
           HEAD_SHA: ${{ needs.compute.outputs.head }}
           BASE_SHA: ${{ needs.compute.outputs.base }}
           STAGE: ${{ needs.compute.outputs.stage }}
+          DOCUMENT: ${{ needs.compute.outputs.document }}
         run: |
           set -euo pipefail
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
@@ -147,11 +164,15 @@ jobs:
           patch="$RUNNER_TEMP/out/finalization.patch"
           git apply --check "$patch"
           git apply "$patch"
-          allowed='^(manifests/(stages|work-items|coverage|sources)\.yaml|STATUS\.md|docs/_index\.md)$'
-          git diff --name-only "$HEAD_SHA" | grep -Ev "$allowed" | (! grep .)
+          while IFS= read -r path; do
+            case "$path" in
+              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT") ;;
+              *) echo "unexpected finalization path: $path" >&2; exit 1 ;;
+            esac
+          done < <(git diff --name-only "$HEAD_SHA")
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add manifests/stages.yaml manifests/work-items.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md
+          git add manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT"
           git commit -m "chore: finalize evidence stage $STAGE"
           finalization_sha="$(git rev-parse HEAD)"
           mkdir -p "$RUNNER_TEMP/trusted/tools" "$RUNNER_TEMP/trusted/schemas"
