@@ -36,6 +36,7 @@ jobs:
       branch: ${{ steps.target.outputs.branch }}
       head_sha: ${{ steps.target.outputs.head_sha }}
       stage: ${{ steps.stage.outputs.value }}
+      capture_needed: ${{ steps.policy.outputs.value }}
     steps:
       - name: Resolve immutable target
         id: target
@@ -95,7 +96,23 @@ jobs:
           fi
           [[ "$value" =~ ^KB-[0-9]{3}$ ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
+      - name: Determine capture policy
+        id: policy
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          STAGE_ID: ${{ steps.stage.outputs.value }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            value=true
+          else
+            value="$(python -c 'from tools.pipeline_common import find_work_item, load_work_items; import os; item=find_work_item(load_work_items(), os.environ["STAGE_ID"]); print("false" if item["source_capture_status"] == "captured" else "true")')"
+          fi
+          echo "value=$value" >> "$GITHUB_OUTPUT"
+          echo "capture_needed=$value"
       - name: Capture and validate source evidence
+        if: steps.policy.outputs.value == 'true'
         env:
           TARGET_HEAD_SHA: ${{ steps.target.outputs.head_sha }}
         run: |
@@ -103,6 +120,7 @@ jobs:
           python tools/work_item_validate.py
           python tools/kb.py validate --strict
       - name: Build allowlisted patch
+        if: steps.policy.outputs.value == 'true'
         shell: bash
         env:
           TARGET_HEAD_SHA: ${{ steps.target.outputs.head_sha }}
@@ -119,6 +137,7 @@ jobs:
           git diff --binary "$TARGET_HEAD_SHA" -- evidence/sources manifests/work-items.yaml > "$RUNNER_TEMP/out/source.patch"
           cp -R "$RUNNER_TEMP/capture" "$RUNNER_TEMP/out/source-snapshots"
       - name: Upload capture result
+        if: steps.policy.outputs.value == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: source-capture-${{ steps.target.outputs.head_sha }}
@@ -128,6 +147,7 @@ jobs:
 
   writeback:
     needs: compute
+    if: needs.compute.outputs.capture_needed == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
