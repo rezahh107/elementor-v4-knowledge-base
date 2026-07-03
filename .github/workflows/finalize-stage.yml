@@ -33,6 +33,7 @@ jobs:
       base: ${{ steps.target.outputs.base }}
       stage: ${{ steps.stage.outputs.value }}
       document: ${{ steps.document.outputs.value }}
+      claim: ${{ steps.claim.outputs.value }}
     steps:
       - id: target
         shell: bash
@@ -99,10 +100,21 @@ jobs:
           value="$(python -c 'from tools.pipeline_common import find_stage, load_stages; import os; print(find_stage(load_stages(), os.environ["STAGE"])["output_path"])')"
           [[ "$value" == docs/*.md ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
+      - id: claim
+        shell: bash
+        env:
+          DOCUMENT: ${{ steps.document.outputs.value }}
+          STAGE: ${{ steps.stage.outputs.value }}
+        run: |
+          set -euo pipefail
+          value="$(python -c 'from pathlib import Path; from tools.kb import parse_front_matter; import os; print(parse_front_matter(Path(os.environ["DOCUMENT"]))[0]["claim_record"])')"
+          [[ "$value" == evidence/claims/"$STAGE"*.yaml ]]
+          echo "value=$value" >> "$GITHUB_OUTPUT"
       - name: Prepare and validate
         env:
           HEAD_SHA: ${{ steps.target.outputs.head }}
         run: |
+          python tools/bind_claim_locators.py '${{ steps.stage.outputs.value }}'
           python tools/stage_finalize.py --stage '${{ steps.stage.outputs.value }}' --phase prepare --expected-head "$HEAD_SHA"
           python tools/kb.py generate
           python tools/work_item_validate.py
@@ -113,17 +125,18 @@ jobs:
         env:
           HEAD_SHA: ${{ steps.target.outputs.head }}
           DOCUMENT: ${{ steps.document.outputs.value }}
+          CLAIM: ${{ steps.claim.outputs.value }}
         run: |
           set -euo pipefail
           git restore --source="$HEAD_SHA" --worktree -- tools schemas pyproject.toml
           while IFS= read -r path; do
             case "$path" in
-              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT") ;;
+              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT"|"$CLAIM") ;;
               *) echo "unexpected finalization path: $path" >&2; exit 1 ;;
             esac
           done < <(git diff --name-only "$HEAD_SHA")
           mkdir -p "$RUNNER_TEMP/out"
-          git diff --binary "$HEAD_SHA" -- manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT" > "$RUNNER_TEMP/out/finalization.patch"
+          git diff --binary "$HEAD_SHA" -- manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT" "$CLAIM" > "$RUNNER_TEMP/out/finalization.patch"
           test -s "$RUNNER_TEMP/out/finalization.patch"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -157,6 +170,7 @@ jobs:
           BASE_SHA: ${{ needs.compute.outputs.base }}
           STAGE: ${{ needs.compute.outputs.stage }}
           DOCUMENT: ${{ needs.compute.outputs.document }}
+          CLAIM: ${{ needs.compute.outputs.claim }}
         run: |
           set -euo pipefail
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
@@ -166,13 +180,13 @@ jobs:
           git apply "$patch"
           while IFS= read -r path; do
             case "$path" in
-              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT") ;;
+              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT"|"$CLAIM") ;;
               *) echo "unexpected finalization path: $path" >&2; exit 1 ;;
             esac
           done < <(git diff --name-only "$HEAD_SHA")
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT"
+          git add manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT" "$CLAIM"
           git commit -m "chore: finalize evidence stage $STAGE"
           finalization_sha="$(git rev-parse HEAD)"
           mkdir -p "$RUNNER_TEMP/trusted/tools" "$RUNNER_TEMP/trusted/schemas"
