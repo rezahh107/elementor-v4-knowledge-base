@@ -10,7 +10,7 @@ on:
         required: true
         type: string
   pull_request_target:
-    types: [ready_for_review]
+    types: [reopened, ready_for_review]
 
 permissions:
   contents: read
@@ -24,6 +24,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.pull_request.head.repo.full_name == github.repository &&
+       github.actor != 'github-actions[bot]' &&
        (startsWith(github.event.pull_request.head.ref, 'migration/') ||
         startsWith(github.event.pull_request.head.ref, 'migration-')))
     runs-on: ubuntu-latest
