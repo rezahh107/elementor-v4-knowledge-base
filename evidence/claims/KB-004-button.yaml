@@ -7,7 +7,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1149-1151
         locator_version: 1
-        snapshot_sha256: &snapshot 8ed3a413f5bb1430d7fc8b84e47be7802f013d8c6a37be44c9dc1b20ecb285d2
+        snapshot_sha256: &snapshot 0b4bd5a554e6465fd8eb5943e9d50c5e910c6871dbe0122b638178f8867d076c
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C002
