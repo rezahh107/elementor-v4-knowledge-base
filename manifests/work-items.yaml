@@ -3,16 +3,16 @@ items:
 - work_id: migration-cycle-01:KB-004
   cycle_id: migration-cycle-01
   stage_id: KB-004
-  branch: migration/KB-004-button-v2
+  branch: migration/KB-004-rq0004-current-main-capture-v2
   pr_number: 31
   state: evidence_draft
   source_capture_status: captured
   attempt: 2
   idempotency_key: migration-cycle-01:KB-004
-  updated_at: 2026-07-03T02:05:28+03:00
+  updated_at: '2026-07-03T02:05:28+03:00'
   last_error: null
   expected_head_sha: 2df247a3d0d0f5cc93f4912f2b560bbcd01d7bc7
-  github_state_observed_at: 2026-07-03T02:05:28+03:00
+  github_state_observed_at: '2026-07-03T02:05:28+03:00'
 - work_id: migration-cycle-01:KB-005
   cycle_id: migration-cycle-01
   stage_id: KB-005
