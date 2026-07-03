@@ -346,7 +346,7 @@ def test_transactional_capture_rolls_back_partial_publication(
     monkeypatch.setattr("tools.source_capture._atomic_write_bytes", fail_second)
 
     with pytest.raises(OSError):
-        commit_payloads_atomically([(first, b"new"), (second, b"never")])
+        commit_payloads_atomically({first: b"new", second: b"never"})
 
     assert first.read_bytes() == b"original"
     assert not second.exists()
