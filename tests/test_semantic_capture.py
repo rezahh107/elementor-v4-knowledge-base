@@ -25,3 +25,4 @@ def test_malformed_candidate_is_rejected_without_exception() -> None:
     old = _record("a" * 64, "b" * 64)
     assert not semantic_capture_equal(old, None)
     assert transport_changed(old, None)
+    assert not transport_changed(None, None)
