@@ -64,6 +64,10 @@ def _update_work_item(item: dict[str, Any], semantic_changed: bool) -> bool:
     )
 
 
+def _publish_failure(original_status: Any) -> bool:
+    return original_status not in {"captured", "failed"}
+
+
 def capture(
     stage_id: str,
     *,
@@ -116,7 +120,7 @@ def capture(
 
         commit_payloads_atomically(payloads)
     except Exception as exc:
-        if original_status != "captured":
+        if _publish_failure(original_status):
             failed = deepcopy(work_items)
             failed_item = find_work_item(failed, stage_id)
             failed_item["source_capture_status"] = "failed"
