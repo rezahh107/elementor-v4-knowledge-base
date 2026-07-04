@@ -58,13 +58,13 @@ def semantic_locator_fingerprint(
     return hashlib.sha256(payload).hexdigest()
 
 
-def semantic_capture_equal(existing: Any, candidate: dict[str, Any]) -> bool:
+def semantic_capture_equal(existing: Any, candidate: Any) -> bool:
     """Return True when two captures represent the same reusable source truth.
 
     HTTP headers, retrieval timestamps, exact response bytes, artifact names,
     and response sizes are deliberately excluded. Those are transport telemetry.
     """
-    if not isinstance(existing, dict):
+    if not isinstance(existing, dict) or not isinstance(candidate, dict):
         return False
     identity_fields = (
         "source_id",
@@ -82,7 +82,7 @@ def semantic_capture_equal(existing: Any, candidate: dict[str, Any]) -> bool:
         return False
 
 
-def transport_changed(existing: Any, candidate: dict[str, Any]) -> bool:
-    if not isinstance(existing, dict):
+def transport_changed(existing: Any, candidate: Any) -> bool:
+    if not isinstance(existing, dict) or not isinstance(candidate, dict):
         return True
     return existing.get("response_bytes_sha256") != candidate.get("response_bytes_sha256")
