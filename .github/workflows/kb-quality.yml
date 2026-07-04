@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: kb-quality-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || github.sha }}
+  group: kb-quality-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: true
 
 jobs:
@@ -39,6 +39,9 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "ref=${{ inputs.ref }}" >> "$GITHUB_OUTPUT"
             echo "expected_sha=${{ inputs.expected_sha }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "ref=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
+            echo "expected_sha=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
           else
             echo "ref=${{ github.sha }}" >> "$GITHUB_OUTPUT"
             echo "expected_sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
