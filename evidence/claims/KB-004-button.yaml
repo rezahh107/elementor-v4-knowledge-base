@@ -7,7 +7,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1149-1151
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: &snapshot 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C002
@@ -18,7 +18,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page line 1151
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C003
@@ -29,7 +29,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1153-1155
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C004
@@ -40,7 +40,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1175-1178
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C005
@@ -51,7 +51,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1178-1181
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C006
@@ -62,7 +62,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1185-1189
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C007
@@ -73,7 +73,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1192-1201
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C008
@@ -84,7 +84,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1202-1208
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C009
@@ -95,7 +95,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1213-1217
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C010
@@ -106,7 +106,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1218-1242
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C011
@@ -117,7 +117,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1258-1278
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C012
@@ -128,7 +128,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1279-1296
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C013
@@ -139,7 +139,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1242-1248
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C014
@@ -150,7 +150,7 @@ claims:
       - source_id: SRC-KB-004-01
         locator: official page lines 1249-1252
         locator_version: 1
-        snapshot_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+        snapshot_sha256: *snapshot
     derived_from: []
     verification_status: machine_validated
   - claim_id: KB-004-C015

@@ -7,30 +7,30 @@ canonical_url: https://elementor.com/help/button-element/
 redirect_chain:
 - https://elementor.com/help/button-element/
 redirect_chain_complete: true
-retrieved_at: '2026-07-03T02:05:28+03:00'
+retrieved_at: 2026-07-04T00:03:21+03:00
 http_status: 200
 content_type: text/html
 charset: utf-8
 content_length: 1632401
 etag: null
-last_modified: Tue, 30 Jun 2026 19:47:07 GMT
+last_modified: Fri, 03 Jul 2026 20:53:35 GMT
 page_title: Button element | Elementor
 page_title_source: html_title
-reported_last_updated: '2026-06-30'
+reported_last_updated: 2026-07-03
 reported_last_updated_source: http_last_modified
-reported_last_updated_hint: '2025-07-01'
-content_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
-response_bytes_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+reported_last_updated_hint: 2025-07-01
+content_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+response_bytes_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
 normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 parser_version: html-text-v2
 source_locator_version: 2
-capture_id: CAP-3ccd974bbf22f4196dca5eab8d99b8ec97dac3e552bb8d739a8cba38c72114f7
+capture_id: CAP-e7d550264ac48482fc1df68a73e89e57ed316b7d49aa99145de0dee09dd1f342
 snapshot:
   storage: workflow_artifact
-  artifact_name: source-snapshot-KB-004-28627141395
-  relative_path: source-snapshots/SRC-KB-004-01/b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1.bin
-  run_id: '28627141395'
-  response_bytes_sha256: b103efbbe673ab5ce38d1d31d8db30bc75b1c6602bb3e1804f0e174f1aeebcd1
+  artifact_name: source-snapshot-KB-004-28683272683
+  relative_path: source-snapshots/SRC-KB-004-01/840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece.bin
+  run_id: '28683272683'
+  response_bytes_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
   normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
 image_evidence_ids:
 - IMG-KB-004-001
