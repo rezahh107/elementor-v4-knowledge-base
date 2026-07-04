@@ -4,7 +4,7 @@ items:
   cycle_id: migration-cycle-01
   stage_id: KB-004
   branch: migration/KB-004-finalization-v5
-  pr_number: null
+  pr_number: 48
   state: finalization_pending
   source_capture_status: captured
   attempt: 5
