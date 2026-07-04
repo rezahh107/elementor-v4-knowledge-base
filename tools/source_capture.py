@@ -36,11 +36,20 @@ image_ids = legacy.image_ids
 fetch = legacy.fetch
 locator_fingerprint = legacy.locator_fingerprint
 build_record = legacy.build_record
-commit_payloads_atomically = legacy.commit_payloads_atomically
 _http_last_updated = legacy._http_last_updated
 _capture_id = legacy._capture_id
 _atomic_write_bytes = legacy._atomic_write_bytes
 _same_capture = semantic_capture_equal
+
+
+def commit_payloads_atomically(payloads: dict[Path, bytes]) -> None:
+    """Delegate publication while preserving the patchable rollback primitive."""
+    original = legacy._atomic_write_bytes
+    legacy._atomic_write_bytes = _atomic_write_bytes
+    try:
+        legacy.commit_payloads_atomically(payloads)
+    finally:
+        legacy._atomic_write_bytes = original
 
 
 def _publish_record(existing: Any, candidate: dict[str, Any]) -> bool:
