@@ -83,6 +83,8 @@ def semantic_capture_equal(existing: Any, candidate: Any) -> bool:
 
 
 def transport_changed(existing: Any, candidate: Any) -> bool:
+    if existing == candidate:
+        return False
     if not isinstance(existing, dict) or not isinstance(candidate, dict):
         return True
     return existing.get("response_bytes_sha256") != candidate.get("response_bytes_sha256")
