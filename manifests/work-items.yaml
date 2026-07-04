@@ -3,13 +3,13 @@ items:
 - work_id: migration-cycle-01:KB-004
   cycle_id: migration-cycle-01
   stage_id: KB-004
-  branch: migration/KB-004-atomic-finalization
-  pr_number: 41
+  branch: migration/KB-004-finalization-v5
+  pr_number: null
   state: finalization_pending
   source_capture_status: captured
-  attempt: 4
+  attempt: 5
   idempotency_key: migration-cycle-01:KB-004
-  updated_at: 2026-07-04T00:19:43+03:00
+  updated_at: 2026-07-04T16:38:00+03:00
   last_error: null
   expected_head_sha: null
   github_state_observed_at: null
