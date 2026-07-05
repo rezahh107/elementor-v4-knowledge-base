@@ -53,7 +53,6 @@ jobs:
           EXPLICIT_STAGE: ${{ inputs.stage_id }}
           PR_BRANCH: ${{ github.event.pull_request.head.ref }}
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          PR_BASE: ${{ github.event.pull_request.base.sha }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           AUTHOR_ASSOCIATION: ${{ github.event.comment.author_association }}
@@ -69,13 +68,13 @@ jobs:
               exit 1
             fi
           }
+          base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH" | awk '{print $1}')"
           if [[ "$EVENT" == workflow_dispatch ]]; then
             branch="$INPUT_BRANCH"
             stage="$EXPLICIT_STAGE"
             [[ "$branch" == migration/* || "$branch" == migration-* ]]
             [[ "$stage" =~ ^KB-[0-9]{3}$ ]]
             head="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$branch" | awk '{print $1}')"
-            base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH" | awk '{print $1}')"
           elif [[ "$EVENT" == issue_comment ]]; then
             [[ "$COMMENT_BODY" == /finalize-stage ]]
             case "$AUTHOR_ASSOCIATION" in
@@ -85,14 +84,12 @@ jobs:
             pr_json="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$ISSUE_NUMBER")"
             branch="$(jq -r '.head.ref' <<<"$pr_json")"
             head="$(jq -r '.head.sha' <<<"$pr_json")"
-            base="$(jq -r '.base.sha' <<<"$pr_json")"
             head_repo="$(jq -r '.head.repo.full_name' <<<"$pr_json")"
             [[ "$head_repo" == "$GITHUB_REPOSITORY" ]]
             stage="$(infer_stage_from_branch "$branch")"
           else
             branch="$PR_BRANCH"
             head="$PR_HEAD"
-            base="$PR_BASE"
             stage="$(infer_stage_from_branch "$branch")"
           fi
           [[ "$branch" == migration/* || "$branch" == migration-* ]]
