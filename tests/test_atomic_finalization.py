@@ -126,6 +126,14 @@ def test_finalize_workflow_uses_current_main_for_trusted_tooling() -> None:
     assert "jq -r '.base.sha'" not in workflow
 
 
+def test_finalize_workflow_fetches_default_branch_ref_not_raw_base_sha() -> None:
+    with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
+        workflow = f.read()
+    assert 'git fetch --no-tags origin "$BASE"' not in workflow
+    assert 'refs/heads/${DEFAULT_BRANCH}:refs/remotes/origin/${DEFAULT_BRANCH}' in workflow
+    assert 'git cat-file -e "$BASE^{commit}"' in workflow
+
+
 def test_finalize_workflow_supports_safe_metadata_retrigger() -> None:
     with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
         workflow = f.read()
