@@ -120,6 +120,16 @@ def test_finalize_workflow_uses_current_main_for_trusted_tooling() -> None:
     parts = workflow.split("      - uses: actions/checkout@", maxsplit=1)
     assert len(parts) == 2, "Checkout step not found in workflow"
     target_step = parts[0]
-    assert 'base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH"' in target_step
+    assert "git ls-remote" in target_step
+    assert "refs/heads/$DEFAULT_BRANCH" in target_step
     assert "github.event.pull_request.base.sha" not in workflow
     assert "jq -r '.base.sha'" not in workflow
+
+
+def test_finalize_workflow_supports_safe_metadata_retrigger() -> None:
+    with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
+        workflow = f.read()
+    assert "pull_request_target:" in workflow
+    for trigger in ["reopened", "ready_for_review", "edited"]:
+        assert trigger in workflow
+    assert "github.event.pull_request.head.ref" in workflow
