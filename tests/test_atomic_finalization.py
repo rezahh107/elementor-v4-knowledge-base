@@ -105,7 +105,21 @@ def test_finalize_workflow_uses_single_bounded_writeback_job() -> None:
 
 
 def test_finalize_workflow_does_not_use_repo_python_before_checkout() -> None:
-    workflow = open(".github/workflows/finalize-stage.yml", encoding="utf-8").read()
-    target_step = workflow.split("      - uses: actions/checkout@", maxsplit=1)[0]
+    with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
+        workflow = f.read()
+    parts = workflow.split("      - uses: actions/checkout@", maxsplit=1)
+    assert len(parts) == 2, "Checkout step not found in workflow"
+    target_step = parts[0]
     assert "from tools.pipeline_common" not in target_step
     assert "infer_stage_from_branch" in target_step
+
+
+def test_finalize_workflow_uses_current_main_for_trusted_tooling() -> None:
+    with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
+        workflow = f.read()
+    parts = workflow.split("      - uses: actions/checkout@", maxsplit=1)
+    assert len(parts) == 2, "Checkout step not found in workflow"
+    target_step = parts[0]
+    assert 'base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH"' in target_step
+    assert "github.event.pull_request.base.sha" not in workflow
+    assert "jq -r '.base.sha'" not in workflow
