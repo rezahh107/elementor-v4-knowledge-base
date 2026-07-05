@@ -102,3 +102,10 @@ def test_finalize_workflow_uses_single_bounded_writeback_job() -> None:
     assert "Finalize and attest atomically" in workflow
     assert "contents: write" in workflow
     assert "HEAD:refs/heads/$BRANCH" in workflow
+
+
+def test_finalize_workflow_does_not_use_repo_python_before_checkout() -> None:
+    workflow = open(".github/workflows/finalize-stage.yml", encoding="utf-8").read()
+    target_step = workflow.split("      - uses: actions/checkout@", maxsplit=1)[0]
+    assert "from tools.pipeline_common" not in target_step
+    assert "infer_stage_from_branch" in target_step

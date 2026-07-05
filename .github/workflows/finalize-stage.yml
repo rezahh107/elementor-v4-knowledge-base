@@ -60,6 +60,15 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           set -euo pipefail
+          infer_stage_from_branch() {
+            local value="$1"
+            if [[ "$value" =~ (KB-[0-9]{3}) ]]; then
+              printf '%s\n' "${BASH_REMATCH[1]}"
+            else
+              echo "could not infer stage from branch: $value" >&2
+              exit 1
+            fi
+          }
           if [[ "$EVENT" == workflow_dispatch ]]; then
             branch="$INPUT_BRANCH"
             stage="$EXPLICIT_STAGE"
@@ -79,12 +88,12 @@ jobs:
             base="$(jq -r '.base.sha' <<<"$pr_json")"
             head_repo="$(jq -r '.head.repo.full_name' <<<"$pr_json")"
             [[ "$head_repo" == "$GITHUB_REPOSITORY" ]]
-            stage="$(BRANCH="$branch" python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["BRANCH"]))')"
+            stage="$(infer_stage_from_branch "$branch")"
           else
             branch="$PR_BRANCH"
             head="$PR_HEAD"
             base="$PR_BASE"
-            stage="$(BRANCH="$branch" python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["BRANCH"]))')"
+            stage="$(infer_stage_from_branch "$branch")"
           fi
           [[ "$branch" == migration/* || "$branch" == migration-* ]]
           [[ "$head" =~ ^[a-f0-9]{40}$ && "$base" =~ ^[a-f0-9]{40}$ ]]
