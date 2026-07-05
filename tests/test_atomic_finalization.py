@@ -138,6 +138,16 @@ def test_finalize_workflow_supports_safe_metadata_retrigger() -> None:
     with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
         workflow = f.read()
     assert "pull_request_target:" in workflow
-    for trigger in ["reopened", "ready_for_review", "edited"]:
+    for trigger in ["reopened", "ready_for_review", "edited", "labeled"]:
         assert trigger in workflow
     assert "github.event.pull_request.head.ref" in workflow
+
+
+def test_finalize_workflow_reports_failures_to_pr_without_workflow_dispatch_noise() -> None:
+    with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
+        workflow = f.read()
+    assert "Report finalizer failure" in workflow
+    assert "issues: write" in workflow
+    assert "gh pr comment" in workflow
+    assert "Finalizer failed for" in workflow
+    assert "github.event_name != 'workflow_dispatch'" in workflow
