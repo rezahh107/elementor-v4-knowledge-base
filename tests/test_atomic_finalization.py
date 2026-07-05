@@ -93,3 +93,12 @@ def test_finalize_workflow_allowlists_exact_document_and_gap_registry() -> None:
     assert "manifests/evidence-gaps.yaml" in workflow
     assert '"$DOCUMENT"' in workflow
     assert "unexpected finalization path" in workflow
+
+
+def test_finalize_workflow_uses_single_bounded_writeback_job() -> None:
+    workflow = open(".github/workflows/finalize-stage.yml", encoding="utf-8").read()
+    assert "upload-artifact" not in workflow
+    assert "download-artifact" not in workflow
+    assert "Finalize and attest atomically" in workflow
+    assert "contents: write" in workflow
+    assert "HEAD:refs/heads/$BRANCH" in workflow

@@ -24,7 +24,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  compute:
+  finalize:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'issue_comment' &&
@@ -38,14 +38,11 @@ jobs:
        github.actor != 'github-actions[bot]' &&
        (startsWith(github.event.pull_request.head.ref, 'migration/') ||
         startsWith(github.event.pull_request.head.ref, 'migration-')))
+    permissions:
+      contents: write
+      issues: read
+      pull-requests: read
     runs-on: ubuntu-latest
-    outputs:
-      branch: ${{ steps.target.outputs.branch }}
-      head: ${{ steps.target.outputs.head }}
-      base: ${{ steps.target.outputs.base }}
-      stage: ${{ steps.stage.outputs.value }}
-      document: ${{ steps.document.outputs.value }}
-      claim: ${{ steps.claim.outputs.value }}
     steps:
       - id: target
         shell: bash
@@ -53,6 +50,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           EVENT: ${{ github.event_name }}
           INPUT_BRANCH: ${{ inputs.branch }}
+          EXPLICIT_STAGE: ${{ inputs.stage_id }}
           PR_BRANCH: ${{ github.event.pull_request.head.ref }}
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
           PR_BASE: ${{ github.event.pull_request.base.sha }}
@@ -64,7 +62,9 @@ jobs:
           set -euo pipefail
           if [[ "$EVENT" == workflow_dispatch ]]; then
             branch="$INPUT_BRANCH"
+            stage="$EXPLICIT_STAGE"
             [[ "$branch" == migration/* || "$branch" == migration-* ]]
+            [[ "$stage" =~ ^KB-[0-9]{3}$ ]]
             head="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$branch" | awk '{print $1}')"
             base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH" | awk '{print $1}')"
           elif [[ "$EVENT" == issue_comment ]]; then
@@ -79,16 +79,20 @@ jobs:
             base="$(jq -r '.base.sha' <<<"$pr_json")"
             head_repo="$(jq -r '.head.repo.full_name' <<<"$pr_json")"
             [[ "$head_repo" == "$GITHUB_REPOSITORY" ]]
+            stage="$(BRANCH="$branch" python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["BRANCH"]))')"
           else
             branch="$PR_BRANCH"
             head="$PR_HEAD"
             base="$PR_BASE"
+            stage="$(BRANCH="$branch" python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["BRANCH"]))')"
           fi
           [[ "$branch" == migration/* || "$branch" == migration-* ]]
           [[ "$head" =~ ^[a-f0-9]{40}$ && "$base" =~ ^[a-f0-9]{40}$ ]]
+          [[ "$stage" =~ ^KB-[0-9]{3}$ ]]
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
           echo "head=$head" >> "$GITHUB_OUTPUT"
           echo "base=$base" >> "$GITHUB_OUTPUT"
+          echo "stage=$stage" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           ref: ${{ steps.target.outputs.head }}
@@ -105,25 +109,10 @@ jobs:
           git fetch --no-tags origin "$BASE"
           git restore --source="$BASE" --worktree -- tools schemas pyproject.toml
           python -m pip install -e ".[dev]"
-      - id: stage
-        shell: bash
-        env:
-          EVENT: ${{ github.event_name }}
-          EXPLICIT: ${{ inputs.stage_id }}
-          BRANCH: ${{ steps.target.outputs.branch }}
-        run: |
-          set -euo pipefail
-          if [[ "$EVENT" == workflow_dispatch ]]; then
-            value="$EXPLICIT"
-          else
-            value="$(python -c 'from tools.pipeline_common import infer_stage; import os; print(infer_stage(os.environ["BRANCH"]))')"
-          fi
-          [[ "$value" =~ ^KB-[0-9]{3}$ ]]
-          echo "value=$value" >> "$GITHUB_OUTPUT"
       - id: document
         shell: bash
         env:
-          STAGE: ${{ steps.stage.outputs.value }}
+          STAGE: ${{ steps.target.outputs.stage }}
         run: |
           set -euo pipefail
           value="$(python -c 'from tools.pipeline_common import find_stage, load_stages; import os; print(find_stage(load_stages(), os.environ["STAGE"])["output_path"])')"
@@ -133,80 +122,34 @@ jobs:
         shell: bash
         env:
           DOCUMENT: ${{ steps.document.outputs.value }}
-          STAGE: ${{ steps.stage.outputs.value }}
+          STAGE: ${{ steps.target.outputs.stage }}
         run: |
           set -euo pipefail
           value="$(python -c 'from pathlib import Path; from tools.kb import parse_front_matter; import os; print(parse_front_matter(Path(os.environ["DOCUMENT"]))[0]["claim_record"])')"
           [[ "$value" == evidence/claims/"$STAGE"*.yaml ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
-      - name: Prepare and validate
+      - name: Finalize and attest atomically
+        shell: bash
         env:
+          GITHUB_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.target.outputs.branch }}
           HEAD_SHA: ${{ steps.target.outputs.head }}
+          BASE_SHA: ${{ steps.target.outputs.base }}
+          STAGE: ${{ steps.target.outputs.stage }}
+          DOCUMENT: ${{ steps.document.outputs.value }}
+          CLAIM: ${{ steps.claim.outputs.value }}
         run: |
-          python tools/bind_claim_locators.py '${{ steps.stage.outputs.value }}'
-          python tools/stage_finalize.py --stage '${{ steps.stage.outputs.value }}' --phase prepare --expected-head "$HEAD_SHA"
+          set -euo pipefail
+          remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
+          [[ "$remote" == "$HEAD_SHA" ]]
+          python tools/bind_claim_locators.py "$STAGE"
+          python tools/stage_finalize.py --stage "$STAGE" --phase prepare --expected-head "$HEAD_SHA"
           python tools/kb.py generate
           python tools/work_item_validate.py
           python tools/repository_consistency_validate.py
           python tools/kb.py generate --check
           python -m pytest -q
-      - name: Build allowlisted patch
-        env:
-          HEAD_SHA: ${{ steps.target.outputs.head }}
-          DOCUMENT: ${{ steps.document.outputs.value }}
-          CLAIM: ${{ steps.claim.outputs.value }}
-        run: |
-          set -euo pipefail
           git restore --source="$HEAD_SHA" --worktree -- tools schemas pyproject.toml
-          while IFS= read -r path; do
-            case "$path" in
-              manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT"|"$CLAIM") ;;
-              *) echo "unexpected finalization path: $path" >&2; exit 1 ;;
-            esac
-          done < <(git diff --name-only "$HEAD_SHA")
-          mkdir -p "$RUNNER_TEMP/out"
-          git diff --binary "$HEAD_SHA" -- manifests/stages.yaml manifests/work-items.yaml manifests/evidence-gaps.yaml manifests/coverage.yaml manifests/sources.yaml STATUS.md docs/_index.md "$DOCUMENT" "$CLAIM" > "$RUNNER_TEMP/out/finalization.patch"
-          test -s "$RUNNER_TEMP/out/finalization.patch"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: stage-finalization-${{ steps.target.outputs.head }}
-          path: ${{ runner.temp }}/out/finalization.patch
-          if-no-files-found: error
-          retention-days: 30
-
-  writeback:
-    needs: compute
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          ref: ${{ needs.compute.outputs.head }}
-          fetch-depth: 0
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
-        with:
-          python-version: "3.13"
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
-        with:
-          name: stage-finalization-${{ needs.compute.outputs.head }}
-          path: ${{ runner.temp }}/out
-      - name: Commit finalization and attestation
-        shell: bash
-        env:
-          BRANCH: ${{ needs.compute.outputs.branch }}
-          HEAD_SHA: ${{ needs.compute.outputs.head }}
-          BASE_SHA: ${{ needs.compute.outputs.base }}
-          STAGE: ${{ needs.compute.outputs.stage }}
-          DOCUMENT: ${{ needs.compute.outputs.document }}
-          CLAIM: ${{ needs.compute.outputs.claim }}
-        run: |
-          set -euo pipefail
-          remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
-          [[ "$remote" == "$HEAD_SHA" ]]
-          patch="$RUNNER_TEMP/out/finalization.patch"
-          git apply --check "$patch"
-          git apply "$patch"
           while IFS= read -r path; do
             case "$path" in
               manifests/stages.yaml|manifests/work-items.yaml|manifests/evidence-gaps.yaml|manifests/coverage.yaml|manifests/sources.yaml|STATUS.md|docs/_index.md|"$DOCUMENT"|"$CLAIM") ;;
@@ -228,4 +171,4 @@ jobs:
           git commit -m "ledger: attest finalization for $STAGE"
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
           [[ "$remote" == "$HEAD_SHA" ]]
-          git push origin "HEAD:refs/heads/$BRANCH"
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$BRANCH"
