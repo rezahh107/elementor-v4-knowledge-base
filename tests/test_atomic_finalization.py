@@ -147,7 +147,10 @@ def test_finalize_workflow_reports_failures_to_pr_without_workflow_dispatch_nois
     with open(".github/workflows/finalize-stage.yml", encoding="utf-8") as f:
         workflow = f.read()
     assert "Report finalizer failure" in workflow
-    assert "issues: write" in workflow
+    assert "pull-requests: write" in workflow
     assert "gh pr comment" in workflow
     assert "Finalizer failed for" in workflow
-    assert "github.event_name != 'workflow_dispatch'" in workflow
+    assert (
+        "github.event_name != 'workflow_dispatch'" in workflow
+        or 'github.event_name != "workflow_dispatch"' in workflow
+    )
