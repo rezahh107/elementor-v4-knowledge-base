@@ -111,8 +111,10 @@ jobs:
       - name: Restore trusted tooling
         env:
           BASE: ${{ steps.target.outputs.base }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
-          git fetch --no-tags origin "$BASE"
+          git fetch --no-tags origin "refs/heads/${DEFAULT_BRANCH}:refs/remotes/origin/${DEFAULT_BRANCH}"
+          git cat-file -e "$BASE^{commit}"
           git restore --source="$BASE" --worktree -- tools schemas pyproject.toml
           python -m pip install -e ".[dev]"
       - id: document
