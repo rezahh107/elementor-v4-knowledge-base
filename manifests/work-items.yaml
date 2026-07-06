@@ -11,10 +11,10 @@ items:
   idempotency_key: migration-cycle-01:KB-004
   updated_at: 2026-07-06T07:00:38+03:00
   last_error: null
-  expected_head_sha: 4468774196b6765c0b35a7bc9e169204759abf65
-  github_state_observed_at: 2026-07-06T07:00:38+03:00
+  expected_head_sha: 6ddc15348e2848602b113345253eaad88c76ab9a
+  github_state_observed_at: 2026-07-06T08:02:30+03:00
   required_check_runs:
-    head_sha: 4468774196b6765c0b35a7bc9e169204759abf65
+    head_sha: 6ddc15348e2848602b113345253eaad88c76ab9a
     python_3_11: pending
     python_3_13: pending
     strict_validation: pending
