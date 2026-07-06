@@ -26,7 +26,7 @@ items:
   branch: migration/KB-005-heading-v2
   pr_number: 58
   state: evidence_draft
-  source_capture_status: captured
+  source_capture_status: pending
   attempt: 2
   idempotency_key: migration-cycle-01:KB-005
   updated_at: 2026-07-07T01:01:56+03:00
