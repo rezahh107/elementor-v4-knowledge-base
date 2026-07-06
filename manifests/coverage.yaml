@@ -1,6 +1,6 @@
 # GENERATED FILE. Edit manifests/stages.yaml.
 manifest_version: 4
-generated_from_sha256: 1c95d9ef37ab83d213d5567ef5fb50d4837cd5755c002f5a711c7f43a37bc929
+generated_from_sha256: 4e9217cb41daef703fd5830df52d2d3aaa79844f0687835020fecee524f00d7a
 summary:
   total_stages: 37
   committed_documents: 18
