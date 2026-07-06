@@ -6,7 +6,7 @@ WORKFLOW_PATH = Path(__file__).parent.parent / ".github" / "workflows" / "finali
 
 def test_finalizer_supports_reopen_same_head_recovery() -> None:
     workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
-    for trigger in ["reopened", "ready_for_review", "edited"]:
+    for trigger in ["reopened", "ready_for_review", "edited", "labeled"]:
         assert trigger in workflow
     assert "github.actor != 'github-actions[bot]'" in workflow
 

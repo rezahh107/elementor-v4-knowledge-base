@@ -12,7 +12,7 @@ on:
   issue_comment:
     types: [created]
   pull_request_target:
-    types: [reopened, ready_for_review, edited]
+    types: [reopened, ready_for_review, edited, labeled]
 
 permissions:
   contents: read
@@ -40,8 +40,8 @@ jobs:
         startsWith(github.event.pull_request.head.ref, 'migration-')))
     permissions:
       contents: write
-      issues: read
-      pull-requests: read
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - id: target
@@ -180,3 +180,18 @@ jobs:
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
           [[ "$remote" == "$HEAD_SHA" ]]
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$BRANCH"
+      - name: Report finalizer failure
+        if: failure() && github.event_name != 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+          STAGE: ${{ steps.target.outputs.stage }}
+          BRANCH: ${{ steps.target.outputs.branch }}
+          HEAD_SHA: ${{ steps.target.outputs.head }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          stage="${STAGE:-unknown}"
+          branch="${BRANCH:-unknown}"
+          head_sha="${HEAD_SHA:-unknown}"
+          gh pr comment "$PR_NUMBER" --body "Finalizer failed for ${stage} on branch ${branch} at head ${head_sha}. Run: ${RUN_URL}"
