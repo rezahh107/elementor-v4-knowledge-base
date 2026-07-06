@@ -1,6 +1,6 @@
 # GENERATED FILE. Edit manifests/stages.yaml.
 manifest_version: 4
-generated_from_sha256: 6aafceda75690a8b1cf8588d71e022e4f6c6231d406c1319c2ecbe2d3943724c
+generated_from_sha256: 4d31d4e479692f9956444c0b8a6285648634d4125f8022f55f57da611d35ea6c
 sources:
 - source_id: SRC-KB-001-01
   stage_id: KB-001
@@ -49,7 +49,7 @@ sources:
   content_fingerprint: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
   output_path: docs/elements/v4/button.md
   stage_status: completed_with_gaps
-  content_commit_sha: 13ff2b76b4008fc8f362b50d9e7e5143bb1a4f19
+  content_commit_sha: 48e2fb14371d4db0ca040ae40590b5f59cc75385
 - source_id: SRC-KB-005-01
   stage_id: KB-005
   knowledge_id: elementor.help.heading-element
