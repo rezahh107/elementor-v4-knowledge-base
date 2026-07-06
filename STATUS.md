@@ -2,7 +2,7 @@
 ---
 project: elementor-v4-knowledge-base
 status_version: 1
-manifest_sha256: 8cf22477506faafae5d8422b47a5207ce029ccd2b6c9a18a27e48c23a158e903
+manifest_sha256: 669e1d9a93cca8a5a2430c5840c0f7237b10bbee28526166cad011e5a61caf12
 timezone: Europe/Istanbul
 pipeline_status: hardening
 source_policy: official_first
@@ -22,7 +22,7 @@ queue_manager_status: paused_for_hardening
 - مراحل زمان‌بندی‌شده: 0
 - مراحل failed/blocked: 0
 - Evidence gapهای باز: 54
-- آخرین زمان تکمیل ثبت‌شده: `2026-06-23T14:00:00+03:00`
+- آخرین زمان تکمیل ثبت‌شده: `2026-07-06T13:58:35+03:00`
 
 ## وضعیت مراحل
 
@@ -31,7 +31,7 @@ queue_manager_status: paused_for_hardening
 | KB-001 | Widgets index | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/indexes/widgets-index.md` |
 | KB-002 | Editor V4 index | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/indexes/editor-v4-index.md` |
 | KB-003 | Explore the V4 features | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/overview/explore-v4-features.md` |
-| KB-004 | Button element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/button.md` |
+| KB-004 | Button element | `completed_with_gaps` | `machine_validated` | `claim_level` | `docs/elements/v4/button.md` |
 | KB-005 | Heading element | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/elements/v4/heading.md` |
 | KB-006 | Loop Grid widget | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/loop-grid.md` |
 | KB-007 | Build a query with the Loop Grid | `completed_with_gaps` | `unreviewed` | `document_level_legacy` | `docs/widgets/loop/loop-grid-query.md` |
