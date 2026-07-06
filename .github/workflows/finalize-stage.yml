@@ -39,6 +39,7 @@ jobs:
        (startsWith(github.event.pull_request.head.ref, 'migration/') ||
         startsWith(github.event.pull_request.head.ref, 'migration-')))
     permissions:
+      actions: write
       contents: write
       issues: write
       pull-requests: write
@@ -140,9 +141,11 @@ jobs:
         shell: bash
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
           BRANCH: ${{ steps.target.outputs.branch }}
           HEAD_SHA: ${{ steps.target.outputs.head }}
           BASE_SHA: ${{ steps.target.outputs.base }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           STAGE: ${{ steps.target.outputs.stage }}
           DOCUMENT: ${{ steps.document.outputs.value }}
           CLAIM: ${{ steps.claim.outputs.value }}
@@ -183,6 +186,8 @@ jobs:
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
           [[ "$remote" == "$HEAD_SHA" ]]
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$BRANCH"
+          validated_sha="$(git rev-parse HEAD)"
+          gh workflow run kb-quality.yml --ref "$DEFAULT_BRANCH" -f ref="$validated_sha" -f expected_sha="$validated_sha"
       - name: Report finalizer failure
         if: failure() && github.event_name != 'workflow_dispatch'
         env:
