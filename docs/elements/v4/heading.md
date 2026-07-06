@@ -7,7 +7,7 @@ source_type: official_help
 version_scope: editor_v4
 last_updated: 2025-08-28
 researched_at: 2026-07-06T15:31:27+03:30
-evidence_status: completed_with_gaps
+evidence_status: draft
 storage_status: committed
 language: fa
 stage_id: KB-005
@@ -19,7 +19,9 @@ provenance_status: claim_level_draft
 
 این سند پیش‌نویس مهاجرت KB-005 از روی صفحه رسمی Elementor Help برای Heading element است. این سند peer reviewed نیست و هنوز Canonical source snapshot، Image inspection و Runtime fixture ندارد؛ بنابراین هیچ ادعای observed/runtime/authoritative از آن نتیجه‌گیری نمی‌شود.
 
-## Source Record پیش‌نویس
+## Source Context پیش‌نویس
+
+این block هنوز Source Record schema-bound نیست و فقط context خوانش فعلی را نگه می‌دارد. Source Record نهایی باید پس از capture مخزنی، snapshot hash واقعی و ledger attestation ساخته شود.
 
 ```yaml
 source_id: SRC-KB-005-01
@@ -28,12 +30,12 @@ requested_url: https://elementor.com/help/heading-element/
 canonical_url: https://elementor.com/help/heading-element/
 source_type: official_help
 retrieved_at: 2026-07-06T15:31:27+03:30
-http_status: observed_via_web_open
+http_status: 200
 page_title: Heading element | Elementor
 reported_last_updated: 2025-08-28
 source_locator_version: 2
-canonical_snapshot_status: pending_repository_capture
-normalized_document_sha256: pending_repository_capture
+snapshot_binding_status: pending_repository_capture
+normalized_document_sha256_status: pending_repository_capture
 ```
 
 ## دامنه مستند
@@ -149,6 +151,7 @@ provenance_status: claim_level_draft
 review_status: unreviewed
 peer_reviewed: false
 open_gaps:
+  - GAP-KB-005-PROVENANCE
   - GAP-KB-005-SNAPSHOT
   - GAP-KB-005-IMAGE-INSPECTION
   - GAP-KB-005-RUNTIME-BEHAVIOR
