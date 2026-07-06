@@ -156,7 +156,6 @@ jobs:
           python tools/work_item_validate.py
           python tools/repository_consistency_validate.py
           python tools/kb.py generate --check
-          python -m pytest -q
           git restore --source="$HEAD_SHA" --worktree -- tools schemas pyproject.toml
           while IFS= read -r path; do
             case "$path" in
@@ -177,6 +176,10 @@ jobs:
           [[ "$(git diff --name-only)" == "ledger/executions.jsonl" ]]
           git add ledger/executions.jsonl
           git commit -m "ledger: attest finalization for $STAGE"
+          git restore --source="$BASE_SHA" --worktree -- tools schemas pyproject.toml
+          python -m pytest -q
+          git restore --source=HEAD --worktree -- tools schemas pyproject.toml
+          git diff --quiet
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
           [[ "$remote" == "$HEAD_SHA" ]]
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$BRANCH"
