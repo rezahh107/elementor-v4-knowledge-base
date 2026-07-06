@@ -24,6 +24,6 @@ def test_finalizer_runs_full_pytest_after_ledger_attestation() -> None:
     pytest = "python -m pytest -q"
     push = "git push"
     assert ledger_commit in workflow
-    assert pytest in workflow
-    assert push in workflow
-    assert workflow.index(ledger_commit) < workflow.index(pytest) < workflow.index(push)
+    after_ledger = workflow.split(ledger_commit, 1)[1]
+    assert pytest in after_ledger
+    assert push in after_ledger.split(pytest, 1)[1]
