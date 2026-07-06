@@ -26,10 +26,10 @@ items:
   branch: migration/KB-005-heading-v2
   pr_number: 58
   state: evidence_draft
-  source_capture_status: captured
+  source_capture_status: pending
   attempt: 2
   idempotency_key: migration-cycle-01:KB-005
-  updated_at: 2026-07-06T20:02:02+03:00
+  updated_at: 2026-07-06T22:28:17+03:30
   last_error: null
   expected_head_sha: dc35270c24060c15b57dd9962e1e5436e970354d
   github_state_observed_at: 2026-07-06T20:02:02+03:00
