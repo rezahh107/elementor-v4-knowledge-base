@@ -2,6 +2,8 @@ name: KB Quality
 
 on:
   pull_request:
+  pull_request_target:
+    types: [reopened, ready_for_review, labeled]
   push:
     branches:
       - main
@@ -20,11 +22,15 @@ permissions:
   contents: read
 
 concurrency:
-  group: kb-quality-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+  group: kb-quality-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: true
 
 jobs:
   validate:
+    if: >-
+      github.event_name != 'pull_request_target' ||
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+       (github.event.action != 'labeled' || github.event.label.name == 'kb-quality-retry'))
     name: validate (${{ matrix.python-version }})
     strategy:
       fail-fast: false
@@ -39,7 +45,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "ref=${{ inputs.ref }}" >> "$GITHUB_OUTPUT"
             echo "expected_sha=${{ inputs.expected_sha }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+          elif [ "${{ github.event_name }}" = "pull_request" ] || [ "${{ github.event_name }}" = "pull_request_target" ]; then
             echo "ref=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
             echo "expected_sha=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
           else
