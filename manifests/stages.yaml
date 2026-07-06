@@ -97,8 +97,8 @@ stages:
   evidence_status: completed_with_gaps
   review_status: machine_validated
   provenance_status: claim_level
-  content_commit_sha: 7a1e2668e98351272472d3cbcb2dc95f7d4f2310
-  completed_at: 2026-07-06T09:01:46+03:00
+  content_commit_sha: 13ff2b76b4008fc8f362b50d9e7e5143bb1a4f19
+  completed_at: 2026-07-06T11:01:48+03:00
   gap_ids:
   - GAP-KB-004-IMAGE-INSPECTION
   - GAP-KB-004-RUNTIME-BEHAVIOR
