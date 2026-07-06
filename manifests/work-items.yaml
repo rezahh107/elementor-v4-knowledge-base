@@ -31,8 +31,6 @@ items:
   idempotency_key: migration-cycle-01:KB-005
   updated_at: 2026-07-06T15:34:22+03:30
   last_error: null
-  supersedes_prs:
-  - 9
 - work_id: migration-cycle-01:KB-018
   cycle_id: migration-cycle-01
   stage_id: KB-018
