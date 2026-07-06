@@ -7,7 +7,7 @@ source_type: official_help
 version_scope: editor_v4
 last_updated: 2025-08-28
 researched_at: 2026-07-06T15:31:27+03:30
-evidence_status: draft
+evidence_status: completed_with_gaps
 storage_status: committed
 language: fa
 stage_id: KB-005
