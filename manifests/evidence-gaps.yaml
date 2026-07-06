@@ -66,7 +66,7 @@ gaps:
 - gap_id: GAP-KB-004-PROVENANCE
   stage_id: KB-004
   title: Claim-level provenance migration for Button element
-  status: open
+  status: resolved
   severity: high
   missing_evidence: Claim-level source locators and claim IDs were not captured in the legacy document.
   affected_conclusion: Individual factual statements cannot be promoted to authoritative claim-level citations.
@@ -77,7 +77,7 @@ gaps:
 - gap_id: GAP-KB-004-SNAPSHOT
   stage_id: KB-004
   title: Reproducible source snapshot for Button element
-  status: open
+  status: resolved
   severity: medium
   missing_evidence: The legacy run did not preserve a source content fingerprint or inspectable image evidence ledger.
   affected_conclusion: The exact source state used by the legacy research cannot be reproduced deterministically.
@@ -410,14 +410,14 @@ gaps:
   - authoritative_status
 - gap_id: GAP-KB-004-REVIEW
   stage_id: KB-004
-  title: Independent review for Button element
+  title: Human review pending
   status: open
-  severity: high
-  missing_evidence: The document has not received an independent peer review or controlled fixture verification.
-  affected_conclusion: The document cannot be classified as authoritative.
-  required_source: independent_peer_review_or_real_fixture
+  severity: medium
+  missing_evidence: No human peer review has approved this migrated stage.
+  affected_conclusion: review_status must not be peer_reviewed.
+  required_source: human review record
   blocks:
-  - authoritative_status
+  - peer_reviewed_status
 - gap_id: GAP-KB-005-REVIEW
   stage_id: KB-005
   title: Independent review for Heading element
@@ -558,3 +558,26 @@ gaps:
   required_source: independent_peer_review_or_real_fixture
   blocks:
   - authoritative_status
+- gap_id: GAP-KB-004-IMAGE-INSPECTION
+  stage_id: KB-004
+  title: Image inspection pending
+  status: open
+  severity: medium
+  missing_evidence: Official article images are only discovered in this draft and have not been retrieved and inspected with
+    hashes.
+  affected_conclusion: No observed claim may be made from official images in this draft.
+  required_source: https://elementor.com/help/button-element/
+  blocks:
+  - observed_claims
+- gap_id: GAP-KB-004-RUNTIME-BEHAVIOR
+  stage_id: KB-004
+  title: Runtime behavior not established
+  status: open
+  severity: medium
+  missing_evidence: The official article does not fully document runtime markup, keyboard focus, responsive overrides, dynamic
+    data, exact plugin version, default values, or link behavior.
+  affected_conclusion: These behaviors must remain insufficient evidence unless another accepted source or fixture validates
+    them.
+  required_source: accepted official documentation or controlled fixture
+  blocks:
+  - runtime_claims

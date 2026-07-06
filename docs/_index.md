@@ -1,7 +1,7 @@
 <!-- GENERATED FILE. Edit manifests/stages.yaml and run tools/kb.py generate. -->
 # فهرست پایگاه دانش Elementor
 
-`manifest_sha256: 8cf22477506faafae5d8422b47a5207ce029ccd2b6c9a18a27e48c23a158e903`
+`manifest_sha256: fb61d0d2e7491907088ef8b79343d7eeebcfed71713e09da9ecd59324ca1ea62`
 
 اسناد `unreviewed` یا دارای `document_level_legacy` پژوهش‌نامه‌اند و نباید authoritative تلقی شوند.
 
@@ -16,7 +16,7 @@
 
 ## Elementهای Editor V4
 
-- [Button element](elements/v4/button.md) — `KB-004` — `completed_with_gaps` — `unreviewed`
+- [Button element](elements/v4/button.md) — `KB-004` — `completed_with_gaps` — `machine_validated`
 - [Heading element](elements/v4/heading.md) — `KB-005` — `completed_with_gaps` — `unreviewed`
 - Div Block element — `KB-016` — `not_scheduled` — اولویت `1`
 - Flexbox element — `KB-017` — `not_scheduled` — اولویت `2`

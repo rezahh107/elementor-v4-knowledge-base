@@ -29,7 +29,7 @@ stages:
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: d59a28d614e93221f5737df277f78fea0b6b42a2
-  completed_at: '2026-06-23T10:51:16+03:00'
+  completed_at: 2026-06-23T10:51:16+03:00
   gap_ids:
   - GAP-KB-001-PROVENANCE
   - GAP-KB-001-SNAPSHOT
@@ -52,7 +52,7 @@ stages:
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: d028238125554e9fd35e4e31900f0fe97ddf96a4
-  completed_at: '2026-06-23T10:51:16+03:00'
+  completed_at: 2026-06-23T10:51:16+03:00
   gap_ids:
   - GAP-KB-002-PROVENANCE
   - GAP-KB-002-SNAPSHOT
@@ -68,14 +68,14 @@ stages:
   - source_id: SRC-KB-003-01
     url: https://elementor.com/help/explore-the-v4-features/
     source_type: official_help
-    last_updated: '2025-06-11'
+    last_updated: 2025-06-11
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 4d2486d5997a642e994583cedf1a716aff2084b1
-  completed_at: '2026-06-23T10:51:16+03:00'
+  completed_at: 2026-06-23T10:51:16+03:00
   gap_ids:
   - GAP-KB-003-PROVENANCE
   - GAP-KB-003-SNAPSHOT
@@ -91,17 +91,17 @@ stages:
   - source_id: SRC-KB-004-01
     url: https://elementor.com/help/button-element/
     source_type: official_help
-    last_updated: '2025-07-01'
-    snapshot_status: missing_legacy_snapshot
-    content_fingerprint: null
+    last_updated: 2025-07-01
+    snapshot_status: captured
+    content_fingerprint: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
   evidence_status: completed_with_gaps
-  review_status: unreviewed
-  provenance_status: document_level_legacy
-  content_commit_sha: 7108a82dde4e446ac5cc88cd5ffbfb13bd08575d
-  completed_at: '2026-06-23T10:51:16+03:00'
+  review_status: machine_validated
+  provenance_status: claim_level
+  content_commit_sha: 4468774196b6765c0b35a7bc9e169204759abf65
+  completed_at: 2026-07-06T07:00:38+03:00
   gap_ids:
-  - GAP-KB-004-PROVENANCE
-  - GAP-KB-004-SNAPSHOT
+  - GAP-KB-004-IMAGE-INSPECTION
+  - GAP-KB-004-RUNTIME-BEHAVIOR
   - GAP-KB-004-REVIEW
 - stage_id: KB-005
   knowledge_id: elementor.help.heading-element
@@ -114,14 +114,14 @@ stages:
   - source_id: SRC-KB-005-01
     url: https://elementor.com/help/heading-element/
     source_type: official_help
-    last_updated: '2025-08-28'
+    last_updated: 2025-08-28
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac
-  completed_at: '2026-06-23T10:51:16+03:00'
+  completed_at: 2026-06-23T10:51:16+03:00
   gap_ids:
   - GAP-KB-005-PROVENANCE
   - GAP-KB-005-SNAPSHOT
@@ -137,14 +137,14 @@ stages:
   - source_id: SRC-KB-006-01
     url: https://elementor.com/help/loop-grid/
     source_type: official_help
-    last_updated: '2026-06-19'
+    last_updated: 2026-06-19
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: ddceabd45d3c8c6655cb44bca6016f98426034ae
-  completed_at: '2026-06-22T11:07:20+03:00'
+  completed_at: 2026-06-22T11:07:20+03:00
   gap_ids:
   - GAP-KB-006-PROVENANCE
   - GAP-KB-006-SNAPSHOT
@@ -160,14 +160,14 @@ stages:
   - source_id: SRC-KB-007-01
     url: https://elementor.com/help/create-a-query-in-a-loop-grid/
     source_type: official_help
-    last_updated: '2026-06-19'
+    last_updated: 2026-06-19
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: ab98a1097ce26a2c2c665cab5d78ca504c1fd97e
-  completed_at: '2026-06-22T12:05:51+03:00'
+  completed_at: 2026-06-22T12:05:51+03:00
   gap_ids:
   - GAP-KB-007-PROVENANCE
   - GAP-KB-007-SNAPSHOT
@@ -183,14 +183,14 @@ stages:
   - source_id: SRC-KB-008-01
     url: https://elementor.com/help/create-queries/
     source_type: official_help
-    last_updated: '2025-06-30'
+    last_updated: 2025-06-30
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 5cfd17535a33ef6cbc6dcb91eaa49803b6d1e3f9
-  completed_at: '2026-06-22T13:19:02+03:00'
+  completed_at: 2026-06-22T13:19:02+03:00
   gap_ids:
   - GAP-KB-008-PROVENANCE
   - GAP-KB-008-SNAPSHOT
@@ -206,14 +206,14 @@ stages:
   - source_id: SRC-KB-009-01
     url: https://elementor.com/help/pagination-for-loop/
     source_type: official_help
-    last_updated: '2025-02-09'
+    last_updated: 2025-02-09
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 66ffe7d5cccf2b18b56919381878d6874b8b744c
-  completed_at: '2026-06-22T14:07:00+03:00'
+  completed_at: 2026-06-22T14:07:00+03:00
   gap_ids:
   - GAP-KB-009-PROVENANCE
   - GAP-KB-009-SNAPSHOT
@@ -229,14 +229,14 @@ stages:
   - source_id: SRC-KB-010-01
     url: https://elementor.com/help/taxonomy-filter/
     source_type: official_help
-    last_updated: '2026-06-04'
+    last_updated: 2026-06-04
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 95657df95445c453d310107715ddc3008baf68bb
-  completed_at: '2026-06-22T15:08:11+03:00'
+  completed_at: 2026-06-22T15:08:11+03:00
   gap_ids:
   - GAP-KB-010-PROVENANCE
   - GAP-KB-010-SNAPSHOT
@@ -252,14 +252,14 @@ stages:
   - source_id: SRC-KB-011-01
     url: https://elementor.com/help/loop-carousel/
     source_type: official_help
-    last_updated: '2024-01-14'
+    last_updated: 2024-01-14
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: c8c747d5199ee8b569e895422eacf7304957f43a
-  completed_at: '2026-06-23T11:28:43+03:00'
+  completed_at: 2026-06-23T11:28:43+03:00
   gap_ids:
   - GAP-KB-011-PROVENANCE
   - GAP-KB-011-SNAPSHOT
@@ -275,14 +275,14 @@ stages:
   - source_id: SRC-KB-012-01
     url: https://elementor.com/help/how-do-i-add-an-alternate-template-in-a-loop-grid/
     source_type: official_help
-    last_updated: '2025-09-02'
+    last_updated: 2025-09-02
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: bb55ad8c288a1d6775818285ebb06731358cc88c
-  completed_at: '2026-06-23T12:00:00+03:00'
+  completed_at: 2026-06-23T12:00:00+03:00
   gap_ids:
   - GAP-KB-012-PROVENANCE
   - GAP-KB-012-SNAPSHOT
@@ -298,14 +298,14 @@ stages:
   - source_id: SRC-KB-013-01
     url: https://elementor.com/help/customize-layout-loop/
     source_type: official_help
-    last_updated: '2025-09-02'
+    last_updated: 2025-09-02
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 82e837133913be600b89cef604d59f0919ea6093
-  completed_at: '2026-06-23T13:28:00+03:00'
+  completed_at: 2026-06-23T13:28:00+03:00
   gap_ids:
   - GAP-KB-013-PROVENANCE
   - GAP-KB-013-SNAPSHOT
@@ -321,14 +321,14 @@ stages:
   - source_id: SRC-KB-014-01
     url: https://elementor.com/help/add-an-off-canvas-widget-to-a-loop-grid/
     source_type: official_help
-    last_updated: '2026-06-08'
+    last_updated: 2026-06-08
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 3f00341d87342073e78e46d6fc42d7f6b705de32
-  completed_at: '2026-06-23T12:58:00+03:00'
+  completed_at: 2026-06-23T12:58:00+03:00
   gap_ids:
   - GAP-KB-014-PROVENANCE
   - GAP-KB-014-SNAPSHOT
@@ -344,20 +344,20 @@ stages:
   - source_id: SRC-KB-015-01
     url: https://elementor.com/help/search-widget/
     source_type: official_help
-    last_updated: '2026-06-19'
+    last_updated: 2026-06-19
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   - source_id: SRC-KB-015-02
     url: https://elementor.com/help/customize-the-search-results-archive/
     source_type: official_help
-    last_updated: '2024-11-11'
+    last_updated: 2024-11-11
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: cb483c967eccfa12636f214f7582830b97ba9806
-  completed_at: '2026-06-23T14:00:00+03:00'
+  completed_at: 2026-06-23T14:00:00+03:00
   gap_ids:
   - GAP-KB-015-PROVENANCE
   - GAP-KB-015-SNAPSHOT
@@ -413,14 +413,14 @@ stages:
   - source_id: SRC-KB-018-01
     url: https://elementor.com/help/image-element/
     source_type: official_help
-    last_updated: '2026-05-26'
+    last_updated: 2026-05-26
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 50923b62a319c99849f5fcf1663341c935d5fc2c
-  completed_at: '2026-06-22T23:08:43+03:00'
+  completed_at: 2026-06-22T23:08:43+03:00
   gap_ids:
   - GAP-KB-018-PROVENANCE
   - GAP-KB-018-SNAPSHOT
@@ -436,14 +436,14 @@ stages:
   - source_id: SRC-KB-019-01
     url: https://elementor.com/help/paragraph-element/
     source_type: official_help
-    last_updated: '2025-08-28'
+    last_updated: 2025-08-28
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 44a8ebeef9dbb3dbbf0496c52e77fae0b8f2ef73
-  completed_at: '2026-06-23T00:06:13+03:00'
+  completed_at: 2026-06-23T00:06:13+03:00
   gap_ids:
   - GAP-KB-019-PROVENANCE
   - GAP-KB-019-SNAPSHOT
@@ -459,14 +459,14 @@ stages:
   - source_id: SRC-KB-020-01
     url: https://elementor.com/help/svg-element/
     source_type: official_help
-    last_updated: '2025-07-01'
+    last_updated: 2025-07-01
     snapshot_status: missing_legacy_snapshot
     content_fingerprint: null
   evidence_status: completed_with_gaps
   review_status: unreviewed
   provenance_status: document_level_legacy
   content_commit_sha: 05cc163db725b1f79f2664bd6eede28a736a23bf
-  completed_at: '2026-06-23T01:04:00+03:00'
+  completed_at: 2026-06-23T01:04:00+03:00
   gap_ids:
   - GAP-KB-020-PROVENANCE
   - GAP-KB-020-SNAPSHOT

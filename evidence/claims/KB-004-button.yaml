@@ -1,166 +1,196 @@
 claims:
-  - claim_id: KB-004-C001
-    stage_id: KB-004
-    claim_text: The official source page title is Button element.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1149-1151
-        locator_version: 1
-        snapshot_sha256: &snapshot 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C002
-    stage_id: KB-004
-    claim_text: The official source reports Last Update as July 1, 2025.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page line 1151
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C003
-    stage_id: KB-004
-    claim_text: The official article is for Editor v4 users and links Editor v3 users to the separate Button Widget article.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1153-1155
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C004
-    stage_id: KB-004
-    claim_text: Buttons are described as guiding user actions, providing calls to action, and adding interactive visual buttons.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1175-1178
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C005
-    stage_id: KB-004
-    claim_text: The main official example links a hero-section button to a registration page.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1178-1181
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C006
-    stage_id: KB-004
-    claim_text: Additional official use cases include portfolio links, event or webinar banners, and before-after transformations.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1185-1189
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C007
-    stage_id: KB-004
-    claim_text: The official example uses Button text Get Started and adds a Link URL.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1192-1201
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C008
-    stage_id: KB-004
-    claim_text: The official example sets Width to 200 and Height to 50.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1202-1208
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C009
-    stage_id: KB-004
-    claim_text: The official example uses Font Family Sora, Font Weight 600, and Font Size 16.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1213-1217
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C010
-    stage_id: KB-004
-    claim_text: The official example sets background opacity to 0 percent, border radius to 50, border width to 2, and border color to #FFFFFF.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1218-1242
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C011
-    stage_id: KB-004
-    claim_text: The General tab documents Button text, Link, Open in a new tab, and ID.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1258-1278
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C012
-    stage_id: KB-004
-    claim_text: The Style tab refers to separate articles for Layout, Spacing, Size, Position, Typography, Background, Border, and Effects.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1279-1296
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C013
-    stage_id: KB-004
-    claim_text: Hover is documented as a state that can change the element appearance.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1242-1248
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C014
-    stage_id: KB-004
-    claim_text: The official hover example changes Hex color to #FFFFFF and opacity to 100 percent, making the button white on mouse hover.
-    evidence_state: documented
-    source_locators:
-      - source_id: SRC-KB-004-01
-        locator: official page lines 1249-1252
-        locator_version: 1
-        snapshot_sha256: *snapshot
-    derived_from: []
-    verification_status: machine_validated
-  - claim_id: KB-004-C015
-    stage_id: KB-004
-    claim_text: The documented numeric and design values are example values, not documented product defaults.
-    evidence_state: derived
-    source_locators: []
-    derived_from:
-      - KB-004-C007
-      - KB-004-C008
-      - KB-004-C009
-      - KB-004-C010
-    verification_status: machine_validated
+- claim_id: KB-004-C001
+  stage_id: KB-004
+  claim_text: The official source page title is Button element.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1149-1151
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: db794d796ec6aaf23655ad95171ca85f21c26de91b965ecc2902269ceb310784
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C002
+  stage_id: KB-004
+  claim_text: The official source reports Last Update as July 1, 2025.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page line 1151
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: f4013c411b54cd0d2a9b4733cdbeca8a2be5873bfb6f1fda39895d2eec3807d9
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C003
+  stage_id: KB-004
+  claim_text: The official article is for Editor v4 users and links Editor v3 users to the separate Button Widget article.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1153-1155
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 8d0517b55efc4a6b9daadb6b4f6c045e229b90b005aa7a200c043b6f7abfd9ca
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C004
+  stage_id: KB-004
+  claim_text: Buttons are described as guiding user actions, providing calls to action, and adding interactive visual buttons.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1175-1178
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: d9e1c5c2fa18bd590d13654c4d03a447cf7d5bb17ef32a765b7d0dcea88514c2
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C005
+  stage_id: KB-004
+  claim_text: The main official example links a hero-section button to a registration page.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1178-1181
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 32abd7fa11a6ce14198ce516f1a70d6a6b4bf74b2dc80273cad49f53e910b392
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C006
+  stage_id: KB-004
+  claim_text: Additional official use cases include portfolio links, event or webinar banners, and before-after transformations.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1185-1189
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: d74db16dc123c968aa1d36af9f2786eedbf2f53c23bacdca5e4579b787c34f1e
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C007
+  stage_id: KB-004
+  claim_text: The official example uses Button text Get Started and adds a Link URL.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1192-1201
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 10970dad4e3cf37c6810ab6668a14f173b139b624a2a40b53616e6a72a8e554e
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C008
+  stage_id: KB-004
+  claim_text: The official example sets Width to 200 and Height to 50.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1202-1208
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: c4e25adee4f6acbc1022e6e79e45d4abe449dd2f35f6469dc855b5e9c8486c19
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C009
+  stage_id: KB-004
+  claim_text: The official example uses Font Family Sora, Font Weight 600, and Font Size 16.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1213-1217
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 84875899a7a8f6570f5d43514e5ab1d55905d3d50d095e06f6616deada6613d0
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C010
+  stage_id: KB-004
+  claim_text: The official example sets background opacity to 0 percent, border radius to 50, border width to 2, and border
+    color to
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1218-1242
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 6c005eb47e1ed637c544ef7040d5e1934b21293765cd9dcfc1ca7d99129093b4
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C011
+  stage_id: KB-004
+  claim_text: The General tab documents Button text, Link, Open in a new tab, and ID.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1258-1278
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 7e4a2325e03fc6c345d1e8252a2f48bc6fe8bb1d00f0fdbdb585f4286c3c06d3
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C012
+  stage_id: KB-004
+  claim_text: The Style tab refers to separate articles for Layout, Spacing, Size, Position, Typography, Background, Border,
+    and Effects.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1279-1296
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: f17fd6e975d66cabb397e4d6576d200edd291ae2f4444226376a9ee77f47fe45
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C013
+  stage_id: KB-004
+  claim_text: Hover is documented as a state that can change the element appearance.
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1242-1248
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: a65d36ed6788167b07526aa1c66603ba5434fbec8892fc67330c216e70350954
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C014
+  stage_id: KB-004
+  claim_text: The official hover example changes Hex color to
+  evidence_state: documented
+  source_locators:
+  - source_id: SRC-KB-004-01
+    locator: official page lines 1249-1252
+    locator_version: 2
+    snapshot_sha256: 840ae5e1f11b1d621da89ee772cbaa9ca473ac78f8f9e6216aa846f4d9e5fece
+    normalized_document_sha256: a1d281afe69b6125aeb66b403a81591cc541e154b76a6d19fb9f623da29bea7b
+    locator_fingerprint: 4ee7d556b2f26dfde8b8d8725a12dc7d6bb890a04c69cea4d179a48ee6d05d78
+  derived_from: []
+  verification_status: machine_validated
+- claim_id: KB-004-C015
+  stage_id: KB-004
+  claim_text: The documented numeric and design values are example values, not documented product defaults.
+  evidence_state: derived
+  source_locators: []
+  derived_from:
+  - KB-004-C007
+  - KB-004-C008
+  - KB-004-C009
+  - KB-004-C010
+  verification_status: machine_validated
