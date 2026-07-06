@@ -12,7 +12,7 @@ storage_status: committed
 language: fa
 stage_id: KB-005
 review_status: unreviewed
-provenance_status: claim_level_draft
+provenance_status: claim_level
 ---
 
 # Heading element در Elementor Editor V4
@@ -78,82 +78,9 @@ General tab شامل بخش‌های Content و Settings است. در این ص�
 
 صفحه Heading element برای جزئیات Style options به مقاله‌های جداگانه `Layout`، `Spacing`، `Size`، `Position`، `Typography`، `Background`، `Border` و `Effects` ارجاع می‌دهد. این ارجاع‌ها وجود دسته‌های Style را نشان می‌دهند، اما جزئیات هر دسته در همین سند claim نمی‌شوند.
 
-## Claim Records پیش‌نویس
+## شکاف‌های باقی‌مانده
 
-```yaml
-- claim_id: KB-005-C001
-  state: documented
-  locator: official page lines 1148-1154
-  claim: صفحه رسمی عنوان Heading element، تاریخ Last Update و دامنه Editor v4 را اعلام می‌کند و کاربران Editor v3 را به Heading widget جداگانه ارجاع می‌دهد.
-- claim_id: KB-005-C002
-  state: documented
-  locator: official page lines 1155-1173
-  claim: افزودن element از طریق + و click/drag به canvas انجام می‌شود و حذف با انتخاب element و فشردن Delete توضیح داده شده است.
-- claim_id: KB-005-C003
-  state: documented
-  locator: official page lines 1174-1178
-  claim: Headingها برای جلب توجه به بخش‌های مهم سایت و سفارشی‌سازی headingهای صفحه بدون کدنویسی معرفی شده‌اند.
-- claim_id: KB-005-C004
-  state: documented
-  locator: official page lines 1179-1191
-  claim: مثال نانوایی و کاربردهای blog post، testimonial و CTA در منبع رسمی آمده‌اند.
-- claim_id: KB-005-C005
-  state: documented
-  locator: official page lines 1192-1210
-  claim: مراحل General tab شامل Title، Link و HTML Tag است و مثال H2 را حفظ می‌کند.
-- claim_id: KB-005-C006
-  state: documented
-  locator: official page lines 1212-1223
-  claim: Style tab، Layout، Align Self و Typography در مثال رسمی استفاده می‌شوند؛ Align Self گزینه‌های Start، Center، End و Stretch دارد.
-- claim_id: KB-005-C007
-  state: documented
-  locator: official page lines 1224-1252
-  claim: General tab شامل Title، Tag، Link، Open in a new tab و ID است؛ متن Link/Open in a new tab دارای anomaly با عبارت Div Block است.
-- claim_id: KB-005-C008
-  state: documented
-  locator: official page lines 1253-1270
-  claim: Style tab به مقاله‌های جداگانه Layout، Spacing، Size، Position، Typography، Background، Border و Effects ارجاع می‌دهد.
-- claim_id: KB-005-C009
-  state: derived
-  derived_from: [KB-005-C004, KB-005-C005, KB-005-C006]
-  claim: مقادیر H1، H2، Center و سبک typography در منبع به‌عنوان example/context آمده‌اند و default محصول را ثابت نمی‌کنند.
-```
-
-## Image Evidence Inventory
-
-تصاویر رسمی صفحه در این draft فقط discovered هستند. تا وقتی تصویرها با hash و inspection مستقل ثبت نشوند، هیچ observed claim از تصویرها ساخته نمی‌شود.
-
-```yaml
-image_status: discovered_not_inspected
-known_image_contexts:
-  - add/delete element image
-  - example image
-  - heading title input
-  - link URL input
-  - HTML tag field
-  - style tab
-  - layout / align self
-  - typography field
-  - general tab content/settings
-  - style tab options
-```
-
-## insufficient_evidence
-
-این صفحه به‌تنهایی موارد زیر را اثبات نمی‌کند: default واقعی HTML tag، فهرست کامل tagها، hierarchy/accessibility rules، خروجی DOM/CSS، nested link behavior، keyboard focus، screen reader behavior، responsive overrides، inherited values، dynamic tags، variables، global classes، states کامل، نسخه دقیق plugin، تفاوت Free/Pro و runtime browser behavior.
-
-## وضعیت نهایی این draft
-
-```yaml
-status: evidence_draft
-verified_scope: official_article_text_only
-provenance_status: claim_level_draft
-review_status: unreviewed
-peer_reviewed: false
-open_gaps:
-  - GAP-KB-005-PROVENANCE
-  - GAP-KB-005-SNAPSHOT
-  - GAP-KB-005-IMAGE-INSPECTION
-  - GAP-KB-005-RUNTIME-BEHAVIOR
-  - GAP-KB-005-REVIEW
-```
+- Canonical source snapshot و normalized document hash هنوز در مخزن ثبت نشده‌اند.
+- Image inspection برای تصاویر مقاله انجام نشده است.
+- Runtime fixture برای رفتار UI، selectorها، خروجی DOM یا defaultها وجود ندارد.
+- Peer review انجام نشده و نباید به‌صورت خودکار ثبت شود.
