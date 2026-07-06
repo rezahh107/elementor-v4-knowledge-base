@@ -23,14 +23,16 @@ items:
 - work_id: migration-cycle-01:KB-005
   cycle_id: migration-cycle-01
   stage_id: KB-005
-  branch: migration/KB-005-heading
-  pr_number: 9
+  branch: migration/KB-005-heading-v2
+  pr_number: 58
   state: evidence_draft
   source_capture_status: pending
-  attempt: 1
+  attempt: 2
   idempotency_key: migration-cycle-01:KB-005
-  updated_at: 2026-06-23T19:55:00+03:00
+  updated_at: 2026-07-06T15:34:22+03:30
   last_error: null
+  supersedes_prs:
+  - 9
 - work_id: migration-cycle-01:KB-018
   cycle_id: migration-cycle-01
   stage_id: KB-018
