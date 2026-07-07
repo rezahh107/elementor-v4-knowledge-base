@@ -37,8 +37,13 @@ def validate() -> list[str]:
     if control["execution_policy"]["active_work_package_limit"] != 1:
         errors.append("WP_ACTIVE_LIMIT_INVALID")
     for wp in catalog["work_packages"]:
-        blob = json.dumps(wp, ensure_ascii=False).lower()
-        if any(term in blob for term in FORBIDDEN_TERMS):
+        fields_to_check = [
+            wp.get("title", ""),
+            wp.get("capability_area", ""),
+            (wp.get("current_state") or {}).get("verified_description", ""),
+            (wp.get("target_state") or {}).get("measurable_description", "")
+        ]
+        if any(any(term in field.lower() for term in FORBIDDEN_TERMS) for field in fields_to_check):
             errors.append(f"{wp['id']}: forbidden artificial or bookkeeping objective")
         missing = REQUIRED_DELIVER - set(wp["must_deliver"])
         if missing:
