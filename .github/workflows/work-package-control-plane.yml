@@ -35,13 +35,22 @@ jobs:
       - name: Capture current GitHub state
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python tools/github_state_snapshot.py --repository "${{ github.repository }}" --output /tmp/repo-state.json
+        run: python tools/github_state_snapshot.py --repository "${{ github.repository }}" --output "${{ runner.temp }}/repo-state.json"
       - name: Produce deterministic plan
-        run: python tools/work_package_controller.py --repo-state /tmp/repo-state.json --output /tmp/work-package-plan.json
+        run: python tools/work_package_controller.py --repo-state "${{ runner.temp }}/repo-state.json" --output "${{ runner.temp }}/work-package-plan.json"
       - name: Publish plan summary
         shell: bash
         run: |
           echo '## Work Package Control Plane' >> "$GITHUB_STEP_SUMMARY"
           echo '```json' >> "$GITHUB_STEP_SUMMARY"
-          cat /tmp/work-package-plan.json >> "$GITHUB_STEP_SUMMARY"
+          cat "${{ runner.temp }}/work-package-plan.json" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload observed state and plan
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: work-package-plan-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/repo-state.json
+            ${{ runner.temp }}/work-package-plan.json
+          if-no-files-found: error
+          retention-days: 30
