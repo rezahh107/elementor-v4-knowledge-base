@@ -12,7 +12,7 @@ storage_status: committed
 language: fa
 stage_id: KB-005
 review_status: unreviewed
-provenance_status: claim_level
+provenance_status: document_level_legacy
 ---
 
 # Heading element در Elementor Editor V4
