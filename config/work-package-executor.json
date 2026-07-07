@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "policy_id": "elementor-v4-work-package-executor-v1",
+  "enabled": true,
+  "cycle_id": "migration-cycle-02",
+  "schedule_cron": "27 * * * *",
+  "branch_prefix": "automation/wp-",
+  "max_stages_per_pull_request": 1,
+  "merge_method": "merge",
+  "required_workflow": "KB Quality",
+  "targets": {
+    "KB-WP-001": [
+      {"stage_id": "KB-005", "scope": "heading"},
+      {"stage_id": "KB-018", "scope": "image"},
+      {"stage_id": "KB-019", "scope": "paragraph"}
+    ],
+    "KB-WP-002": [
+      {"stage_id": "KB-001", "scope": "widgets-index"},
+      {"stage_id": "KB-002", "scope": "editor-v4-index"},
+      {"stage_id": "KB-003", "scope": "v4-overview"},
+      {"stage_id": "KB-015", "scope": "search"},
+      {"stage_id": "KB-020", "scope": "svg"}
+    ],
+    "KB-WP-003": [
+      {"stage_id": "KB-006", "scope": "loop-grid"},
+      {"stage_id": "KB-007", "scope": "loop-query"},
+      {"stage_id": "KB-008", "scope": "query-configuration"},
+      {"stage_id": "KB-009", "scope": "loop-pagination"},
+      {"stage_id": "KB-010", "scope": "taxonomy-filter"},
+      {"stage_id": "KB-011", "scope": "loop-carousel"},
+      {"stage_id": "KB-012", "scope": "alternate-template"},
+      {"stage_id": "KB-013", "scope": "customize-layout"},
+      {"stage_id": "KB-014", "scope": "off-canvas"}
+    ]
+  }
+}
