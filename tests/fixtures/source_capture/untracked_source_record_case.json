@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "case_id": "SOURCE-CAPTURE-UNTRACKED-001",
+  "status": "confirmed",
+  "observed_behavior": "A new evidence/sources source record exists in the compute workspace but is omitted from source.patch because an unstaged untracked file is invisible to git diff.",
+  "expected_behavior": "The allowlisted capture patch contains both new and modified source records plus manifests/work-items.yaml.",
+  "required_assertions": [
+    "new evidence/sources files are staged before patch generation",
+    "the path allowlist is evaluated from the staged diff",
+    "source.patch is generated from the staged diff against TARGET_HEAD_SHA",
+    "unrelated paths fail closed",
+    "a regression test proves a new source record is present in the patch"
+  ],
+  "affected_workflow": ".github/workflows/capture-source.yml",
+  "verification_state": "unverified_rule"
+}
