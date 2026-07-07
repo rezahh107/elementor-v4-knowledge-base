@@ -50,7 +50,8 @@ def validate() -> list[str]:
             errors.append(f"{wp['id']}: missing deliverables {sorted(missing)}")
         if not wp["current_state"]["verified_description"] or not wp["target_state"]["measurable_description"]:
             errors.append(f"{wp['id']}: missing measurable transition")
-        for version in wp["source_scope"]["applicable_elementor_versions"]:
+        versions = (wp.get("source_scope") or {}).get("applicable_elementor_versions") or []
+        for version in versions:
             if isinstance(version, dict) and version.get("verification_status") == "verified" and not version.get("evidence_refs"):
                 errors.append(f"{wp['id']}: verified version lacks evidence")
             if isinstance(version, str) and version.lower() == "latest":
