@@ -2,14 +2,21 @@
 id: elementor.help.heading-element
 title: Heading element
 source_url: https://elementor.com/help/heading-element/
+canonical_url: https://elementor.com/help/heading-element/
 source_type: official_help
 version_scope: editor_v4
 last_updated: 2025-08-28
-researched_at: 2026-06-23T10:47:13+03:00
+researched_at: 2026-07-07T16:59:47+03:00
 evidence_status: completed_with_gaps
 storage_status: committed
 language: fa
 stage_id: KB-005
+review_status: unreviewed
+provenance_status: document_level_legacy
+claim_record: evidence/claims/KB-005-heading.yaml
+source_record: evidence/sources/SRC-KB-005-01.yaml
+image_evidence: evidence/images/KB-005-heading.yaml
+gap_record: evidence/gaps/KB-005-heading.yaml
 ---
 
 # جزوه جامع Heading element در Elementor Editor V4
@@ -17,7 +24,8 @@ stage_id: KB-005
 ## مشخصات منبع
 
 - مقاله رسمی: `Heading element`
-- آخرین به‌روزرسانی: `August 28, 2025`
+- آخرین به‌روزرسانی درج‌شده در متن صفحه: `August 28, 2025`
+- HTTP `Last-Modified` در capture برابر `July 5, 2026` است؛ این transport metadata جایگزین تاریخ درج‌شده در متن صفحه یا تاریخ semantic edit محسوب نمی‌شود.
 - دامنه صریح: Editor V4
 - مقاله کاربران V3 را به `Heading widget` جداگانه ارجاع می‌دهد.
 
@@ -109,25 +117,19 @@ Heading برای افزودن و سفارشی‌سازی عنوان‌ها و ت
 
 مقاله می‌گوید بخش Typography برای تنظیم Size و Font type استفاده می‌شود. سایر کنترل‌های Typography در صفحه مستقل قرار دارند.
 
+## documented
+
+Claimهای documented در `evidence/claims/KB-005-heading.yaml` به Source Record و snapshot captured متصل شده‌اند.
+
 ## observed
 
-تصاویر رسمی مقاله موارد زیر را نمایش می‌دهند:
-
-- افزودن Heading؛
-- Title؛
-- Link؛
-- HTML Tag؛
-- Layout و Align Self؛
-- Typography؛
-- General settings و Style categories.
-
-جزئیات Labelها و مقادیر خارج از متن بدون مشاهده مستقیم و کنترل‌شده Fact محسوب نمی‌شود.
+هیچ observed claim در این مرحله ایجاد نشده است. URL تصاویر فقط discovered است و retrieval، hash و inspection آن‌ها انجام نشده است.
 
 ## derived
 
 - انتخاب Tag یک تصمیم معنایی محتواست، اما مقاله فقط اثر کلی بر فهم موتور جستجو را مطرح می‌کند و ترتیب Headingها یا WCAG را مستند نمی‌کند.
-- Heading از Style system مشترک V4 استفاده می‌کند.
-- Align Self به رابطه Heading با Parent container وابسته است؛ نوع دقیق Parent و CSS output در مقاله اثبات نشده است.
+- مقادیر `H1` و `H2` در Contextهای مثال آمده‌اند و Default محصول را ثابت نمی‌کنند.
+- ناسازگاری `Div Block` به‌عنوان anomaly منبع حفظ می‌شود و رفتار Heading یا Div Block را ثابت نمی‌کند.
 
 ## insufficient_evidence
 
@@ -145,7 +147,8 @@ Heading برای افزودن و سفارشی‌سازی عنوان‌ها و ت
 - همه کنترل‌های Typography؛
 - Free/Pro prerequisite؛
 - نسخه دقیق افزونه؛
-- Runtime DOM/CSS و Browser behavior.
+- Runtime DOM/CSS و Browser behavior؛
+- inspection تصاویر رسمی.
 
 ## تعارض‌ها و خطاهای متن منبع
 
@@ -157,12 +160,16 @@ Heading برای افزودن و سفارشی‌سازی عنوان‌ها و ت
   text: "Visitors clicking the Div Block..."
   expected_subject: Heading
   action: preserve_and_do_not_propagate
+- type: metadata_category_difference
+  page_reported_last_update: 2025-08-28
+  http_last_modified: 2026-07-05
+  action: preserve_separately
 ```
 
 ## وضعیت نهایی
 
 ```yaml
 status: completed_with_gaps
-verified_scope: official_article_text_and_listed_images
-missing_evidence: [defaults, complete_tag_list, responsive, dynamic_data, accessibility, runtime_markup]
+verified_scope: captured_official_article_text
+missing_evidence: [image_inspection, defaults, complete_tag_list, responsive, dynamic_data, accessibility, runtime_markup, peer_review]
 ```
