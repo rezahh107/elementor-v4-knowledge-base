@@ -23,9 +23,8 @@ jobs:
         with:
           python-version: "3.13"
       - run: python tools/work_package_validate.py
-      - name: Generate controller snapshot input
-        run: |
-          cat > /tmp/repo-state.json <<'JSON'
-          {"pull_requests":[],"workflow_runs":[]}
-          JSON
+      - name: Capture current GitHub state
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/github_state_snapshot.py --repository ${{ github.repository }} --output /tmp/repo-state.json
       - run: python tools/work_package_controller.py --repo-state /tmp/repo-state.json
