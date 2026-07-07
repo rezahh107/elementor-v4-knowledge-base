@@ -11,8 +11,8 @@ evidence_status: completed_with_gaps
 storage_status: committed
 language: fa
 stage_id: KB-005
-review_status: unreviewed
-provenance_status: document_level_legacy
+review_status: machine_validated
+provenance_status: claim_level
 claim_record: evidence/claims/KB-005-heading.yaml
 source_record: evidence/sources/SRC-KB-005-01.yaml
 image_evidence: evidence/images/KB-005-heading.yaml

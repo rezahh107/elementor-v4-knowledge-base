@@ -1,6 +1,6 @@
 # GENERATED FILE. Edit manifests/stages.yaml.
 manifest_version: 4
-generated_from_sha256: 669e1d9a93cca8a5a2430c5840c0f7237b10bbee28526166cad011e5a61caf12
+generated_from_sha256: 0e96009f92bf1ffd24a0bb1531c4c7f68ee8dd36dc6f4938f14e92450ca2ca4b
 sources:
 - source_id: SRC-KB-001-01
   stage_id: KB-001
@@ -57,11 +57,11 @@ sources:
   url: https://elementor.com/help/heading-element/
   source_type: official_help
   last_updated: 2025-08-28
-  snapshot_status: missing_legacy_snapshot
-  content_fingerprint: null
+  snapshot_status: captured
+  content_fingerprint: 28abbc6c504488a86c8b1fd5b3b05c0633a8431353990a71da06b734d84eb15f
   output_path: docs/elements/v4/heading.md
   stage_status: completed_with_gaps
-  content_commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac
+  content_commit_sha: 0c23404ae313d7a739d3b5e2028f55cdb2ec759b
 - source_id: SRC-KB-006-01
   stage_id: KB-006
   knowledge_id: elementor.help.loop-grid

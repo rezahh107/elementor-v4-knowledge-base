@@ -25,14 +25,21 @@ items:
   stage_id: KB-005
   branch: migration/KB-005-heading
   pr_number: 64
-  state: evidence_draft
+  state: machine_validated
   source_capture_status: captured
   attempt: 1
   idempotency_key: migration-cycle-01:KB-005
-  updated_at: 2026-07-07T16:59:47+03:00
+  updated_at: 2026-07-07T17:11:41+03:00
   last_error: null
-  expected_head_sha: 7e990e21f8d957e2fc8498c8e25e8bcd389ac5f2
-  github_state_observed_at: 2026-07-07T16:59:47+03:00
+  expected_head_sha: 0c23404ae313d7a739d3b5e2028f55cdb2ec759b
+  github_state_observed_at: 2026-07-07T17:11:41+03:00
+  required_check_runs:
+    head_sha: 0c23404ae313d7a739d3b5e2028f55cdb2ec759b
+    python_3_11: pending
+    python_3_13: pending
+    strict_validation: pending
+    generated_artifacts: pending
+    pytest: pending
 - work_id: migration-cycle-01:KB-018
   cycle_id: migration-cycle-01
   stage_id: KB-018
