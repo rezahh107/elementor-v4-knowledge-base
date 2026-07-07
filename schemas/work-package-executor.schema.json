@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:edis:elementor-v4-kb:schema:work-package-executor:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "enabled",
+    "cycle_id",
+    "schedule_cron",
+    "branch_prefix",
+    "max_stages_per_pull_request",
+    "merge_method",
+    "required_workflow",
+    "targets"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "policy_id": {"const": "elementor-v4-work-package-executor-v1"},
+    "enabled": {"const": true},
+    "cycle_id": {
+      "type": "string",
+      "pattern": "^migration-cycle-[0-9]{2}$"
+    },
+    "schedule_cron": {"const": "27 * * * *"},
+    "branch_prefix": {"const": "automation/wp-"},
+    "max_stages_per_pull_request": {"const": 1},
+    "merge_method": {"enum": ["merge", "squash", "rebase"]},
+    "required_workflow": {"const": "KB Quality"},
+    "targets": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^KB-WP-[0-9]{3}$"},
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stage_id", "scope"],
+          "properties": {
+            "stage_id": {
+              "type": "string",
+              "pattern": "^KB-[0-9]{3}$"
+            },
+            "scope": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          }
+        }
+      }
+    }
+  }
+}
