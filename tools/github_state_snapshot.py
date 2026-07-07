@@ -9,8 +9,22 @@ def main():
     req.add_header('Authorization', f'Bearer {token}')
     req.add_header('Accept','application/vnd.github+json')
     with urllib.request.urlopen(req) as r:
-        prs=json.load(r)
-    data={'pull_requests':[{'number':p.get('number'),'state':p.get('state'),'draft':p.get('draft'),'head_sha':p.get('head',{}).get('sha'),'head_ref':p.get('head',{}).get('ref')} for p in prs], 'workflow_runs':[]}
+        prs = json.load(r)
+    if not isinstance(prs, list):
+        raise ValueError(f"Unexpected API response format: {prs}")
+    data = {
+        'pull_requests': [
+            {
+                'number': p.get('number'),
+                'state': p.get('state'),
+                'draft': p.get('draft'),
+                'head_sha': (p.get('head') or {}).get('sha'),
+                'head_ref': (p.get('head') or {}).get('ref')
+            }
+            for p in prs if isinstance(p, dict)
+        ],
+        'workflow_runs': []
+    }
     with open(args.output,'w',encoding='utf-8') as f:
         json.dump(data,f,indent=2)
 if __name__ == '__main__':
