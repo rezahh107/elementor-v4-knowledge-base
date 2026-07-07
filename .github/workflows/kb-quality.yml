@@ -63,10 +63,6 @@ jobs:
         run: |
           actual_sha="$(git rev-parse HEAD)"
           expected_sha="${{ steps.target.outputs.expected_sha }}"
-          echo "event=${{ github.event_name }}"
-          echo "ref=${{ steps.target.outputs.ref }}"
-          echo "expected_sha=$expected_sha"
-          echo "actual_sha=$actual_sha"
           if [ "$actual_sha" != "$expected_sha" ]; then
             echo "::error::Checked-out SHA $actual_sha does not match expected SHA $expected_sha."
             exit 1
@@ -86,6 +82,8 @@ jobs:
         run: python tools/kb.py generate --check
       - name: Validate Work Items
         run: python tools/work_item_validate.py
+      - name: Validate Work Package control plane
+        run: python tools/work_package_validate.py all
       - name: Validate cross-file evidence contracts
         run: python tools/repository_consistency_validate.py
       - name: Validate rolling queue
