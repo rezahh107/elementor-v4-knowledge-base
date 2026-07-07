@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "canonicalization_version": 1,
+  "catalog_id": "elementor-v4-capability-catalog",
+  "catalog_revision": 1,
+  "policy": {
+    "active_work_package_target": 1,
+    "ready_work_package_target": 3,
+    "refresh_when_ready_below": 2,
+    "max_ready_work_packages": 5,
+    "state_driven_refresh": true,
+    "fixed_ordinal_refresh_forbidden": true,
+    "artificial_work_packages_forbidden": true,
+    "bookkeeping_only_work_forbidden": true
+  },
+  "work_packages": [
+    {
+      "id": "KB-WP-001",
+      "title": "Complete Elementor V4 basic content elements knowledge domain",
+      "capability_area": "elementor_v4_content_elements",
+      "status": "ready",
+      "current_state": {
+        "verified_description": "Heading, Image and Paragraph related knowledge remains split across legacy stage records and incomplete provenance transitions.",
+        "evidence_refs": ["manifests/stages.yaml", "PR-58"]
+      },
+      "target_state": {
+        "measurable_description": "Declared content-element scope has normalized knowledge entries, provenance records, version scope, limitations, examples where applicable, validation and coverage mapping.",
+        "excluded_claims": ["runtime behavior without fixtures", "unsupported Elementor defaults"]
+      },
+      "business_value": "Creates a reusable verified foundation for common Elementor V4 elements.",
+      "source_scope": {
+        "preferred_source_types": ["official_documentation", "official_developer_documentation"],
+        "applicable_elementor_versions": ["unknown_until_verified"],
+        "freshness_requirements": ["record retrieval context when source is actually observed"]
+      },
+      "must_deliver": ["source_inventory", "normalized_knowledge_entries", "version_scope", "provenance_metadata", "limitations_and_uncertainty", "examples_when_applicable", "validator_integration", "CI_integration", "truthful_documentation"],
+      "must_preserve": ["no_invented_sources", "no_unverified_official_claims", "no_runtime_claim_without_evidence"],
+      "definition_of_done": ["measurable_target_state_reached", "material_facts_traceable", "validators_pass", "negative_fixtures_pass", "exact_head_ci_passes"],
+      "split_policy": {"preserve_work_package_id": true, "split_by_implementation_layer_only": true}
+    },
+    {
+      "id": "KB-WP-002",
+      "title": "Migrate legacy knowledge records to provenance controlled state",
+      "capability_area": "source_provenance_and_freshness",
+      "status": "ready",
+      "current_state": {
+        "verified_description": "Multiple legacy knowledge records use document-level provenance and missing snapshot states.",
+        "evidence_refs": ["manifests/stages.yaml", "manifests/sources.yaml"]
+      },
+      "target_state": {
+        "measurable_description": "Existing declared domains have attributable source records, verification states and visible uncertainty boundaries.",
+        "excluded_claims": ["permanent latest claims", "fabricated snapshots"]
+      },
+      "business_value": "Improves trust and prevents operational metadata becoming factual evidence.",
+      "source_scope": {
+        "preferred_source_types": ["official_documentation", "official_release_notes"],
+        "applicable_elementor_versions": ["unknown_until_verified"],
+        "freshness_requirements": ["actual retrieval dates only"]
+      },
+      "must_deliver": ["source_inventory", "normalized_knowledge_entries", "version_scope", "provenance_metadata", "limitations_and_uncertainty", "validator_integration", "CI_integration"],
+      "must_preserve": ["no_invented_sources", "no_unverified_version_claims", "conflicts_visible"],
+      "definition_of_done": ["all scoped records validated", "negative fixtures reject invalid provenance", "main verification passes"],
+      "split_policy": {"preserve_work_package_id": true, "split_by_implementation_layer_only": true}
+    },
+    {
+      "id": "KB-WP-003",
+      "title": "Complete Elementor V4 Loop Grid knowledge family",
+      "capability_area": "elementor_v4_loop_domain",
+      "status": "ready",
+      "current_state": {
+        "verified_description": "Loop related entries exist as separate legacy knowledge stages requiring capability-level completion.",
+        "evidence_refs": ["manifests/stages.yaml"]
+      },
+      "target_state": {
+        "measurable_description": "Loop Grid scoped knowledge contains normalized concepts, sources, limitations, examples and validation contracts.",
+        "excluded_claims": ["unsupported runtime performance claims", "unverified compatibility claims"]
+      },
+      "business_value": "Completes a coherent Elementor V4 feature family instead of isolated articles.",
+      "source_scope": {
+        "preferred_source_types": ["official_documentation", "official_developer_documentation"],
+        "applicable_elementor_versions": ["unknown_until_verified"],
+        "freshness_requirements": ["record source scope explicitly"]
+      },
+      "must_deliver": ["source_inventory", "normalized_knowledge_entries", "version_scope", "provenance_metadata", "limitations_and_uncertainty", "examples_when_applicable", "validator_integration", "CI_integration"],
+      "must_preserve": ["no_invented_sources", "no_large_copyrighted_copy", "no_unverified_behavior"],
+      "definition_of_done": ["feature-family transition measured", "fixtures and validators pass", "exact-head CI passes"],
+      "split_policy": {"preserve_work_package_id": true, "split_by_implementation_layer_only": true}
+    }
+  ]
+}
