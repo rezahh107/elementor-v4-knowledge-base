@@ -1,0 +1,10 @@
+images:
+- image_id: IMG-KB-005-001
+  stage_id: KB-005
+  source_id: SRC-KB-005-01
+  url: https://elementor.com/help/wp-content/uploads/2025/06/Style-tab-587x1024.png
+  retrieval_status: discovered
+  inspection_status: not_inspected
+  sha256: null
+  claims_supported: []
+  notes: []
