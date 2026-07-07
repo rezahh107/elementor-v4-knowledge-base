@@ -1,0 +1,8 @@
+schema_version: 0
+source_id: SRC-KB-005-01
+stage_id: KB-005
+evidence_state: insufficient_evidence
+status: placeholder_pending_trusted_capture
+notes:
+- This placeholder is not source evidence.
+- Capture Source Evidence must replace this file before validation or merge.
