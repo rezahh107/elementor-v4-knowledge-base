@@ -1,1 +1,246 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["schema_version","canonicalization_version","catalog_id","catalog_revision","policy","work_packages"],"properties":{"schema_version":{"const":1},"canonicalization_version":{"const":1},"catalog_id":{"type":"string","minLength":3},"catalog_revision":{"type":"integer","minimum":1},"policy":{"type":"object"},"work_packages":{"type":"array","minItems":1,"items":{"type":"object","additionalProperties":false,"required":["id","title","capability_area","status","current_state","target_state","business_value","source_scope","must_deliver","must_preserve","definition_of_done","split_policy"],"properties":{"id":{"type":"string","pattern":"^KB-WP-[0-9]{3}$"},"title":{"type":"string","minLength":10},"capability_area":{"type":"string","minLength":3},"status":{"enum":["active","ready","blocked","completed","superseded"]},"current_state":{"type":"object","required":["verified_description","evidence_refs"],"properties":{"verified_description":{"type":"string","minLength":20},"evidence_refs":{"type":"array","minItems":1}}},"target_state":{"type":"object","required":["measurable_description","excluded_claims"],"properties":{"measurable_description":{"type":"string","minLength":20},"excluded_claims":{"type":"array"}}},"business_value":{"type":"string","minLength":10},"source_scope":{"type":"object","required":["preferred_source_types","applicable_elementor_versions","freshness_requirements"]},"must_deliver":{"type":"array","minItems":7,"uniqueItems":true},"must_preserve":{"type":"array","minItems":3,"uniqueItems":true},"definition_of_done":{"type":"array","minItems":3,"uniqueItems":true},"split_policy":{"type":"object","required":["preserve_work_package_id","split_by_implementation_layer_only"]}}}}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:edis:elementor-v4-kb:schema:work-package-catalog:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canonicalization_version",
+    "catalog_id",
+    "catalog_revision",
+    "policy",
+    "work_packages"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "canonicalization_version": {"const": 1},
+    "catalog_id": {"type": "string", "minLength": 3},
+    "catalog_revision": {"type": "integer", "minimum": 1},
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_work_package_target",
+        "ready_work_package_target",
+        "refresh_when_ready_below",
+        "max_ready_work_packages",
+        "state_driven_refresh",
+        "fixed_ordinal_refresh_forbidden",
+        "artificial_work_packages_forbidden",
+        "bookkeeping_only_work_forbidden"
+      ],
+      "properties": {
+        "active_work_package_target": {"const": 1},
+        "ready_work_package_target": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "refresh_when_ready_below": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_ready_work_packages": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state_driven_refresh": {"const": true},
+        "fixed_ordinal_refresh_forbidden": {"const": true},
+        "artificial_work_packages_forbidden": {"const": true},
+        "bookkeeping_only_work_forbidden": {"const": true}
+      }
+    },
+    "work_packages": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/work_package"}
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_array": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/non_empty_string"},
+      "uniqueItems": true
+    },
+    "version_scope": {
+      "oneOf": [
+        {"const": "unknown_until_verified"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "verification_status",
+            "evidence_refs"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "not": {"const": "latest"}
+            },
+            "verification_status": {
+              "enum": [
+                "verified",
+                "partially_verified",
+                "version_ambiguous",
+                "conflicting_sources",
+                "official_source_missing",
+                "live_verification_required",
+                "blocked_external_source",
+                "deprecated_or_historical"
+              ]
+            },
+            "evidence_refs": {
+              "$ref": "#/$defs/string_array"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "verification_status": {"const": "verified"}
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence_refs": {"minItems": 1}
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "work_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "capability_area",
+        "status",
+        "current_state",
+        "target_state",
+        "business_value",
+        "source_scope",
+        "must_deliver",
+        "must_preserve",
+        "definition_of_done",
+        "split_policy"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^KB-WP-[0-9]{3}$"
+        },
+        "title": {"type": "string", "minLength": 10},
+        "capability_area": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "ready",
+            "blocked",
+            "completed",
+            "superseded"
+          ]
+        },
+        "current_state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verified_description",
+            "evidence_refs"
+          ],
+          "properties": {
+            "verified_description": {
+              "type": "string",
+              "minLength": 20
+            },
+            "evidence_refs": {
+              "$ref": "#/$defs/string_array",
+              "minItems": 1
+            }
+          }
+        },
+        "target_state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "measurable_description",
+            "excluded_claims"
+          ],
+          "properties": {
+            "measurable_description": {
+              "type": "string",
+              "minLength": 20
+            },
+            "excluded_claims": {
+              "$ref": "#/$defs/string_array"
+            }
+          }
+        },
+        "business_value": {
+          "type": "string",
+          "minLength": 10
+        },
+        "source_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "preferred_source_types",
+            "applicable_elementor_versions",
+            "freshness_requirements"
+          ],
+          "properties": {
+            "preferred_source_types": {
+              "$ref": "#/$defs/string_array",
+              "minItems": 1
+            },
+            "applicable_elementor_versions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"$ref": "#/$defs/version_scope"}
+            },
+            "freshness_requirements": {
+              "$ref": "#/$defs/string_array",
+              "minItems": 1
+            }
+          }
+        },
+        "must_deliver": {
+          "$ref": "#/$defs/string_array",
+          "minItems": 7
+        },
+        "must_preserve": {
+          "$ref": "#/$defs/string_array",
+          "minItems": 3
+        },
+        "definition_of_done": {
+          "$ref": "#/$defs/string_array",
+          "minItems": 3
+        },
+        "split_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "preserve_work_package_id",
+            "split_by_implementation_layer_only"
+          ],
+          "properties": {
+            "preserve_work_package_id": {"const": true},
+            "split_by_implementation_layer_only": {"const": true}
+          }
+        }
+      }
+    }
+  }
+}
