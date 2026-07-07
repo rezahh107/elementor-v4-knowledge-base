@@ -39,13 +39,19 @@ jobs:
       - name: Produce deterministic plan
         run: python tools/work_package_controller.py --repo-state "${{ runner.temp }}/repo-state.json" --output "${{ runner.temp }}/work-package-plan.json"
       - name: Publish plan summary
+        if: always()
         shell: bash
         run: |
           echo '## Work Package Control Plane' >> "$GITHUB_STEP_SUMMARY"
-          echo '```json' >> "$GITHUB_STEP_SUMMARY"
-          cat "${{ runner.temp }}/work-package-plan.json" >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f "${{ runner.temp }}/work-package-plan.json" ]]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat "${{ runner.temp }}/work-package-plan.json" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Plan file was not produced.' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Upload observed state and plan
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: work-package-plan-${{ github.run_id }}-${{ github.run_attempt }}
