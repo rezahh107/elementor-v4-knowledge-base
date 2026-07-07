@@ -1,8 +1,55 @@
-schema_version: 0
+schema_version: 3
 source_id: SRC-KB-005-01
 stage_id: KB-005
-evidence_state: insufficient_evidence
-status: placeholder_pending_trusted_capture
+source_type: official_help
+requested_url: https://elementor.com/help/heading-element/
+canonical_url: https://elementor.com/help/heading-element/
+redirect_chain:
+- https://elementor.com/help/heading-element/
+redirect_chain_complete: true
+retrieved_at: 2026-07-07T16:59:47+03:00
+http_status: 200
+content_type: text/html
+charset: utf-8
+content_length: 1624713
+etag: null
+last_modified: Sun, 05 Jul 2026 08:01:40 GMT
+page_title: Heading element | Elementor
+page_title_source: html_title
+reported_last_updated: 2026-07-05
+reported_last_updated_source: http_last_modified
+reported_last_updated_hint: 2025-08-28
+content_sha256: ac85e67561eca878b4ac39cb8626f554fc43617f68bec5edeb405db3976bff31
+response_bytes_sha256: ac85e67561eca878b4ac39cb8626f554fc43617f68bec5edeb405db3976bff31
+normalized_document_sha256: 28abbc6c504488a86c8b1fd5b3b05c0633a8431353990a71da06b734d84eb15f
+parser_version: html-text-v2
+source_locator_version: 2
+capture_id: CAP-a725e46723fdfc9b6f73771358260d610068ea7c35b20bd85b3fed3a09fd2f8e
+snapshot:
+  storage: workflow_artifact
+  artifact_name: source-snapshot-KB-005-28872007798
+  relative_path: source-snapshots/SRC-KB-005-01/ac85e67561eca878b4ac39cb8626f554fc43617f68bec5edeb405db3976bff31.bin
+  run_id: '28872007798'
+  response_bytes_sha256: ac85e67561eca878b4ac39cb8626f554fc43617f68bec5edeb405db3976bff31
+  normalized_document_sha256: 28abbc6c504488a86c8b1fd5b3b05c0633a8431353990a71da06b734d84eb15f
+image_evidence_ids: []
+discovered_image_urls:
+- https://elementor.com/help/wp-content/uploads/2023/10/Menu-widget-button.png
+- https://elementor.com/help/wp-content/uploads/2025/04/4-Set-the-size-2-1024x482.png
+- https://elementor.com/help/wp-content/uploads/2025/05/10-edit-the-font-1.png
+- https://elementor.com/help/wp-content/uploads/2025/05/2-click-the-plus-sign-1.png
+- https://elementor.com/help/wp-content/uploads/2025/05/3-enter-the-link-url-1-1.png
+- https://elementor.com/help/wp-content/uploads/2025/05/4-Leave-as-H2.png
+- https://elementor.com/help/wp-content/uploads/2025/05/5-Click-the-Style-tab-2.png
+- https://elementor.com/help/wp-content/uploads/2025/05/7-center-the-heading-1.png
+- https://elementor.com/help/wp-content/uploads/2025/05/8-open-typography-field-1.png
+- https://elementor.com/help/wp-content/uploads/2025/05/Open-layout-1.png
+- https://elementor.com/help/wp-content/uploads/2025/05/enter-the-heading-title-2.png
+- https://elementor.com/help/wp-content/uploads/2025/06/General-tab-Settings.png
+- https://elementor.com/help/wp-content/uploads/2025/06/General-tab-content.png
+- https://elementor.com/help/wp-content/uploads/2025/06/Style-tab-587x1024.png
 notes:
-- This placeholder is not source evidence.
-- Capture Source Evidence must replace this file before validation or merge.
+- response_bytes_sha256 hashes exact HTTP response bytes
+- normalized_document_sha256 hashes deterministic visible-ish HTML text
+- source_locator_version 2 requires claim locators to bind both snapshot and normalized document fingerprints
+- reported_last_updated_hint is unverified manifest input and is not an observed date
