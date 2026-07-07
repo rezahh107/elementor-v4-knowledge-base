@@ -1,0 +1,33 @@
+schema_version: 1
+gaps:
+- gap_id: GAP-KB-005-IMAGE-INSPECTION
+  stage_id: KB-005
+  title: Image inspection pending
+  status: open
+  severity: medium
+  missing_evidence: Official article images have not been retrieved, hashed, and inspected.
+  affected_conclusion: No observed claim may be made from official images.
+  required_source: Retrieved and inspected official image evidence.
+  blocks:
+  - observed_claims
+- gap_id: GAP-KB-005-RUNTIME-BEHAVIOR
+  stage_id: KB-005
+  title: Runtime behavior not established
+  status: open
+  severity: medium
+  missing_evidence: Runtime markup, CSS output, responsive inheritance, dynamic data, keyboard focus, ARIA behavior, and product defaults are not established.
+  affected_conclusion: Runtime and default-value conclusions remain insufficient evidence.
+  required_source: Accepted official developer documentation or a controlled runtime fixture.
+  blocks:
+  - runtime_claims
+  - default_value_claims
+- gap_id: GAP-KB-005-REVIEW
+  stage_id: KB-005
+  title: Human review pending
+  status: open
+  severity: medium
+  missing_evidence: No human peer review has approved this migrated stage.
+  affected_conclusion: review_status must not be peer_reviewed.
+  required_source: Human review record.
+  blocks:
+  - peer_reviewed_status
