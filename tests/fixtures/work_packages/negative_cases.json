@@ -1,0 +1,9 @@
+{
+  "cases": [
+    {"id":"artificial-work","expect":"rejected","reason":"artificial Work Package"},
+    {"id":"bookkeeping-only","expect":"rejected","reason":"status-only mutation"},
+    {"id":"empty-target-state","expect":"rejected","reason":"no measurable transition"},
+    {"id":"fixed-ordinal-refresh","expect":"rejected","reason":"refresh triggered by task count"},
+    {"id":"unsupported-version-claim","expect":"rejected","reason":"version without evidence"}
+  ]
+}
