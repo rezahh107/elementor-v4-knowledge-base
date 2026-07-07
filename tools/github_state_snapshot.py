@@ -11,6 +11,9 @@ from pathlib import Path
 from typing import Any
 
 API = "https://api.github.com"
+PER_PAGE = 100
+MAX_PAGES = 1000
+
 
 def build_request(repository: str, token: str = "", endpoint: str = "pulls?state=open&per_page=100") -> urllib.request.Request:
     request = urllib.request.Request(f"{API}/repos/{repository}/{endpoint}")
@@ -20,9 +23,47 @@ def build_request(repository: str, token: str = "", endpoint: str = "pulls?state
         request.add_header("Authorization", f"Bearer {token}")
     return request
 
+
 def api_get(repository: str, endpoint: str, token: str) -> Any:
     with urllib.request.urlopen(build_request(repository, token, endpoint), timeout=30) as response:
         return json.load(response)
+
+
+def _paged_endpoint(endpoint: str, page: int) -> str:
+    path, separator, raw_query = endpoint.partition("?")
+    query = [
+        (key, value)
+        for key, value in urllib.parse.parse_qsl(raw_query, keep_blank_values=True)
+        if key not in {"page", "per_page"}
+    ]
+    query.extend((("per_page", str(PER_PAGE)), ("page", str(page))))
+    return f"{path}?{urllib.parse.urlencode(query)}"
+
+
+def api_get_all_list(repository: str, endpoint: str, token: str) -> list[Any]:
+    items: list[Any] = []
+    for page in range(1, MAX_PAGES + 1):
+        payload = api_get(repository, _paged_endpoint(endpoint, page), token)
+        if not isinstance(payload, list):
+            raise ValueError(f"Unexpected paginated response format: {payload!r}")
+        items.extend(payload)
+        if len(payload) < PER_PAGE:
+            return items
+    raise RuntimeError(f"GitHub pagination exceeded {MAX_PAGES} pages for {endpoint}")
+
+
+def api_get_all_workflow_runs(repository: str, endpoint: str, token: str) -> dict[str, Any]:
+    runs: list[Any] = []
+    for page in range(1, MAX_PAGES + 1):
+        payload = api_get(repository, _paged_endpoint(endpoint, page), token)
+        page_runs = payload.get("workflow_runs") if isinstance(payload, dict) else None
+        if not isinstance(page_runs, list):
+            raise ValueError(f"Unexpected workflow response format: {payload!r}")
+        runs.extend(page_runs)
+        if len(page_runs) < PER_PAGE:
+            return {"workflow_runs": runs}
+    raise RuntimeError(f"GitHub workflow pagination exceeded {MAX_PAGES} pages")
+
 
 def normalize_workflow_runs(payload: Any, head_sha: str) -> list[dict[str, Any]]:
     runs = payload.get("workflow_runs") if isinstance(payload, dict) else None
@@ -35,6 +76,7 @@ def normalize_workflow_runs(payload: Any, head_sha: str) -> list[dict[str, Any]]
         if isinstance(run, dict) and run.get("head_sha") == head_sha
     ]
     return sorted(result, key=lambda item: (item.get("name") or "", item.get("id") or 0))
+
 
 def normalize_reviews(payload: Any) -> list[dict[str, Any]]:
     if not isinstance(payload, list):
@@ -53,6 +95,7 @@ def normalize_reviews(payload: Any) -> list[dict[str, Any]]:
         if current is None or (item["submitted_at"] or "") >= (current["submitted_at"] or ""):
             latest[login] = item
     return [latest[key] for key in sorted(latest)]
+
 
 def normalize_pull_requests(payload: Any) -> list[dict[str, Any]]:
     if not isinstance(payload, list):
@@ -75,17 +118,23 @@ def normalize_pull_requests(payload: Any) -> list[dict[str, Any]]:
         })
     return sorted(result, key=lambda item: item.get("number") or 0)
 
+
 def capture(repository: str, token: str) -> dict[str, Any]:
     repo = api_get(repository, "", token)
     default_branch = repo.get("default_branch")
+    if not isinstance(default_branch, str) or not default_branch:
+        raise ValueError("GitHub repository response lacks a default branch")
     branch = api_get(repository, f"branches/{urllib.parse.quote(default_branch, safe='')}", token)
-    pull_requests = normalize_pull_requests(api_get(repository, "pulls?state=open&per_page=100", token))
+    pull_requests = normalize_pull_requests(api_get_all_list(repository, "pulls?state=open", token))
     all_runs: list[dict[str, Any]] = []
     for pr in pull_requests:
         number, head_sha = pr["number"], pr["head_sha"]
-        pr["reviews"] = normalize_reviews(api_get(repository, f"pulls/{number}/reviews?per_page=100", token))
-        query = urllib.parse.urlencode({"head_sha": head_sha, "per_page": 100})
-        pr["workflow_runs"] = normalize_workflow_runs(api_get(repository, f"actions/runs?{query}", token), head_sha)
+        if not isinstance(number, int) or not isinstance(head_sha, str):
+            raise ValueError(f"Open PR lacks stable number or head SHA: {pr!r}")
+        pr["reviews"] = normalize_reviews(api_get_all_list(repository, f"pulls/{number}/reviews", token))
+        query = urllib.parse.urlencode({"head_sha": head_sha})
+        run_payload = api_get_all_workflow_runs(repository, f"actions/runs?{query}", token)
+        pr["workflow_runs"] = normalize_workflow_runs(run_payload, head_sha)
         all_runs.extend(pr["workflow_runs"])
     return {
         "schema_version": 1,
@@ -95,6 +144,7 @@ def capture(repository: str, token: str) -> dict[str, Any]:
         "workflow_runs": sorted(all_runs, key=lambda item: (item.get("name") or "", item.get("id") or 0)),
     }
 
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repository", required=True)
@@ -103,6 +153,7 @@ def main() -> int:
     data = capture(args.repository, os.environ.get("GITHUB_TOKEN", ""))
     args.output.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
