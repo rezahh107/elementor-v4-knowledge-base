@@ -34,7 +34,7 @@ def validate() -> list[str]:
         errors.append("WP_ACTIVE_UNKNOWN")
     if control.get("active_work_package_id") != queue.get("active_work_package_id"):
         errors.append("WP_CONTROL_QUEUE_ACTIVE_DRIFT")
-    if control["execution_policy"]["active_work_package_limit"] != 1:
+    if (control.get("execution_policy") or {}).get("active_work_package_limit") != 1:
         errors.append("WP_ACTIVE_LIMIT_INVALID")
     for wp in catalog["work_packages"]:
         fields_to_check = [
@@ -57,8 +57,11 @@ def validate() -> list[str]:
             if isinstance(version, str) and version.lower() == "latest":
                 errors.append(f"{wp['id']}: permanent latest claim forbidden")
     for wp_id in ready:
-        if wp_id not in packages:
+        wp = packages.get(wp_id)
+        if wp is None:
             errors.append(f"queue references unknown work package {wp_id}")
+        elif wp.get("status") != "ready":
+            errors.append(f"{wp_id}: ready queue references catalog status {wp.get('status')!r}")
     return sorted(set(errors))
 
 
