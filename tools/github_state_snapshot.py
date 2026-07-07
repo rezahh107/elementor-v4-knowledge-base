@@ -1,31 +1,65 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, json, os, urllib.request
 
-def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--repository',required=True); ap.add_argument('--output',required=True); args=ap.parse_args()
-    token=os.environ.get('GITHUB_TOKEN','')
-    req=urllib.request.Request(f"https://api.github.com/repos/{args.repository}/pulls?state=open")
-    req.add_header('Authorization', f'Bearer {token}')
-    req.add_header('Accept','application/vnd.github+json')
-    with urllib.request.urlopen(req) as r:
-        prs = json.load(r)
-    if not isinstance(prs, list):
-        raise ValueError(f"Unexpected API response format: {prs}")
-    data = {
-        'pull_requests': [
+import argparse
+import json
+import os
+import urllib.request
+from typing import Any
+
+
+def build_request(repository: str, token: str = "") -> urllib.request.Request:
+    request = urllib.request.Request(
+        f"https://api.github.com/repos/{repository}/pulls?state=open"
+    )
+    if token:
+        request.add_header("Authorization", f"Bearer {token}")
+    request.add_header("Accept", "application/vnd.github+json")
+    return request
+
+
+def normalize_pull_requests(payload: Any) -> list[dict[str, Any]]:
+    if not isinstance(payload, list):
+        raise ValueError(f"Unexpected API response format: {payload!r}")
+
+    normalized: list[dict[str, Any]] = []
+    for pull_request in payload:
+        if not isinstance(pull_request, dict):
+            continue
+        head = pull_request.get("head") or {}
+        if not isinstance(head, dict):
+            head = {}
+        normalized.append(
             {
-                'number': p.get('number'),
-                'state': p.get('state'),
-                'draft': p.get('draft'),
-                'head_sha': (p.get('head') or {}).get('sha'),
-                'head_ref': (p.get('head') or {}).get('ref')
+                "number": pull_request.get("number"),
+                "state": pull_request.get("state"),
+                "draft": pull_request.get("draft"),
+                "head_sha": head.get("sha"),
+                "head_ref": head.get("ref"),
             }
-            for p in prs if isinstance(p, dict)
-        ],
-        'workflow_runs': []
+        )
+    return normalized
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--repository", required=True)
+    parser.add_argument("--output", required=True)
+    args = parser.parse_args()
+
+    request = build_request(args.repository, os.environ.get("GITHUB_TOKEN", ""))
+    with urllib.request.urlopen(request) as response:
+        payload = json.load(response)
+
+    data = {
+        "pull_requests": normalize_pull_requests(payload),
+        "workflow_runs": [],
     }
-    with open(args.output,'w',encoding='utf-8') as f:
-        json.dump(data,f,indent=2)
-if __name__ == '__main__':
-    main()
+    with open(args.output, "w", encoding="utf-8", newline="\n") as handle:
+        json.dump(data, handle, ensure_ascii=False, indent=2, sort_keys=True)
+        handle.write("\n")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
