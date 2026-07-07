@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "request_id": "KB-WP-001:KB-005:2026-07-07",
+  "status": "proposed",
+  "evidence_state": "insufficient_evidence",
+  "work_package_id": "KB-WP-001",
+  "stage_id": "KB-005",
+  "branch": "migration/KB-005-work-package-001",
+  "observed_main_sha": "fc10ee819f1e93d5ab478f8c26353004234a05f7",
+  "required_pipeline": [
+    "Capture Source Evidence",
+    "Finalize Evidence Stage",
+    "KB Quality"
+  ],
+  "constraints": {
+    "one_stage_per_pull_request": true,
+    "no_direct_main_write": true,
+    "no_peer_review_claim": true,
+    "no_runtime_claim_without_fixture": true,
+    "merge_requires_exact_head": true
+  },
+  "missing_evidence": [
+    "canonical source snapshot",
+    "schema-bound source record",
+    "claim locators",
+    "stage gap record",
+    "exact-head validation"
+  ]
+}
