@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Capture deterministic GitHub state for the Work Package planner."""
+"""Capture deterministic GitHub state for the Work Package planner and lifecycle reconciler."""
 
 from __future__ import annotations
 
 import argparse
 import json
 import os
+import re
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -13,9 +14,11 @@ from pathlib import Path
 from typing import Any
 
 API = "https://api.github.com"
+GRAPHQL = "https://api.github.com/graphql"
 PER_PAGE = 100
 MAX_PAGES = 1000
 DECISIVE_REVIEW_STATES = {"APPROVED", "CHANGES_REQUESTED", "DISMISSED"}
+STAGE_RE = re.compile(r"(KB-[0-9]{3})")
 
 
 def build_request(
@@ -38,6 +41,20 @@ def api_get(repository: str, endpoint: str, token: str) -> Any:
     request = build_request(repository, token, endpoint)
     with urllib.request.urlopen(request, timeout=30) as response:
         return json.load(response)
+
+
+def graphql_request(token: str, query: str, variables: dict[str, Any]) -> Any:
+    body = json.dumps({"query": query, "variables": variables}, sort_keys=True, allow_nan=False).encode("utf-8")
+    request = urllib.request.Request(GRAPHQL, data=body, method="POST")
+    request.add_header("Accept", "application/vnd.github+json")
+    request.add_header("Content-Type", "application/json")
+    if token:
+        request.add_header("Authorization", f"Bearer {token}")
+    with urllib.request.urlopen(request, timeout=30) as response:
+        payload = json.load(response)
+    if payload.get("errors"):
+        raise RuntimeError(f"GitHub GraphQL errors: {payload['errors']!r}")
+    return payload.get("data")
 
 
 def _paged_endpoint(endpoint: str, page: int) -> str:
@@ -110,6 +127,15 @@ def api_get_all_workflow_runs(
     raise RuntimeError(
         f"GitHub workflow pagination exceeded {MAX_PAGES} pages"
     )
+
+
+def infer_stage(*values: Any) -> str | None:
+    for value in values:
+        if isinstance(value, str):
+            match = STAGE_RE.search(value)
+            if match:
+                return match.group(1)
+    return None
 
 
 def normalize_workflow_runs(
@@ -188,6 +214,92 @@ def normalize_reviews(payload: Any) -> list[dict[str, Any]]:
     return [latest[key] for key in sorted(latest)]
 
 
+def normalize_review_threads(repository: str, number: int, token: str) -> list[dict[str, Any]]:
+    owner, name = repository.split("/", 1)
+    query = """
+    query($owner: String!, $name: String!, $number: Int!, $after: String) {
+      repository(owner: $owner, name: $name) {
+        pullRequest(number: $number) {
+          reviewThreads(first: 100, after: $after) {
+            nodes {
+              id
+              isResolved
+              isOutdated
+              path
+              line
+              startLine
+              comments(first: 100) {
+                nodes {
+                  id
+                  body
+                  createdAt
+                  author { login }
+                  path
+                  line
+                  commit { oid }
+                }
+              }
+            }
+            pageInfo { hasNextPage endCursor }
+          }
+        }
+      }
+    }
+    """
+    after: str | None = None
+    threads: list[dict[str, Any]] = []
+    for _page in range(MAX_PAGES):
+        data = graphql_request(token, query, {"owner": owner, "name": name, "number": number, "after": after})
+        block = data.get("repository", {}).get("pullRequest", {}).get("reviewThreads")
+        if not isinstance(block, dict):
+            raise ValueError(f"Unexpected reviewThreads GraphQL payload for PR {number}: {data!r}")
+        nodes = block.get("nodes") or []
+        for node in nodes:
+            if not isinstance(node, dict):
+                continue
+            comments = []
+            for comment in (node.get("comments") or {}).get("nodes") or []:
+                if not isinstance(comment, dict):
+                    continue
+                author = comment.get("author") or {}
+                commit = comment.get("commit") or {}
+                comments.append(
+                    {
+                        "comment_id": comment.get("id"),
+                        "author_login": author.get("login") if isinstance(author, dict) else None,
+                        "body": comment.get("body"),
+                        "created_at": comment.get("createdAt"),
+                        "path": comment.get("path"),
+                        "line": comment.get("line"),
+                        "commit_sha": commit.get("oid") if isinstance(commit, dict) else None,
+                    }
+                )
+            first_body = comments[0].get("body") if comments else None
+            threads.append(
+                {
+                    "thread_id": node.get("id"),
+                    "is_resolved": bool(node.get("isResolved")),
+                    "is_outdated": bool(node.get("isOutdated")),
+                    "path": node.get("path"),
+                    "line": node.get("line"),
+                    "start_line": node.get("startLine"),
+                    "body": first_body,
+                    "comments": sorted(
+                        comments,
+                        key=lambda item: (
+                            item.get("created_at") or "",
+                            item.get("comment_id") or "",
+                        ),
+                    ),
+                }
+            )
+        page_info = block.get("pageInfo") or {}
+        if not page_info.get("hasNextPage"):
+            break
+        after = page_info.get("endCursor")
+    return sorted(threads, key=lambda item: item.get("thread_id") or "")
+
+
 def normalize_pull_requests(payload: Any) -> list[dict[str, Any]]:
     if not isinstance(payload, list):
         raise ValueError(
@@ -203,21 +315,25 @@ def normalize_pull_requests(payload: Any) -> list[dict[str, Any]]:
         base = pull_request.get("base") or {}
         raw_labels = pull_request.get("labels")
         labels = raw_labels if isinstance(raw_labels, list) else []
+        head_ref = head.get("ref") if isinstance(head, dict) else None
+        title = pull_request.get("title")
+        body = pull_request.get("body")
 
         result.append(
             {
                 "number": pull_request.get("number"),
                 "state": pull_request.get("state"),
                 "draft": bool(pull_request.get("draft")),
+                "merged": bool(pull_request.get("merged")),
+                "mergeable": pull_request.get("mergeable"),
                 "head_sha": (
                     head.get("sha") if isinstance(head, dict) else None
                 ),
-                "head_ref": (
-                    head.get("ref") if isinstance(head, dict) else None
-                ),
+                "head_ref": head_ref,
                 "base_ref": (
                     base.get("ref") if isinstance(base, dict) else None
                 ),
+                "stage_id": infer_stage(head_ref, title, body),
                 "labels": sorted(
                     item.get("name")
                     for item in labels
@@ -225,7 +341,10 @@ def normalize_pull_requests(payload: Any) -> list[dict[str, Any]]:
                     and isinstance(item.get("name"), str)
                 ),
                 "updated_at": pull_request.get("updated_at"),
+                "title": title,
+                "body": body,
                 "reviews": [],
+                "review_threads": [],
                 "workflow_runs": [],
             }
         )
@@ -274,6 +393,7 @@ def capture(repository: str, token: str) -> dict[str, Any]:
                 token,
             )
         )
+        pull_request["review_threads"] = normalize_review_threads(repository, number, token)
         query = urllib.parse.urlencode({"head_sha": head_sha})
         run_payload = api_get_all_workflow_runs(
             repository,
@@ -323,6 +443,7 @@ def main() -> int:
             ensure_ascii=False,
             indent=2,
             sort_keys=True,
+            allow_nan=False,
         )
         + "\n",
         encoding="utf-8",
