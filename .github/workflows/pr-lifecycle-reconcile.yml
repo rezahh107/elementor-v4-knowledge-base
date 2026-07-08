@@ -1,22 +1,22 @@
-name: Work Package Control Plane
+name: PR Lifecycle Reconcile
 
 on:
-  schedule:
-    - cron: "17 * * * *"
   workflow_dispatch:
+  schedule:
+    - cron: "7 * * * *"
 
 permissions:
   contents: read
-  pull-requests: write
   issues: write
+  pull-requests: write
   actions: read
 
 concurrency:
-  group: work-package-control-plane
+  group: pr-lifecycle-reconcile
   cancel-in-progress: false
 
 jobs:
-  plan:
+  reconcile:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -31,8 +31,6 @@ jobs:
           cache: pip
       - name: Install
         run: python -m pip install -e ".[dev]"
-      - name: Validate Work Package contracts
-        run: python tools/work_package_validate.py all
       - name: Capture current GitHub state
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -72,7 +70,7 @@ jobs:
             echo "ERROR: PR-Inspector manifest references scripts/validate_repository_v2.py but the file is absent." >&2
             exit 1
           fi
-      - name: Reconcile lifecycle before planning
+      - name: Reconcile lifecycle state
         id: lifecycle
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -89,58 +87,24 @@ jobs:
           if [[ "$status" != "0" && "$status" != "2" ]]; then
             exit "$status"
           fi
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          import json
-          from pathlib import Path
-          plan = json.loads(Path(__import__('os').environ['RUNNER_TEMP'], 'lifecycle-plan.json').read_text(encoding='utf-8'))
-          print('new_work_allowed=' + ('true' if plan['planner_gate']['new_work_allowed'] else 'false'))
-          PY
-      - name: Produce deterministic plan
-        if: steps.lifecycle.outputs.new_work_allowed == 'true'
-        run: python tools/work_package_controller.py --repo-state "${{ runner.temp }}/repo-state.json" --output "${{ runner.temp }}/work-package-plan.json"
-      - name: Record planner gate block
-        if: steps.lifecycle.outputs.new_work_allowed != 'true'
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          import os
-          lifecycle = json.loads((Path(os.environ['RUNNER_TEMP']) / 'lifecycle-plan.json').read_text(encoding='utf-8'))
-          blocked = {
-            'action': 'blocked',
-            'reason': 'lifecycle_reconciliation_required',
-            'planner_gate': lifecycle['planner_gate'],
-            'work_package': None,
-          }
-          (Path(os.environ['RUNNER_TEMP']) / 'work-package-plan.json').write_text(json.dumps(blocked, ensure_ascii=False, indent=2, sort_keys=True) + '\n', encoding='utf-8')
-          PY
-      - name: Publish plan summary
+      - name: Publish lifecycle summary
         if: always()
-        shell: bash
         run: |
-          echo '## Work Package Control Plane' >> "$GITHUB_STEP_SUMMARY"
+          echo '## PR Lifecycle Reconciler' >> "$GITHUB_STEP_SUMMARY"
           if [[ -f "${{ runner.temp }}/lifecycle-plan.json" ]]; then
-            echo '### Lifecycle plan' >> "$GITHUB_STEP_SUMMARY"
             echo '```json' >> "$GITHUB_STEP_SUMMARY"
             cat "${{ runner.temp }}/lifecycle-plan.json" >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
-          fi
-          if [[ -f "${{ runner.temp }}/work-package-plan.json" ]]; then
-            echo '### Work Package plan' >> "$GITHUB_STEP_SUMMARY"
-            echo '```json' >> "$GITHUB_STEP_SUMMARY"
-            cat "${{ runner.temp }}/work-package-plan.json" >> "$GITHUB_STEP_SUMMARY"
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
           else
-            echo 'Plan file was not produced.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Lifecycle plan was not produced.' >> "$GITHUB_STEP_SUMMARY"
           fi
-      - name: Upload observed state and plan
+      - name: Upload lifecycle artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: work-package-plan-${{ github.run_id }}-${{ github.run_attempt }}
+          name: pr-lifecycle-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/repo-state.json
             ${{ runner.temp }}/lifecycle-plan.json
-            ${{ runner.temp }}/work-package-plan.json
           if-no-files-found: error
           retention-days: 30

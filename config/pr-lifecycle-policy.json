@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "lifecycle": {
+    "mutation_branch_prefixes": [
+      "automation/",
+      "migration/",
+      "migration-",
+      "wp/",
+      "work-package/"
+    ],
+    "mutation_labels": [
+      "automation",
+      "mutation-pr",
+      "work-package",
+      "source-capture",
+      "finalizer"
+    ],
+    "superseded_labels": [
+      "superseded"
+    ]
+  },
+  "review": {
+    "required_dispositions": [
+      "accepted_fixed",
+      "accepted_superseded",
+      "accepted_deferred",
+      "rejected_with_contract",
+      "rejected_with_evidence",
+      "insufficient_evidence",
+      "unresolved_blocker"
+    ],
+    "ai_review_authors": [
+      "gemini-code-assist[bot]",
+      "codex[bot]",
+      "github-copilot[bot]"
+    ]
+  },
+  "gates": {
+    "required_workflows": [
+      "KB Quality"
+    ],
+    "final_exact_head_gate": {
+      "required": true,
+      "workflow_name": "KB Quality"
+    },
+    "ready_to_merge_when_human_approved": false
+  },
+  "allowed_mutations": [
+    "comment",
+    "resolve_thread",
+    "close_pr",
+    "label"
+  ]
+}
