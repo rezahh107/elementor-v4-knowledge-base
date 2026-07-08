@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-07-08T00:00:00Z",
+  "repository": {
+    "full_name": "rezahh107/elementor-v4-knowledge-base",
+    "default_branch": "main",
+    "main_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "pull_requests": [
+    {
+      "number": 71,
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "mergeable": true,
+      "head_sha": "4444444444444444444444444444444444444444",
+      "head_ref": "migration/KB-007-active",
+      "base_ref": "main",
+      "stage_id": "KB-007",
+      "labels": ["automation"],
+      "updated_at": "2026-07-07T10:00:00Z",
+      "reviews": [],
+      "review_threads": [],
+      "workflow_runs": []
+    }
+  ],
+  "workflow_runs": []
+}
