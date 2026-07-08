@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-07-08T00:00:00Z",
+  "repository": {
+    "full_name": "rezahh107/elementor-v4-knowledge-base",
+    "default_branch": "main",
+    "main_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "pull_requests": [
+    {
+      "number": 70,
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "mergeable": true,
+      "head_sha": "3333333333333333333333333333333333333333",
+      "head_ref": "migration/KB-006-active",
+      "base_ref": "main",
+      "stage_id": "KB-006",
+      "labels": ["automation"],
+      "updated_at": "2026-07-07T10:00:00Z",
+      "reviews": [],
+      "review_threads": [
+        {
+          "thread_id": "THREAD-70-A",
+          "is_resolved": false,
+          "comments": [
+            {
+              "author_login": "codex[bot]",
+              "body": "Missing exact-head gate proof."
+            }
+          ]
+        }
+      ],
+      "workflow_runs": [
+        {
+          "id": 101,
+          "name": "KB Quality",
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "3333333333333333333333333333333333333333",
+          "run_attempt": 1,
+          "created_at": "2026-07-07T12:05:00Z",
+          "updated_at": "2026-07-07T12:10:00Z"
+        }
+      ]
+    }
+  ],
+  "workflow_runs": []
+}
