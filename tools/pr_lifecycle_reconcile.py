@@ -11,7 +11,6 @@ import json
 import math
 import os
 import re
-import sys
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -118,32 +117,47 @@ def pr_sort_key(pr: dict[str, Any]) -> tuple[str, int]:
     return (str(pr.get("updated_at") or ""), int(pr.get("number") or 0))
 
 
-def latest_run_by_name(pr: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    result: dict[str, dict[str, Any]] = {}
+def workflow_run_names(run: dict[str, Any]) -> set[str]:
+    names: set[str] = set()
+    for key in ("name", "display_title", "displayTitle", "workflow_name", "workflowName"):
+        value = run.get(key)
+        if isinstance(value, str) and value.strip():
+            names.add(value.strip())
+    return names
+
+
+def run_matches_required_workflow(run: dict[str, Any], required_name: str, head_sha: str) -> bool:
+    names = workflow_run_names(run)
+    return required_name in names or f"{required_name} {head_sha}" in names
+
+
+def latest_required_run(pr: dict[str, Any], required_name: str) -> dict[str, Any] | None:
+    head_sha = pr.get("head_sha")
+    if not isinstance(head_sha, str):
+        return None
+    latest: dict[str, Any] | None = None
     for run in pr.get("workflow_runs", []):
         if not isinstance(run, dict):
             continue
-        if run.get("head_sha") != pr.get("head_sha"):
+        if run.get("head_sha") != head_sha:
             continue
-        name = run.get("name")
-        if not isinstance(name, str):
+        if not run_matches_required_workflow(run, required_name, head_sha):
             continue
-        current = result.get(name)
-        if current is None or int(run.get("id") or 0) > int(current.get("id") or 0):
-            result[name] = run
-    return result
+        if latest is None or int(run.get("id") or 0) > int(latest.get("id") or 0):
+            latest = run
+    return latest
 
 
 def ci_state(pr: dict[str, Any], policy: dict[str, Any]) -> str:
     required = policy["gates"]["required_workflows"]
     if not required:
         return "success"
-    runs = latest_run_by_name(pr)
-    if not set(required) <= set(runs):
+    runs = {name: latest_required_run(pr, name) for name in required}
+    if any(run is None for run in runs.values()):
         return "missing"
-    if any(runs[name].get("status") != "completed" for name in required):
+    if any(run.get("status") != "completed" for run in runs.values() if run is not None):
         return "pending"
-    if all(runs[name].get("conclusion") == "success" for name in required):
+    if all(run.get("conclusion") == "success" for run in runs.values() if run is not None):
         return "success"
     return "failed"
 
@@ -154,8 +168,7 @@ def final_gate_state(pr: dict[str, Any], policy: dict[str, Any]) -> str:
     if not required:
         return "not_required"
     name = gate.get("workflow_name", "KB Quality")
-    runs = latest_run_by_name(pr)
-    run = runs.get(name)
+    run = latest_required_run(pr, name)
     if run is None:
         return "missing"
     if run.get("status") != "completed":
@@ -202,6 +215,7 @@ def thread_resolved(thread: dict[str, Any]) -> bool:
 
 def thread_disposition(thread: dict[str, Any], *, superseded: bool) -> dict[str, Any]:
     tid = thread_id(thread) or "missing-thread-id"
+    resolved = thread_resolved(thread)
     text = thread_text(thread)
     marker = explicit_disposition(text)
     if superseded:
@@ -210,13 +224,13 @@ def thread_disposition(thread: dict[str, Any], *, superseded: bool) -> dict[str,
     elif marker is not None:
         disposition = marker
         reason = "Explicit lifecycle disposition marker was found in review discussion."
-    elif thread_resolved(thread):
+    elif resolved:
         disposition = "accepted_fixed"
         reason = "GitHub reports the review thread as resolved."
     else:
         disposition = "unresolved_blocker"
         reason = "No explicit disposition or resolved-state evidence exists for this thread."
-    return {"thread_id": tid, "disposition": disposition, "reason": reason}
+    return {"thread_id": tid, "is_resolved": resolved, "disposition": disposition, "reason": reason}
 
 
 def all_threads_disposed(dispositions: list[dict[str, Any]]) -> bool:
@@ -407,11 +421,15 @@ def apply_plan(plan: dict[str, Any], token: str) -> list[dict[str, Any]]:
             api_request(repository, f"issues/{pr_number}/labels", token, method="POST", body={"labels": [label]})
             result["mutations"].append("label")
         if "resolve_thread" in allowed:
+            resolved_count = 0
             for disposition in action.get("review_dispositions", []):
                 tid = disposition.get("thread_id")
+                if disposition.get("is_resolved") is True:
+                    continue
                 if isinstance(tid, str) and tid != "missing-thread-id":
                     graphql(token, "mutation($threadId: ID!) { resolveReviewThread(input: {threadId: $threadId}) { thread { id isResolved } } }", {"threadId": tid})
-            result["mutations"].append("resolve_thread")
+                    resolved_count += 1
+            result["mutations"].append({"resolve_thread": resolved_count})
         if "close_pr" in allowed:
             api_request(repository, f"pulls/{pr_number}", token, method="PATCH", body={"state": "closed"})
             result["mutations"].append("close_pr")
