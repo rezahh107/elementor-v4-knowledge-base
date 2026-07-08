@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/pr-lifecycle-policy.schema.json",
+  "title": "PR Lifecycle Reconciler Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lifecycle", "review", "gates", "allowed_mutations"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mutation_branch_prefixes", "mutation_labels", "superseded_labels"],
+      "properties": {
+        "mutation_branch_prefixes": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "mutation_labels": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "superseded_labels": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_dispositions", "ai_review_authors"],
+      "properties": {
+        "required_dispositions": {
+          "type": "array",
+          "items": {"enum": ["accepted_fixed", "accepted_superseded", "accepted_deferred", "rejected_with_contract", "rejected_with_evidence", "insufficient_evidence", "unresolved_blocker"]},
+          "uniqueItems": true
+        },
+        "ai_review_authors": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_workflows", "final_exact_head_gate", "ready_to_merge_when_human_approved"],
+      "properties": {
+        "required_workflows": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "final_exact_head_gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required", "workflow_name"],
+          "properties": {
+            "required": {"type": "boolean"},
+            "workflow_name": {"type": "string", "minLength": 1}
+          }
+        },
+        "ready_to_merge_when_human_approved": {"type": "boolean"}
+      }
+    },
+    "allowed_mutations": {"type": "array", "items": {"enum": ["comment", "resolve_thread", "close_pr", "label"]}, "uniqueItems": true}
+  }
+}
