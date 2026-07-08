@@ -248,6 +248,10 @@ jobs:
             --arg dispatch_started "$dispatch_started" \
             '{schema_version:1, stage_id:$stage, head_sha:$head_sha, conclusion:$conclusion, label:$label, run_id:$run_id, run_url:$run_url, run_head_sha:$run_head_sha, dispatched_at:$dispatch_started, limitations:(if $conclusion == "insufficient_evidence" then ["dispatched KB Quality run could not be uniquely observed before timeout"] else [] end)}' \
             > "$RUNNER_TEMP/final-check/final-check.json"
+          echo '### Final exact-head KB Quality result' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/final-check/final-check.json" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
           if [[ -n "$PR_NUMBER" ]]; then
             gh label create final-check-passed --color 0E8A16 --description "Final exact-head KB Quality passed" --force >/dev/null
             gh label create final-check-failed --color B60205 --description "Final exact-head KB Quality failed" --force >/dev/null
@@ -265,14 +269,6 @@ jobs:
           if [[ "$conclusion" != "success" ]]; then
             exit 1
           fi
-      - name: Upload final check artifact
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: final-check-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/final-check
-          if-no-files-found: warn
-          retention-days: 30
       - name: Report finalizer failure
         if: failure() && github.event_name != 'workflow_dispatch'
         env:
