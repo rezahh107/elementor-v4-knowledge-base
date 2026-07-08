@@ -1,6 +1,6 @@
 # GENERATED FILE. Edit manifests/stages.yaml.
 manifest_version: 4
-generated_from_sha256: e41ccbd6c33c0b830c95c73ad967af92e195344994f5ae7f2417eedc8d1a954e
+generated_from_sha256: a64ce3a04a4b8e2da43c558657366d7c7505ca25e9ad301f0db645e2a7144245
 sources:
 - source_id: SRC-KB-001-01
   stage_id: KB-001
@@ -61,7 +61,7 @@ sources:
   content_fingerprint: 28abbc6c504488a86c8b1fd5b3b05c0633a8431353990a71da06b734d84eb15f
   output_path: docs/elements/v4/heading.md
   stage_status: completed_with_gaps
-  content_commit_sha: 054da0ff8bd3e6eb3a16631057a0f1ff5a004a22
+  content_commit_sha: 52bcde19d00b9599b0eee7c0df577136d2422943
 - source_id: SRC-KB-006-01
   stage_id: KB-006
   knowledge_id: elementor.help.loop-grid

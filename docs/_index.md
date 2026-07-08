@@ -1,7 +1,7 @@
 <!-- GENERATED FILE. Edit manifests/stages.yaml and run tools/kb.py generate. -->
 # فهرست پایگاه دانش Elementor
 
-`manifest_sha256: e41ccbd6c33c0b830c95c73ad967af92e195344994f5ae7f2417eedc8d1a954e`
+`manifest_sha256: a64ce3a04a4b8e2da43c558657366d7c7505ca25e9ad301f0db645e2a7144245`
 
 اسناد `unreviewed` یا دارای `document_level_legacy` پژوهش‌نامه‌اند و نباید authoritative تلقی شوند.
 
