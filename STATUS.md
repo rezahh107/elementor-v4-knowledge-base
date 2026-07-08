@@ -2,7 +2,7 @@
 ---
 project: elementor-v4-knowledge-base
 status_version: 1
-manifest_sha256: 0e96009f92bf1ffd24a0bb1531c4c7f68ee8dd36dc6f4938f14e92450ca2ca4b
+manifest_sha256: d2c06bbff6ccca50ac0501ba4b9dd1d012749d6c98ba151dcc26fc0a3d76f325
 timezone: Europe/Istanbul
 pipeline_status: hardening
 source_policy: official_first
@@ -22,7 +22,7 @@ queue_manager_status: paused_for_hardening
 - مراحل زمان‌بندی‌شده: 0
 - مراحل failed/blocked: 0
 - Evidence gapهای باز: 54
-- آخرین زمان تکمیل ثبت‌شده: `2026-07-07T17:11:41+03:00`
+- آخرین زمان تکمیل ثبت‌شده: `2026-07-08T12:47:50+03:00`
 
 ## وضعیت مراحل
 
