@@ -4,18 +4,24 @@
   "title": "GitHub repository-state snapshot",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "captured_at", "repository", "pull_requests", "workflow_runs"],
+  "required": ["captured_at", "pull_requests", "workflow_runs"],
+  "anyOf": [
+    {"required": ["schema_version"]},
+    {"required": ["snapshot_version"]}
+  ],
   "properties": {
     "schema_version": {"const": 1},
+    "snapshot_version": {"const": 1},
     "captured_at": {"type": "string", "format": "date-time"},
     "repository": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["full_name", "default_branch", "main_sha"],
+      "required": ["default_branch"],
       "properties": {
         "full_name": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
         "default_branch": {"type": "string", "minLength": 1},
-        "main_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"}
+        "main_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "head_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"}
       }
     },
     "pull_requests": {
@@ -23,7 +29,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["number", "state", "draft", "merged", "head_ref", "base_ref", "head_sha", "labels", "reviews", "review_threads", "workflow_runs"],
+        "required": ["number", "state", "draft", "head_sha"],
         "properties": {
           "number": {"type": "integer", "minimum": 1},
           "stage_id": {"type": ["string", "null"], "pattern": "^KB-[0-9]{3}$"},
@@ -40,53 +46,8 @@
           "body": {"type": ["string", "null"]},
           "labels": {"type": "array", "items": {"type": "string"}},
           "unique_completed_ledger_event": {"type": "boolean"},
-          "reviews": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["user", "state", "submitted_at"],
-              "properties": {
-                "user": {"type": "string"},
-                "state": {"type": "string"},
-                "submitted_at": {"type": ["string", "null"], "format": "date-time"}
-              }
-            }
-          },
-          "review_threads": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["thread_id", "is_resolved", "is_outdated", "comments"],
-              "properties": {
-                "thread_id": {"type": ["string", "null"]},
-                "is_resolved": {"type": "boolean"},
-                "is_outdated": {"type": "boolean"},
-                "path": {"type": ["string", "null"]},
-                "line": {"type": ["integer", "null"]},
-                "start_line": {"type": ["integer", "null"]},
-                "body": {"type": ["string", "null"]},
-                "comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["comment_id", "author_login", "body", "created_at", "path", "line", "commit_sha"],
-                    "properties": {
-                      "comment_id": {"type": ["string", "null"]},
-                      "author_login": {"type": ["string", "null"]},
-                      "body": {"type": ["string", "null"]},
-                      "created_at": {"type": ["string", "null"], "format": "date-time"},
-                      "path": {"type": ["string", "null"]},
-                      "line": {"type": ["integer", "null"]},
-                      "commit_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"}
-                    }
-                  }
-                }
-              }
-            }
-          },
+          "reviews": {"$ref": "#/$defs/reviews"},
+          "review_threads": {"$ref": "#/$defs/review_threads"},
           "workflow_runs": {"$ref": "#/$defs/workflow_runs"}
         }
       }
@@ -94,12 +55,59 @@
     "workflow_runs": {"$ref": "#/$defs/workflow_runs"}
   },
   "$defs": {
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["user", "state", "submitted_at"],
+        "properties": {
+          "user": {"type": "string"},
+          "state": {"type": "string"},
+          "submitted_at": {"type": ["string", "null"], "format": "date-time"}
+        }
+      }
+    },
+    "review_threads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["thread_id", "is_resolved", "is_outdated", "comments"],
+        "properties": {
+          "thread_id": {"type": ["string", "null"]},
+          "is_resolved": {"type": "boolean"},
+          "is_outdated": {"type": "boolean"},
+          "path": {"type": ["string", "null"]},
+          "line": {"type": ["integer", "null"]},
+          "start_line": {"type": ["integer", "null"]},
+          "body": {"type": ["string", "null"]},
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["comment_id", "author_login", "body", "created_at", "path", "line", "commit_sha"],
+              "properties": {
+                "comment_id": {"type": ["string", "null"]},
+                "author_login": {"type": ["string", "null"]},
+                "body": {"type": ["string", "null"]},
+                "created_at": {"type": ["string", "null"], "format": "date-time"},
+                "path": {"type": ["string", "null"]},
+                "line": {"type": ["integer", "null"]},
+                "commit_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"}
+              }
+            }
+          }
+        }
+      }
+    },
     "workflow_runs": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "name", "event", "status", "conclusion", "head_sha", "run_attempt", "created_at", "updated_at"],
+        "required": ["id", "name", "conclusion"],
         "properties": {
           "id": {"type": "integer", "minimum": 1},
           "name": {"type": "string", "minLength": 1},
@@ -107,10 +115,25 @@
           "event": {"type": ["string", "null"]},
           "status": {"type": ["string", "null"]},
           "conclusion": {"type": ["string", "null"]},
+          "action_required_reason": {"type": ["string", "null"]},
           "head_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
           "run_attempt": {"type": ["integer", "null"]},
           "created_at": {"type": ["string", "null"], "format": "date-time"},
-          "updated_at": {"type": ["string", "null"], "format": "date-time"}
+          "updated_at": {"type": ["string", "null"], "format": "date-time"},
+          "stage_id": {"type": ["string", "null"], "pattern": "^KB-[0-9]{3}$"},
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": ["name"],
+              "properties": {
+                "name": {"type": "string", "minLength": 1},
+                "status": {"type": "string"},
+                "conclusion": {"type": ["string", "null"]}
+              }
+            }
+          }
         }
       }
     }
