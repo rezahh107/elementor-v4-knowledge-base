@@ -103,6 +103,7 @@
         "properties": {
           "id": {"type": "integer", "minimum": 1},
           "name": {"type": "string", "minLength": 1},
+          "display_title": {"type": ["string", "null"]},
           "event": {"type": ["string", "null"]},
           "status": {"type": ["string", "null"]},
           "conclusion": {"type": ["string", "null"]},
