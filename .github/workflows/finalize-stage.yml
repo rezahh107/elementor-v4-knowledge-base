@@ -143,7 +143,7 @@ jobs:
           value="$(python -c 'from pathlib import Path; from tools.kb import parse_front_matter; import os; print(parse_front_matter(Path(os.environ["DOCUMENT"]))[0]["claim_record"])')"
           [[ "$value" == evidence/claims/"$STAGE"*.yaml ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
-      - name: Finalize, attest, dispatch, and record final check
+      - name: Finalize and attest atomically, dispatch, and record final check
         shell: bash
         env:
           GITHUB_TOKEN: ${{ github.token }}
