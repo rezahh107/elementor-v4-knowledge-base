@@ -1,0 +1,110 @@
+name: PR Lifecycle Reconcile
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7 * * * *"
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  actions: read
+
+concurrency:
+  group: pr-lifecycle-reconcile
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Capture current GitHub state
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/github_state_snapshot.py --repository "${{ github.repository }}" --output "${{ runner.temp }}/repo-state.json"
+      - name: PR-Inspector read-only gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh repo clone rezahh107/PR-Inspector "$RUNNER_TEMP/pr-inspector" -- --depth 1
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          import yaml
+          root = Path(__import__('os').environ['RUNNER_TEMP']) / 'pr-inspector'
+          manifest = yaml.safe_load((root / 'protocol-manifest.yaml').read_text(encoding='utf-8'))
+          errors = []
+          if manifest.get('operation_mode') != 'read_only_review':
+              errors.append('PR-Inspector operation_mode is not read_only_review')
+          forbidden = set(manifest.get('forbidden_default_actions') or [])
+          required_forbidden = {'modify_target_repository', 'create_comment', 'approve_pull_request', 'merge_pull_request'}
+          missing = sorted(required_forbidden - forbidden)
+          if missing:
+              errors.append('PR-Inspector manifest missing forbidden actions: ' + ', '.join(missing))
+          command = manifest.get('validation_commands', {}).get('repository')
+          if not isinstance(command, str) or not command:
+              errors.append('PR-Inspector repository validation command missing')
+          if errors:
+              for error in errors:
+                  print('ERROR:', error, file=sys.stderr)
+              raise SystemExit(1)
+          PY
+          cd "$RUNNER_TEMP/pr-inspector"
+          if [[ -f scripts/validate_repository_v2.py ]]; then
+            python scripts/validate_repository_v2.py
+          else
+            echo "ERROR: PR-Inspector manifest references scripts/validate_repository_v2.py but the file is absent." >&2
+            exit 1
+          fi
+      - name: Reconcile lifecycle state
+        id: lifecycle
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set +e
+          python tools/pr_lifecycle_reconcile.py \
+            --repo-state "${{ runner.temp }}/repo-state.json" \
+            --output "${{ runner.temp }}/lifecycle-plan.json" \
+            --apply
+          status=$?
+          set -e
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          if [[ "$status" != "0" && "$status" != "2" ]]; then
+            exit "$status"
+          fi
+      - name: Publish lifecycle summary
+        if: always()
+        run: |
+          echo '## PR Lifecycle Reconciler' >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f "${{ runner.temp }}/lifecycle-plan.json" ]]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat "${{ runner.temp }}/lifecycle-plan.json" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Lifecycle plan was not produced.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload lifecycle artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pr-lifecycle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/repo-state.json
+            ${{ runner.temp }}/lifecycle-plan.json
+          if-no-files-found: error
+          retention-days: 30
