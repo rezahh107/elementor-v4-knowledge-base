@@ -18,16 +18,29 @@
   "properties": {
     "schema_version": {"const": 1},
     "policy_id": {"const": "elementor-v4-work-package-executor-v1"},
-    "enabled": {"const": true},
+    "enabled": {"type": "boolean"},
     "cycle_id": {
       "type": "string",
       "pattern": "^migration-cycle-[0-9]{2}$"
     },
-    "schedule_cron": {"const": "27 * * * *"},
-    "branch_prefix": {"const": "automation/wp-"},
-    "max_stages_per_pull_request": {"const": 1},
+    "schedule_cron": {
+      "type": "string",
+      "pattern": "^\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+$"
+    },
+    "branch_prefix": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._/-]+$"
+    },
+    "max_stages_per_pull_request": {
+      "type": "integer",
+      "minimum": 1
+    },
     "merge_method": {"enum": ["merge", "squash", "rebase"]},
-    "required_workflow": {"const": "KB Quality"},
+    "required_workflow": {
+      "type": "string",
+      "minLength": 1
+    },
     "targets": {
       "type": "object",
       "minProperties": 1,
