@@ -115,16 +115,16 @@ stages:
     url: https://elementor.com/help/heading-element/
     source_type: official_help
     last_updated: 2025-08-28
-    snapshot_status: missing_legacy_snapshot
-    content_fingerprint: null
+    snapshot_status: captured
+    content_fingerprint: 28abbc6c504488a86c8b1fd5b3b05c0633a8431353990a71da06b734d84eb15f
   evidence_status: completed_with_gaps
-  review_status: unreviewed
-  provenance_status: document_level_legacy
-  content_commit_sha: 7b0dd87368ae50bdd444f085cd268c3193c13bac
-  completed_at: 2026-06-23T10:51:16+03:00
+  review_status: machine_validated
+  provenance_status: claim_level
+  content_commit_sha: 52bcde19d00b9599b0eee7c0df577136d2422943
+  completed_at: 2026-07-08T12:59:12+03:00
   gap_ids:
-  - GAP-KB-005-PROVENANCE
-  - GAP-KB-005-SNAPSHOT
+  - GAP-KB-005-IMAGE-INSPECTION
+  - GAP-KB-005-RUNTIME-BEHAVIOR
   - GAP-KB-005-REVIEW
 - stage_id: KB-006
   knowledge_id: elementor.help.loop-grid
