@@ -92,4 +92,16 @@ jobs:
       - name: Validate execution ledger chain
         run: python tools/ledger_validate.py
       - name: Test
-        run: python -m pytest -q
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p "$RUNNER_TEMP/pytest-logs"
+          python -m pytest -q 2>&1 | tee "$RUNNER_TEMP/pytest-logs/pytest-${{ matrix.python-version }}.log"
+      - name: Upload pytest log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pytest-log-${{ matrix.python-version }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pytest-logs
+          if-no-files-found: warn
+          retention-days: 7
