@@ -1,4 +1,5 @@
 name: KB Quality
+run-name: KB Quality ${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha || (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.head.sha || github.sha }}
 
 on:
   pull_request:
