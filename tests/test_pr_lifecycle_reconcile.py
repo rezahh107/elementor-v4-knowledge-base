@@ -24,6 +24,7 @@ def test_superseded_draft_can_be_closed_only_with_strict_evidence() -> None:
     assert first["replacement_pr"] == 64
     assert first["allowed_mutations"] == ["comment", "resolve_thread", "close_pr"]
     assert first["review_dispositions"][0]["disposition"] == "accepted_superseded"
+    assert first["review_dispositions"][0]["is_resolved"] is False
     assert plan["planner_gate"]["new_work_allowed"] is False
 
 
@@ -32,6 +33,7 @@ def test_unresolved_review_thread_blocks_ready_state() -> None:
     action = plan["actions"][0]
     assert action["classification"] == "blocked_by_review"
     assert action["review_dispositions"][0]["disposition"] == "unresolved_blocker"
+    assert action["review_dispositions"][0]["is_resolved"] is False
     assert plan["planner_gate"]["new_work_allowed"] is False
 
 
@@ -40,6 +42,18 @@ def test_missing_final_gate_blocks_ready_state() -> None:
     action = plan["actions"][0]
     assert action["classification"] == "blocked_by_ci"
     assert "Required CI state is missing" in action["reason"]
+
+
+def test_plain_workflow_name_satisfies_ci_and_final_gate() -> None:
+    plan = _plan("plain_workflow_name.json")
+    action = plan["actions"][0]
+    assert action["classification"] == "ready_for_human_review"
+
+
+def test_run_name_with_exact_sha_satisfies_ci_and_final_gate() -> None:
+    plan = _plan("run_named_workflow.json")
+    action = plan["actions"][0]
+    assert action["classification"] == "ready_for_human_review"
 
 
 def test_canonical_json_rejects_non_finite_values() -> None:
