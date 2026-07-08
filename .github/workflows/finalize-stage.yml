@@ -54,6 +54,7 @@ jobs:
           EXPLICIT_STAGE: ${{ inputs.stage_id }}
           PR_BRANCH: ${{ github.event.pull_request.head.ref }}
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          EVENT_PR_NUMBER: ${{ github.event.pull_request.number }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           AUTHOR_ASSOCIATION: ${{ github.event.comment.author_association }}
@@ -70,12 +71,14 @@ jobs:
             fi
           }
           base="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$DEFAULT_BRANCH" | awk '{print $1}')"
+          pr_number=""
           if [[ "$EVENT" == workflow_dispatch ]]; then
             branch="$INPUT_BRANCH"
             stage="$EXPLICIT_STAGE"
             [[ "$branch" == migration/* || "$branch" == migration-* ]]
             [[ "$stage" =~ ^KB-[0-9]{3}$ ]]
             head="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/$branch" | awk '{print $1}')"
+            pr_number="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
           elif [[ "$EVENT" == issue_comment ]]; then
             [[ "$COMMENT_BODY" == /finalize-stage ]]
             case "$AUTHOR_ASSOCIATION" in
@@ -88,10 +91,12 @@ jobs:
             head_repo="$(jq -r '.head.repo.full_name' <<<"$pr_json")"
             [[ "$head_repo" == "$GITHUB_REPOSITORY" ]]
             stage="$(infer_stage_from_branch "$branch")"
+            pr_number="$ISSUE_NUMBER"
           else
             branch="$PR_BRANCH"
             head="$PR_HEAD"
             stage="$(infer_stage_from_branch "$branch")"
+            pr_number="$EVENT_PR_NUMBER"
           fi
           [[ "$branch" == migration/* || "$branch" == migration-* ]]
           [[ "$head" =~ ^[a-f0-9]{40}$ && "$base" =~ ^[a-f0-9]{40}$ ]]
@@ -100,6 +105,7 @@ jobs:
           echo "head=$head" >> "$GITHUB_OUTPUT"
           echo "base=$base" >> "$GITHUB_OUTPUT"
           echo "stage=$stage" >> "$GITHUB_OUTPUT"
+          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           ref: ${{ steps.target.outputs.head }}
@@ -137,7 +143,7 @@ jobs:
           value="$(python -c 'from pathlib import Path; from tools.kb import parse_front_matter; import os; print(parse_front_matter(Path(os.environ["DOCUMENT"]))[0]["claim_record"])')"
           [[ "$value" == evidence/claims/"$STAGE"*.yaml ]]
           echo "value=$value" >> "$GITHUB_OUTPUT"
-      - name: Finalize and attest atomically
+      - name: Finalize, attest, dispatch, and record final check
         shell: bash
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -149,6 +155,7 @@ jobs:
           STAGE: ${{ steps.target.outputs.stage }}
           DOCUMENT: ${{ steps.document.outputs.value }}
           CLAIM: ${{ steps.claim.outputs.value }}
+          PR_NUMBER: ${{ steps.target.outputs.pr_number }}
         run: |
           set -euo pipefail
           remote="$(git ls-remote origin "refs/heads/$BRANCH" | awk '{print $1}')"
@@ -187,7 +194,85 @@ jobs:
           [[ "$remote" == "$HEAD_SHA" ]]
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$BRANCH"
           validated_sha="$(git rev-parse HEAD)"
+          [[ "$validated_sha" =~ ^[a-f0-9]{40}$ ]]
+
+          dispatch_started="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           gh workflow run kb-quality.yml --ref "$DEFAULT_BRANCH" -f ref="$validated_sha" -f expected_sha="$validated_sha"
+          title="KB Quality $validated_sha"
+          mkdir -p "$RUNNER_TEMP/final-check"
+          observed=""
+          deadline=$((SECONDS + 900))
+          while (( SECONDS < deadline )); do
+            candidates="$(gh run list --workflow kb-quality.yml --event workflow_dispatch --json databaseId,displayTitle,headSha,status,conclusion,url,createdAt --limit 50 \
+              | jq -c --arg title "$title" '[.[] | select(.displayTitle == $title)] | sort_by(.databaseId)')"
+            count="$(jq 'length' <<<"$candidates")"
+            if [[ "$count" == "1" ]]; then
+              observed="$(jq -c '.[0]' <<<"$candidates")"
+              status="$(jq -r '.status' <<<"$observed")"
+              if [[ "$status" == "completed" ]]; then
+                break
+              fi
+            elif [[ "$count" -gt "1" ]]; then
+              observed=""
+              break
+            fi
+            sleep 15
+          done
+          if [[ -z "$observed" ]]; then
+            conclusion="insufficient_evidence"
+            label="final-check-insufficient-evidence"
+            run_id=null
+            run_url=null
+            run_head_sha=null
+          else
+            gh_conclusion="$(jq -r '.conclusion // ""' <<<"$observed")"
+            run_id="$(jq -r '.databaseId' <<<"$observed")"
+            run_url="$(jq -r '.url' <<<"$observed")"
+            run_head_sha="$(jq -r '.headSha' <<<"$observed")"
+            if [[ "$gh_conclusion" == "success" ]]; then
+              conclusion="success"
+              label="final-check-passed"
+            else
+              conclusion="failure"
+              label="final-check-failed"
+            fi
+          fi
+          jq -n \
+            --arg stage "$STAGE" \
+            --arg head_sha "$validated_sha" \
+            --arg conclusion "$conclusion" \
+            --arg label "$label" \
+            --argjson run_id "$run_id" \
+            --arg run_url "$run_url" \
+            --arg run_head_sha "$run_head_sha" \
+            --arg dispatch_started "$dispatch_started" \
+            '{schema_version:1, stage_id:$stage, head_sha:$head_sha, conclusion:$conclusion, label:$label, run_id:$run_id, run_url:$run_url, run_head_sha:$run_head_sha, dispatched_at:$dispatch_started, limitations:(if $conclusion == "insufficient_evidence" then ["dispatched KB Quality run could not be uniquely observed before timeout"] else [] end)}' \
+            > "$RUNNER_TEMP/final-check/final-check.json"
+          if [[ -n "$PR_NUMBER" ]]; then
+            gh label create final-check-passed --color 0E8A16 --description "Final exact-head KB Quality passed" --force >/dev/null
+            gh label create final-check-failed --color B60205 --description "Final exact-head KB Quality failed" --force >/dev/null
+            gh label create final-check-insufficient-evidence --color D93F0B --description "Final exact-head KB Quality could not be observed" --force >/dev/null
+            gh issue edit "$PR_NUMBER" --remove-label final-check-passed --remove-label final-check-failed --remove-label final-check-insufficient-evidence >/dev/null 2>&1 || true
+            gh issue edit "$PR_NUMBER" --add-label "$label"
+            {
+              echo "Final exact-head KB Quality result for $STAGE: $conclusion"
+              echo
+              echo '```json'
+              cat "$RUNNER_TEMP/final-check/final-check.json"
+              echo '```'
+            } | gh pr comment "$PR_NUMBER" --body-file -
+          fi
+          if [[ "$conclusion" != "success" ]]; then
+            exit 1
+          fi
+      - name: Upload final check artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: final-check-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/final-check
+          if-no-files-found: warn
+          retention-days: 30
       - name: Report finalizer failure
         if: failure() && github.event_name != 'workflow_dispatch'
         env:
